@@ -11,7 +11,7 @@ try {
 	$dbh = new PDO($dsn, $user, $pass);
 
 	if($_SERVER['REQUEST_METHOD'] === 'POST') {
-		$text = htmlspecialchars(nl2br($_POST['text']));
+		$text = $_POST['text'];
 		$stmt = $dbh->prepare('INSERT INTO posts (post) VALUES (:post)');
 		$stmt->bindParam(':post', $text, PDO::PARAM_STR);
 		$stmt->execute();
@@ -49,7 +49,7 @@ try {
 				<?php foreach((array)$posts as $post) : ?>
 				<tr>
 					<td><?php echo $post['id']; ?></td>
-					<td><?php echo $post['post']; ?></td>
+					<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>
