@@ -25,7 +25,6 @@ try {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
@@ -46,7 +45,7 @@ try {
 					<th>投稿ID</th>
 					<th>投稿内容</th>
 				</tr>
-				<?php foreach((array)$posts as $post) : ?>
+				<?php foreach($posts as $post) : ?>
 				<tr>
 					<td><?php echo $post['id']; ?></td>
 					<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
