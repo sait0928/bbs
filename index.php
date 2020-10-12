@@ -16,7 +16,7 @@ $posts = $stmt->fetchAll();
 		<h1>掲示板</h1>
 		<div id="form">
 			<form action="insert.php" method="POST">
-				<textarea name="text" id="" cols="50" rows="5"></textarea>
+				<textarea name="text" id="" cols="50" rows="5" required></textarea>
 				<input type="submit" value="投稿">
 			</form>
 		</div>
