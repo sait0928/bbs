@@ -17,7 +17,6 @@ $posts = $stmt->fetchAll();
 		<div id="form">
 			<form action="insert.php" method="POST">
 				<textarea name="text" id="" cols="50" rows="5"></textarea>
-				<input type="hidden" name="process" value="insert">
 				<input type="submit" value="投稿">
 			</form>
 		</div>
@@ -34,7 +33,6 @@ $posts = $stmt->fetchAll();
 					<td>
 						<form action="delete.php" method="POST">
 							<input type="hidden" name="id" value="<?php echo $post['id']; ?>">
-							<input type="hidden" name="process" value="delete">
 							<input type="submit" value="削除">
 						</form>
 					</td>
