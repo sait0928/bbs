@@ -2,8 +2,22 @@
 
 include 'connect.php';
 
-$stmt = $dbh->query('SELECT * FROM posts ORDER BY id DESC');
-$posts = $stmt->fetchAll();
+$page = $_GET['page'];
+
+if($page === null) {
+	$stmt = $dbh->query('SELECT * FROM posts ORDER BY id DESC LIMIT 3');
+	$posts = $stmt->fetchAll();
+} else {
+	$start = ($page - 1) * 3;
+	$stmt = $dbh->prepare('SELECT * FROM posts ORDER BY id DESC LIMIT :start, 3');
+	$stmt->bindValue(':start', $start, PDO::PARAM_INT);
+	$stmt->execute();
+	$posts = $stmt->fetchAll();
+}
+
+$stmt = $dbh->query('SELECT COUNT(*) FROM posts');
+$count = $stmt->fetchColumn();
+$pages = ceil($count / 3);
 
 ?>
 <!DOCTYPE html>
@@ -39,6 +53,11 @@ $posts = $stmt->fetchAll();
 				</tr>
 				<?php endforeach; ?>
 			</table>
+		</div>
+		<div id="pagination">
+			<?php for($i = 1; $i <= $pages; $i++) : ?>
+			<a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+			<?php endfor; ?>
 		</div>
 	</body>
 </html>
