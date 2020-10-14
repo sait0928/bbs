@@ -2,7 +2,7 @@
 
 include 'connect.php';
 
-$page = $_GET['page'];
+$page = $_GET['page'] ?? null;
 
 if($page === null) {
 	$stmt = $dbh->query('SELECT * FROM posts ORDER BY id DESC LIMIT 3');
