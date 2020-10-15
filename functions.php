@@ -34,7 +34,6 @@ function insert(PDO $dbh, string $text): void
  */
 function delete(PDO $dbh, int $id): void
 {
-	$id = $_POST['id'];
 	$stmt = $dbh->prepare('DELETE FROM posts WHERE id=:id');
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
