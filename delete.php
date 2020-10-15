@@ -1,12 +1,11 @@
 <?php
 
-include 'connect.php';
+include 'functions.php';
+
+$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$id = $_POST['id'];
-	$stmt = $dbh->prepare('DELETE FROM posts WHERE id=:id');
-	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-	$stmt->execute();
+	delete($dbh, $_POST['id']);
 }
 
 header('Location: /');

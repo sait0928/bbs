@@ -1,23 +1,14 @@
 <?php
 
-include 'connect.php';
+include 'functions.php';
+
+$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
 $page = $_GET['page'] ?? null;
 
-if($page === null) {
-	$stmt = $dbh->query('SELECT * FROM posts ORDER BY id DESC LIMIT 3');
-	$posts = $stmt->fetchAll();
-} else {
-	$start = ($page - 1) * 3;
-	$stmt = $dbh->prepare('SELECT * FROM posts ORDER BY id DESC LIMIT :start, 3');
-	$stmt->bindValue(':start', $start, PDO::PARAM_INT);
-	$stmt->execute();
-	$posts = $stmt->fetchAll();
-}
+$posts = select($dbh, $page);
 
-$stmt = $dbh->query('SELECT COUNT(*) FROM posts');
-$count = $stmt->fetchColumn();
-$pages = ceil($count / 3);
+$pages = countPages($dbh);
 
 ?>
 <!DOCTYPE html>

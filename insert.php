@@ -1,12 +1,11 @@
 <?php
 
-include 'connect.php';
+include 'functions.php';
+
+$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$text = $_POST['text'];
-	$stmt = $dbh->prepare('INSERT INTO posts (post) VALUES (:post)');
-	$stmt->bindParam(':post', $text, PDO::PARAM_STR);
-	$stmt->execute();
+	insert($dbh, $_POST['text']);
 }
 
 header('Location: /');
