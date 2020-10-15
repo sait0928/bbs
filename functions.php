@@ -62,6 +62,8 @@ function select(PDO $dbh, ?int $page): array
 }
 
 /**
+ * ページ総数のカウント
+ *
  * @param PDO $dbh
  * @return int
  */
