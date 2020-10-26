@@ -18,7 +18,7 @@
 	</form>
 </div>
 <div id="login">
-    <a href="login_form.php">ログインはコチラ</a>
+	<a href="login_form.php">ログインはコチラ</a>
 </div>
 </body>
 </html>

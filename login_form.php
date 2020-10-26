@@ -16,7 +16,7 @@
 	</form>
 </div>
 <div id="register">
-    <a href="register_form.php">新規登録はコチラ</a>
+	<a href="register_form.php">新規登録はコチラ</a>
 </div>
 </body>
 </html>
