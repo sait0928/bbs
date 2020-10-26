@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$name = $_SESSION['name'];
+
 include 'functions.php';
 
 $dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
@@ -19,6 +22,7 @@ $pages = countPages($dbh);
 	</head>
 	<body>
 		<h1>掲示板</h1>
+        <p>ようこそ<?php echo $name; ?>さん！</p>
 		<div id="form">
 			<form action="insert.php" method="POST">
 				<textarea name="text" id="" cols="50" rows="5" required></textarea>
