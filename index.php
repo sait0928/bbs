@@ -54,5 +54,8 @@ $pages = countPages($dbh);
 		<a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 	<?php endfor; ?>
 </div>
+<div id="logout">
+	<a href="logout.php">ログアウト</a>
+</div>
 </body>
 </html>
