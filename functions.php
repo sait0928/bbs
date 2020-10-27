@@ -83,3 +83,22 @@ function redirect(string $url): void
 	header('Location: '.$url);
 	exit;
 }
+
+/**
+ * 新規登録
+ *
+ * @param string $pass
+ * @param string $again
+ * @param PDO $dbh
+ * @param string $name
+ */
+function register(string $pass, string $again, PDO $dbh, string $name): void
+{
+	if($pass === $again) {
+		$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+		$stmt = $dbh->prepare('INSERT INTO users (user, pass) VALUES (:user, :pass)');
+		$stmt->bindParam(':user', $name, PDO::PARAM_STR);
+		$stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+		$stmt->execute();
+	}
+}
