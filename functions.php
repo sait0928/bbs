@@ -109,9 +109,9 @@ function register(string $pass, string $again, PDO $dbh, string $name): void
  * @param PDO $dbh
  * @param string $name
  * @param string $pass
- * @return string
+ * @return bool
  */
-function login(PDO $dbh, string $name, string $pass): string
+function login(PDO $dbh, string $name, string $pass): bool
 {
 	$stmt = $dbh->prepare('SELECT pass FROM users WHERE user=:name');
 	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -120,9 +120,9 @@ function login(PDO $dbh, string $name, string $pass): string
 	$verify_pass = $stmt->fetch();
 
 	if(password_verify($pass, $verify_pass['pass'])) {
-		return true;
+		return (bool)true;
 	} else {
-		return false;
+		return (bool)false;
 	}
 }
 
