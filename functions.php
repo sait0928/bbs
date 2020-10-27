@@ -104,6 +104,8 @@ function register(string $pass, string $again, PDO $dbh, string $name): void
 }
 
 /**
+ * ログイン
+ *
  * @param PDO $dbh
  * @param string $name
  * @param string $pass
@@ -122,4 +124,13 @@ function login(PDO $dbh, string $name, string $pass): string
 	} else {
 		return false;
 	}
+}
+
+/**
+ * ログアウト
+ */
+function logout(): void
+{
+	$_SESSION = array();
+	session_destroy();
 }

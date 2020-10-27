@@ -4,7 +4,6 @@ session_start();
 
 include 'functions.php';
 
-$_SESSION = array();
-session_destroy();
+logout();
 
 redirect('/login_form.php');
