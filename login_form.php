@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if(isset($_SESSION['name'])) {
+	header('Location: /');
+	exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

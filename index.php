@@ -1,7 +1,13 @@
 <?php
 
 session_start();
-$name = $_SESSION['name'];
+
+if(!isset($_SESSION['name'])) {
+	header('Location: /login_form.php');
+	exit;
+} else {
+	$name = $_SESSION['name'];
+}
 
 include 'functions.php';
 
