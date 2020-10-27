@@ -5,4 +5,4 @@ session_start();
 $_SESSION = array();
 session_destroy();
 
-header('Location: /login_form.php');
+redirect('/login_form.php');

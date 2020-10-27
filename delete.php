@@ -8,4 +8,4 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	delete($dbh, $_POST['id']);
 }
 
-header('Location: /');
+redirect('/');

@@ -2,9 +2,10 @@
 
 session_start();
 
+include 'functions.php';
+
 if(isset($_SESSION['name'])) {
-	header('Location: /');
-	exit;
+	redirect('/');
 }
 
 ?>

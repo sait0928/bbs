@@ -3,8 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['name'])) {
-	header('Location: /login_form.php');
-	exit;
+	redirect('/login_form.php');
 } else {
 	$name = $_SESSION['name'];
 }

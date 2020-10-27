@@ -18,8 +18,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(password_verify($_POST['pass'], $pass['pass'])) {
 		$_SESSION['name'] = $name;
 
-		header('Location: /');
+		redirect('/');
 	} else {
-		header('Location: /login_form.php');
+		redirect('/login_form.php');
 	}
 }
