@@ -2,13 +2,13 @@
 
 session_start();
 
+include 'functions.php';
+
 if(!isset($_SESSION['name'])) {
 	redirect('/login_form.php');
 } else {
 	$name = $_SESSION['name'];
 }
-
-include 'functions.php';
 
 $dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
