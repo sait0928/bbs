@@ -102,3 +102,24 @@ function register(string $pass, string $again, PDO $dbh, string $name): void
 		$stmt->execute();
 	}
 }
+
+/**
+ * @param PDO $dbh
+ * @param string $name
+ * @param string $pass
+ * @return string
+ */
+function login(PDO $dbh, string $name, string $pass): string
+{
+	$stmt = $dbh->prepare('SELECT pass FROM users WHERE user=:name');
+	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+	$stmt->execute();
+
+	$verify_pass = $stmt->fetch();
+
+	if(password_verify($pass, $verify_pass['pass'])) {
+		return true;
+	} else {
+		return false;
+	}
+}
