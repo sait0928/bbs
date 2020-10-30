@@ -18,11 +18,13 @@ function connect(string $dsn, string $user, string $pass): PDO
  *
  * @param PDO $dbh
  * @param string $text
+ * @param int $user_id
  */
-function insert(PDO $dbh, string $text): void
+function insert(PDO $dbh, string $text, int $user_id): void
 {
-	$stmt = $dbh->prepare('INSERT INTO posts (post) VALUES (:post)');
+	$stmt = $dbh->prepare('INSERT INTO posts (post, user_id) VALUES (:post, :user_id)');
 	$stmt->bindParam(':post', $text, PDO::PARAM_STR);
+	$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 	$stmt->execute();
 }
 
