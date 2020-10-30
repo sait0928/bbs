@@ -6,6 +6,7 @@ include 'functions.php';
 include 'functions/db.php';
 include 'functions/http.php';
 include 'functions/users.php';
+include 'functions/auth.php';
 
 $dbh = connect();
 
