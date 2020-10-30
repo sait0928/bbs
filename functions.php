@@ -158,13 +158,13 @@ function selectUserByEmail(PDO $dbh, string $email): array
  * IDからユーザーのレコードを取得
  *
  * @param PDO $dbh
- * @param string $id
+ * @param int $id
  * @return array
  */
-function selectUserById(PDO $dbh, string $id): array
+function selectUserById(PDO $dbh, int $id): array
 {
 	$stmt = $dbh->prepare('SELECT * FROM users WHERE id=:id');
-	$stmt->bindParam(':id', $id, PDO::PARAM_STR);
+	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 	return $user = $stmt->fetch();
 }
