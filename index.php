@@ -6,16 +6,14 @@ include 'functions.php';
 
 if(!isset($_SESSION['user_id'])) {
 	redirect('/login_form.php');
-} else {
-	$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
-
-	$user = selectUserById($dbh, $_SESSION['user_id']);
-
-	$name = $user['name'];
 }
 
-$page = $_GET['page'] ?? null;
+$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
+$user = selectUserById($dbh, $_SESSION['user_id']);
+$name = $user['name'];
+
+$page = $_GET['page'] ?? null;
 $posts = select($dbh, $page);
 
 $pages = countPages($dbh);
