@@ -4,13 +4,15 @@ session_start();
 
 include 'functions.php';
 
-if(!isset($_SESSION['name'])) {
+if(!isset($_SESSION['user_id'])) {
 	redirect('/login_form.php');
 } else {
-	$name = $_SESSION['name'];
-}
+	$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
-$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
+	$user = selectUserById($dbh, $_SESSION['user_id']);
+
+	$name = $user['name'];
+}
 
 $page = $_GET['page'] ?? null;
 

@@ -19,8 +19,8 @@ if(isset($_SESSION['name'])) {
 <h1>ログイン</h1>
 <div id="form">
 	<form action="login.php" method="POST">
-		<label for="name">名前:</label>
-		<input type="text" name="name" id="name"><br>
+		<label for="email">メールアドレス:</label>
+		<input type="email" name="email" id="email"><br>
 		<label for="pass">パスワード:</label>
 		<input type="password" name="pass" id="pass"><br>
 		<input type="submit" value="ログイン">

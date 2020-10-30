@@ -7,8 +7,10 @@ include 'functions.php';
 $dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if(login($dbh, $_POST['name'], $_POST['pass'])) {
-		$_SESSION['name'] = $_POST['name'];
+	if(login($dbh, $_POST['email'], $_POST['pass'])) {
+		$user = selectUserByEmail($dbh, $_POST['email']);
+
+		$_SESSION['user_id'] = $user['id'];
 
 		redirect('/');
 	} else {

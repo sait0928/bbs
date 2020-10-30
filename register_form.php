@@ -21,6 +21,8 @@ if(isset($_SESSION['name'])) {
 	<form action="register.php" method="POST">
 		<label for="name">名前:</label>
 		<input type="text" name="name" id="name"><br>
+		<label for="email">メールアドレス:</label>
+		<input type="email" name="email" id="email"><br>
 		<label for="pass">パスワード設定:</label>
 		<input type="password" name="pass" id="pass"><br>
 		<label for="again">パスワード再入力:</label>
