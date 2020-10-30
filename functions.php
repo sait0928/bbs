@@ -1,19 +1,6 @@
 <?php
 
 /**
- * データベースに接続
- *
- * @param string $dsn
- * @param string $user
- * @param string $pass
- * @return PDO
- */
-function connect(string $dsn, string $user, string $pass): PDO
-{
-	return $dbh = new PDO($dsn, $user, $pass);
-}
-
-/**
  * フォームに入力された内容をテーブルに挿入
  *
  * @param PDO $dbh

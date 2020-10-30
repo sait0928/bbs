@@ -3,8 +3,9 @@
 session_start();
 
 include 'functions.php';
+include 'functions/db.php';
 
-$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
+$dbh = connect();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(login($dbh, $_POST['email'], $_POST['pass'])) {

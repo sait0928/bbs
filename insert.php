@@ -1,8 +1,9 @@
 <?php
 
 include 'functions.php';
+include 'functions/db.php';
 
-$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
+$dbh = connect();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	insert($dbh, $_POST['text'], $_POST['user_id']);

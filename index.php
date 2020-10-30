@@ -3,12 +3,13 @@
 session_start();
 
 include 'functions.php';
+include 'functions/db.php';
 
 if(!isset($_SESSION['user_id'])) {
 	redirect('/login_form.php');
 }
 
-$dbh = connect('mysql:dbname=bbs;host=localhost', 'root', '');
+$dbh = connect();
 
 $user = selectUserById($dbh, $_SESSION['user_id']);
 $name = $user['name'];
