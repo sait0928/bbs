@@ -1,55 +1,6 @@
 <?php
 
 /**
- * フォームに入力された内容をテーブルに挿入
- *
- * @param PDO $dbh
- * @param string $text
- * @param int $user_id
- */
-function insert(PDO $dbh, string $text, int $user_id): void
-{
-	$stmt = $dbh->prepare('INSERT INTO posts (post, user_id) VALUES (:post, :user_id)');
-	$stmt->bindParam(':post', $text, PDO::PARAM_STR);
-	$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-	$stmt->execute();
-}
-
-/**
- * レコードを削除
- *
- * @param PDO $dbh
- * @param int $id
- */
-function delete(PDO $dbh, int $id): void
-{
-	$stmt = $dbh->prepare('DELETE FROM posts WHERE id=:id');
-	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-	$stmt->execute();
-}
-
-/**
- * テーブルの内容を出力
- *
- * @param PDO $dbh
- * @param int|null $page
- * @return array
- */
-function select(PDO $dbh, ?int $page): array
-{
-	if($page === null) {
-		$stmt = $dbh->query('SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT 3');
-		return $posts = $stmt->fetchAll();
-	} else {
-		$start = ($page - 1) * 3;
-		$stmt = $dbh->prepare('SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT :start, 3');
-		$stmt->bindParam(':start', $start, PDO::PARAM_INT);
-		$stmt->execute();
-		return $posts = $stmt->fetchAll();
-	}
-}
-
-/**
  * ページ総数のカウント
  *
  * @param PDO $dbh
