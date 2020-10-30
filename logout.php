@@ -3,6 +3,7 @@
 session_start();
 
 include 'functions.php';
+include 'functions/http.php';
 
 logout();
 

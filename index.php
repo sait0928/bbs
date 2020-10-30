@@ -4,6 +4,7 @@ session_start();
 
 include 'functions.php';
 include 'functions/db.php';
+include 'functions/http.php';
 
 if(!isset($_SESSION['user_id'])) {
 	redirect('/login_form.php');

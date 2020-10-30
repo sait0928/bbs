@@ -63,17 +63,6 @@ function countPages(PDO $dbh): int
 }
 
 /**
- * リダイレクト
- *
- * @param string $url
- */
-function redirect(string $url): void
-{
-	header('Location: '.$url);
-	exit;
-}
-
-/**
  * 新規登録
  *
  * @param string $pass
