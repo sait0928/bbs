@@ -39,11 +39,13 @@ $pages = countPages($dbh);
 	<table>
 		<tr>
 			<th>投稿ID</th>
+			<th>投稿者</th>
 			<th>投稿内容</th>
 		</tr>
 		<?php foreach($posts as $post) : ?>
 			<tr>
 				<td><?php echo $post['id']; ?></td>
+				<td><?php echo $post['name']; ?></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 				<td>
 					<form action="delete.php" method="POST">
