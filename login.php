@@ -5,6 +5,7 @@ session_start();
 include 'functions.php';
 include 'functions/db.php';
 include 'functions/http.php';
+include 'functions/users.php';
 
 $dbh = connect();
 
