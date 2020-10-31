@@ -26,13 +26,13 @@ function select(PDO $dbh, ?int $page): array
 {
 	if($page === null) {
 		$stmt = $dbh->query('SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT 3');
-		return $posts = $stmt->fetchAll();
+		return $stmt->fetchAll();
 	} else {
 		$start = ($page - 1) * 3;
 		$stmt = $dbh->prepare('SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT :start, 3');
 		$stmt->bindParam(':start', $start, PDO::PARAM_INT);
 		$stmt->execute();
-		return $posts = $stmt->fetchAll();
+		return $stmt->fetchAll();
 	}
 }
 

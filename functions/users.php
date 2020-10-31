@@ -33,7 +33,7 @@ function selectUserByEmail(PDO $dbh, string $email): array
 	$stmt = $dbh->prepare('SELECT * FROM users WHERE email=:email');
 	$stmt->bindParam(':email', $email, PDO::PARAM_STR);
 	$stmt->execute();
-	return $user = $stmt->fetch();
+	return $stmt->fetch();
 }
 
 /**
@@ -48,5 +48,5 @@ function selectUserById(PDO $dbh, int $id): array
 	$stmt = $dbh->prepare('SELECT * FROM users WHERE id=:id');
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
-	return $user = $stmt->fetch();
+	return $stmt->fetch();
 }
