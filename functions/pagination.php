@@ -3,12 +3,11 @@
 /**
  * ページ総数のカウント
  *
- * @param PDO $dbh
+ * @param int $total_posts
+ * @param int $display_posts
  * @return int
  */
-function countPages(PDO $dbh): int
+function countPages(int $total_posts): int
 {
-	$stmt = $dbh->query('SELECT COUNT(*) FROM posts');
-	$count = $stmt->fetchColumn();
-	return $pages = ceil($count / 3);
+	return ceil($total_posts / 3);
 }

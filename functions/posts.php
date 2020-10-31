@@ -48,3 +48,15 @@ function delete(PDO $dbh, int $id): void
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 }
+
+/**
+ * 記事総数のカウント
+ *
+ * @param PDO $dbh
+ * @return int
+ */
+function countPosts(PDO $dbh): int
+{
+	$stmt = $dbh->query('SELECT COUNT(*) FROM posts');
+	return $stmt->fetchColumn();
+}

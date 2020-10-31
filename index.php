@@ -20,7 +20,8 @@ $name = $user['name'];
 $page = $_GET['page'] ?? null;
 $posts = select($dbh, $page);
 
-$pages = countPages($dbh);
+$total_posts = countPosts($dbh);
+$pages = countPages($total_posts);
 
 ?>
 <!DOCTYPE html>
