@@ -2,8 +2,8 @@
 
 session_start();
 
-include 'functions.php';
 include 'functions/http.php';
+include 'functions/auth.php';
 
 logout();
 

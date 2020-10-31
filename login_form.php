@@ -2,7 +2,6 @@
 
 session_start();
 
-include 'functions.php';
 include 'functions/http.php';
 
 if(isset($_SESSION['user_id'])) {

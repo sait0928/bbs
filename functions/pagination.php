@@ -12,12 +12,3 @@ function countPages(PDO $dbh): int
 	$count = $stmt->fetchColumn();
 	return $pages = ceil($count / 3);
 }
-
-/**
- * ログアウト
- */
-function logout(): void
-{
-	$_SESSION = array();
-	session_destroy();
-}

@@ -22,3 +22,12 @@ function login(PDO $dbh, string $email, string $pass): bool
 		return (bool)false;
 	}
 }
+
+/**
+ * ログアウト
+ */
+function logout(): void
+{
+	$_SESSION = array();
+	session_destroy();
+}
