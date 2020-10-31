@@ -4,7 +4,6 @@
  * ページ総数のカウント
  *
  * @param int $total_posts
- * @param int $display_posts
  * @return int
  */
 function countPages(int $total_posts): int
