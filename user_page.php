@@ -14,13 +14,13 @@ if(!isset($_SESSION['user_id'])) {
 
 $dbh = connect();
 
-$user = selectUserById($dbh, $_SESSION['user_id']);
+$user = selectUserById($dbh, $_GET['user_id']);
 $name = $user['name'];
 
 $page = $_GET['page'] ?? null;
-$posts = select($dbh, $page);
+$posts = selectUserPosts($dbh, $page, $_GET['user_id']);
 
-$total_posts = countPosts($dbh);
+$total_posts = countUserPosts($dbh, $_GET['user_id']);
 $pages = countPages($total_posts);
 
 ?>
@@ -32,13 +32,9 @@ $pages = countPages($total_posts);
 </head>
 <body>
 <h1>掲示板</h1>
-<p>ようこそ<?php echo $name; ?>さん！</p>
-<div id="form">
-	<form action="insert.php" method="POST">
-		<textarea name="text" id="" cols="50" rows="5" required></textarea>
-		<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-		<input type="submit" value="投稿">
-	</form>
+<p><?php echo $name; ?>さんの投稿一覧</p>
+<div id="return">
+	<a href="/">←戻る</a>
 </div>
 <div id="posts">
 	<table>
@@ -50,15 +46,15 @@ $pages = countPages($total_posts);
 		<?php foreach($posts as $post) : ?>
 			<tr>
 				<td><?php echo $post['id']; ?></td>
-				<td><a href="user_page.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></td>
+				<td><?php echo $post['name']; ?></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 				<?php if($post['user_id'] === $_SESSION['user_id']) : ?>
-				<td>
-					<form action="delete.php" method="POST">
-						<input type="hidden" name="id" value="<?php echo $post['id']; ?>">
-						<input type="submit" value="削除">
-					</form>
-				</td>
+					<td>
+						<form action="delete.php" method="POST">
+							<input type="hidden" name="id" value="<?php echo $post['id']; ?>">
+							<input type="submit" value="削除">
+						</form>
+					</td>
 				<?php endif; ?>
 			</tr>
 		<?php endforeach; ?>
@@ -66,11 +62,8 @@ $pages = countPages($total_posts);
 </div>
 <div id="pagination">
 	<?php for($i = 1; $i <= $pages; $i++) : ?>
-		<a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+		<a href="?user_id=<?php echo $_GET['user_id']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
 	<?php endfor; ?>
-</div>
-<div id="logout">
-	<a href="logout.php">ログアウト</a>
 </div>
 </body>
 </html>
