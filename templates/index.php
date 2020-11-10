@@ -23,17 +23,9 @@
 		</tr>
 		<?php foreach($posts as $post) : ?>
 			<tr>
-				<td><?php echo $post['id']; ?></td>
+				<td><?php echo $post['post_id']; ?></td>
 				<td><a href="user_page.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
-				<?php if($post['user_id'] === $_SESSION['user_id']) : ?>
-					<td>
-						<form action="delete.php" method="POST">
-							<input type="hidden" name="id" value="<?php echo $post['id']; ?>">
-							<input type="submit" value="削除">
-						</form>
-					</td>
-				<?php endif; ?>
 			</tr>
 		<?php endforeach; ?>
 	</table>
