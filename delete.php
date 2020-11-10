@@ -1,11 +1,14 @@
 <?php
 
 include 'functions/db.php';
+include 'functions/posts.php';
+
+if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+	redirect('/');
+}
 
 $dbh = connect();
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	delete($dbh, $_POST['id']);
-}
+delete($dbh, $_POST['id']);
 
 redirect('/');
