@@ -4,21 +4,18 @@
  * ユーザー新規登録
  *
  * @param string $pass
- * @param string $again
  * @param PDO $dbh
  * @param string $name
  * @param string $email
  */
-function register(string $pass, string $again, PDO $dbh, string $name, string $email): void
+function register(string $pass, PDO $dbh, string $name, string $email): void
 {
-	if($pass === $again) {
-		$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-		$stmt = $dbh->prepare('INSERT INTO users (name, email, pass) VALUES (:name, :email, :pass)');
-		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
-		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
-		$stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
-		$stmt->execute();
-	}
+	$pass = password_hash($pass, PASSWORD_DEFAULT);
+	$stmt = $dbh->prepare('INSERT INTO users (name, email, pass) VALUES (:name, :email, :pass)');
+	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+	$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+	$stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+	$stmt->execute();
 }
 
 /**

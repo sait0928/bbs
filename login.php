@@ -7,7 +7,7 @@ include 'functions/http.php';
 include 'functions/users.php';
 include 'functions/auth.php';
 
-if(!($_SERVER['REQUEST_METHOD'] === 'POST')) {
+if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	redirect('/login_form.php');
 }
 

@@ -20,13 +20,13 @@ if(isset($_SESSION['user_id'])) {
 <div id="form">
 	<form action="register.php" method="POST">
 		<label for="name">名前:</label>
-		<input type="text" name="name" id="name"><br>
+		<input type="text" name="name" id="name" required><br>
 		<label for="email">メールアドレス:</label>
-		<input type="email" name="email" id="email"><br>
+		<input type="email" name="email" id="email" required><br>
 		<label for="pass">パスワード設定:</label>
-		<input type="password" name="pass" id="pass"><br>
+		<input type="password" name="pass" id="pass" required><br>
 		<label for="again">パスワード再入力:</label>
-		<input type="password" name="again" id="again"><br>
+		<input type="password" name="again" id="again" required><br>
 		<input type="submit" value="新規登録">
 	</form>
 </div>

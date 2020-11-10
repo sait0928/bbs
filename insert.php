@@ -4,7 +4,7 @@ include 'functions/db.php';
 include 'functions/http.php';
 include 'functions/posts.php';
 
-if(!($_SERVER['REQUEST_METHOD'] === 'POST')) {
+if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	redirect('/');
 }
 

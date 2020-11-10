@@ -20,9 +20,9 @@ if(isset($_SESSION['user_id'])) {
 <div id="form">
 	<form action="login.php" method="POST">
 		<label for="email">メールアドレス:</label>
-		<input type="email" name="email" id="email"><br>
+		<input type="email" name="email" id="email" required><br>
 		<label for="pass">パスワード:</label>
-		<input type="password" name="pass" id="pass"><br>
+		<input type="password" name="pass" id="pass" required><br>
 		<input type="submit" value="ログイン">
 	</form>
 </div>
