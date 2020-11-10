@@ -2,9 +2,9 @@
 
 session_start();
 
-include 'functions/db.php';
-include 'functions/http.php';
-include 'functions/users.php';
+include '../functions/db.php';
+include '../functions/http.php';
+include '../functions/users.php';
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	redirect('/register_form.php');
