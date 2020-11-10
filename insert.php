@@ -4,10 +4,12 @@ include 'functions/db.php';
 include 'functions/http.php';
 include 'functions/posts.php';
 
+if(!($_SERVER['REQUEST_METHOD'] === 'POST')) {
+	redirect('/');
+}
+
 $dbh = connect();
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	insert($dbh, $_POST['text'], $_POST['user_id']);
-}
+insert($dbh, $_POST['text'], $_POST['user_id']);
 
 redirect('/');
