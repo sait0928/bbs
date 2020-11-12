@@ -1,26 +1,18 @@
 <?php
-ini_set('display_errors', "On");
-session_start();
 
-include '../functions/db.php';
-include '../functions/http.php';
-include '../functions/posts.php';
-include '../functions/users.php';
-include '../functions/pagination.php';
+$url = parse_url($_SERVER['REQUEST_URI']);
+$path = $url['path'];
 
-if(!isset($_SESSION['user_id'])) {
-	redirect('/login_form.php');
-}
-
-$dbh = connect();
-
-$user = selectUserById($dbh, $_SESSION['user_id']);
-$name = $user['name'];
-
-$page = $_GET['page'] ?? null;
-$posts = select($dbh, $page);
-
-$total_posts = countPosts($dbh);
-$pages = countPages($total_posts);
-
-include '../templates/index.php';
+const CONTROLLER_BASE = '../controllers';
+const ROUTES = [
+	'/' => '/index.php',
+	'/user_page' => '/user_page.php',
+	'/insert' => '/insert.php',
+	'/login_form' => '/login_form.php',
+	'/login' => '/login.php',
+	'/register_form' => '/register_form.php',
+	'/register' => '/register.php',
+	'/logout' => '/logout.php',
+];
+$route = ROUTES[$path] ?? '/404.php';
+include CONTROLLER_BASE . $route;

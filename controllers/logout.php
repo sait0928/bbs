@@ -7,4 +7,4 @@ include '../functions/auth.php';
 
 logout();
 
-redirect('/login_form.php');
+redirect('/login_form');

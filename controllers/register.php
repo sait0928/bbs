@@ -7,11 +7,11 @@ include '../functions/http.php';
 include '../functions/users.php';
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-	redirect('/register_form.php');
+	redirect('/register_form');
 }
 
 if($_POST['pass'] !== $_POST['again']) {
-	redirect('/register_form.php');
+	redirect('/register_form');
 }
 
 $dbh = connect();

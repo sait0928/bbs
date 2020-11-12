@@ -7,7 +7,7 @@
 <body>
 <h1>新規登録</h1>
 <div id="form">
-	<form action="register.php" method="POST">
+	<form action="/register" method="POST">
 		<label for="name">名前:</label>
 		<input type="text" name="name" id="name" required><br>
 		<label for="email">メールアドレス:</label>
@@ -20,7 +20,7 @@
 	</form>
 </div>
 <div id="login">
-	<a href="login_form.php">ログインはコチラ</a>
+	<a href="/login_form">ログインはコチラ</a>
 </div>
 </body>
 </html>

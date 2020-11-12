@@ -24,7 +24,7 @@
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 				<?php if($post['user_id'] === $_SESSION['user_id']) : ?>
 					<td>
-						<form action="delete.php" method="POST">
+						<form action="/delete" method="POST">
 							<input type="hidden" name="id" value="<?php echo $post['post_id']; ?>">
 							<input type="submit" value="削除">
 						</form>
@@ -36,7 +36,7 @@
 </div>
 <div id="pagination">
 	<?php for($i = 1; $i <= $pages; $i++) : ?>
-		<a href="?user_id=<?php echo $_GET['user_id']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+		<a href="/user_page?user_id=<?php echo $_GET['user_id']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
 	<?php endfor; ?>
 </div>
 </body>

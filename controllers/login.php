@@ -8,7 +8,7 @@ include '../functions/users.php';
 include '../functions/auth.php';
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-	redirect('/login_form.php');
+	redirect('/login_form');
 }
 
 $dbh = connect();
@@ -20,5 +20,5 @@ if(login($dbh, $_POST['email'], $_POST['pass'])) {
 
 	redirect('/');
 } else {
-	redirect('/login_form.php');
+	redirect('/login_form');
 }
