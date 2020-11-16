@@ -1,10 +1,13 @@
 <?php
 
-session_start();
+function logoutAction()
+{
+	include '../functions/http.php';
+	include '../functions/auth.php';
 
-include '../functions/http.php';
-include '../functions/auth.php';
+	session_start();
 
-logout();
+	logout();
 
-redirect('/login_form');
+	redirect('/login_form');
+}

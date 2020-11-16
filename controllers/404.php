@@ -1,5 +1,8 @@
 <?php
 
-session_start();
+function notFoundAction(): void
+{
+	session_start();
 
-echo 'ページが見つかりません';
+	echo 'ページが見つかりません';
+}
