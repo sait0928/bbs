@@ -3,6 +3,8 @@
 use Model\User\SelectUser;
 use Model\User\User;
 
+include '../Model/User/SelectUser.php';
+include '../Model/User/User.php';
 include '../functions/db.php';
 include '../functions/http.php';
 include '../functions/posts.php';
@@ -22,7 +24,7 @@ function indexAction(): void
 	$select_user = new SelectUser();
 	$login_user = $select_user->selectUserById($user);
 	$name = $login_user['name'];
-	
+
 	$dbh = connect();
 
 	$page = $_GET['page'] ?? null;

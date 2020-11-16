@@ -1,8 +1,6 @@
 <?php
 namespace Model\User;
 
-include '../../functions/db.php';
-
 class Auth
 {
 	private $dbh;
@@ -17,7 +15,7 @@ class Auth
 		$email = $user->getEmail();
 		$pass = $user->getPassword();
 		$stmt = $this->dbh->prepare('SELECT pass FROM users WHERE email=:email');
-		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->bindParam(':email', $email, \PDO::PARAM_STR);
 		$stmt->execute();
 
 		$verify_pass = $stmt->fetch();

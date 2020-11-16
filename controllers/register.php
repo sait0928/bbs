@@ -4,6 +4,9 @@ use Model\User\SelectUser;
 use Model\User\User;
 use Model\User\UserRegistration;
 
+include '../Model/User/SelectUser.php';
+include '../Model/User/User.php';
+include '../Model/User/UserRegistration.php';
 include '../functions/db.php';
 include '../functions/http.php';
 
