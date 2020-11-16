@@ -19,10 +19,10 @@ function indexAction(): void
 	$user = new User();
 	$user->setUserId($_SESSION['user_id']);
 
-	$search_user = new SelectUser();
-	$login_user = $search_user->selectUserById($user);
+	$select_user = new SelectUser();
+	$login_user = $select_user->selectUserById($user);
 	$name = $login_user['name'];
-	$name = 'test';
+	
 	$dbh = connect();
 
 	$page = $_GET['page'] ?? null;
