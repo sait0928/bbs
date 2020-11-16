@@ -1,9 +1,9 @@
 <?php
 
-function loginFormAction()
-{
-	include '../functions/http.php';
+include '../functions/http.php';
 
+function loginFormAction(): void
+{
 	session_start();
 
 	if(isset($_SESSION['user_id'])) {

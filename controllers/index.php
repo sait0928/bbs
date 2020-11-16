@@ -1,13 +1,13 @@
 <?php
 
+include '../functions/db.php';
+include '../functions/http.php';
+include '../functions/posts.php';
+include '../functions/users.php';
+include '../functions/pagination.php';
+
 function indexAction(): void
 {
-	include '../functions/db.php';
-	include '../functions/http.php';
-	include '../functions/posts.php';
-	include '../functions/users.php';
-	include '../functions/pagination.php';
-
 	session_start();
 
 	if(!isset($_SESSION['user_id'])) {

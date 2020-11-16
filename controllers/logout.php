@@ -1,10 +1,10 @@
 <?php
 
-function logoutAction()
-{
-	include '../functions/http.php';
-	include '../functions/auth.php';
+include '../functions/http.php';
+include '../functions/auth.php';
 
+function logoutAction(): void
+{
 	session_start();
 
 	logout();

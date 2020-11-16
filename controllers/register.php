@@ -1,11 +1,11 @@
 <?php
 
-function registerAction()
-{
-	include '../functions/db.php';
-	include '../functions/http.php';
-	include '../functions/users.php';
+include '../functions/db.php';
+include '../functions/http.php';
+include '../functions/users.php';
 
+function registerAction(): void
+{
 	session_start();
 
 	if($_SERVER['REQUEST_METHOD'] !== 'POST') {

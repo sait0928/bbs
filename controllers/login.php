@@ -1,12 +1,12 @@
 <?php
 
-function loginAction()
-{
-	include '../functions/db.php';
-	include '../functions/http.php';
-	include '../functions/users.php';
-	include '../functions/auth.php';
+include '../functions/db.php';
+include '../functions/http.php';
+include '../functions/users.php';
+include '../functions/auth.php';
 
+function loginAction(): void
+{
 	session_start();
 
 	if($_SERVER['REQUEST_METHOD'] !== 'POST') {
