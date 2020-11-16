@@ -1,13 +1,15 @@
 <?php
 
+use Model\User\Auth;
+
 include '../functions/http.php';
-include '../functions/auth.php';
 
 function logoutAction(): void
 {
 	session_start();
 
-	logout();
+	$auth = new Auth();
+	$auth->logout();
 
 	redirect('/login_form');
 }

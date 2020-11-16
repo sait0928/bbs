@@ -1,9 +1,11 @@
 <?php
 
+use Model\User\Auth;
+use Model\User\SelectUser;
+use Model\User\User;
+
 include '../functions/db.php';
 include '../functions/http.php';
-include '../functions/users.php';
-include '../functions/auth.php';
 
 function loginAction(): void
 {
@@ -13,17 +15,18 @@ function loginAction(): void
 		redirect('/login_form');
 	}
 
-	$dbh = connect();
+	$user = new User();
+	$user->setEmail($_POST['email']);
+	$user->setPassword($_POST['pass']);
 
-	if(login($dbh, $_POST['email'], $_POST['pass'])) {
-		$user = selectUserByEmail($dbh, $_POST['email']);
-
-		$_SESSION['user_id'] = $user['id'];
+	$auth = new Auth();
+	$select_user = new SelectUser();
+	if($auth->login($user)) {
+		$login_user = $select_user->selectUserByEmail($user);
+		$_SESSION['user_id'] = $login_user['id'];
 
 		redirect('/');
 	} else {
 		redirect('/login_form');
 	}
 }
-
-loginAction();

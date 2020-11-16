@@ -1,9 +1,11 @@
 <?php
 
+use Model\User\SelectUser;
+use Model\User\User;
+
 include '../functions/db.php';
 include '../functions/http.php';
 include '../functions/posts.php';
-include '../functions/users.php';
 include '../functions/pagination.php';
 
 function indexAction(): void
@@ -14,10 +16,14 @@ function indexAction(): void
 		redirect('/login_form');
 	}
 
-	$dbh = connect();
+	$user = new User();
+	$user->setUserId($_SESSION['user_id']);
 
-	$user = selectUserById($dbh, $_SESSION['user_id']);
-	$name = $user['name'];
+	$search_user = new SelectUser();
+	$login_user = $search_user->selectUserById($user);
+	$name = $login_user['name'];
+	$name = 'test';
+	$dbh = connect();
 
 	$page = $_GET['page'] ?? null;
 	$posts = select($dbh, $page);

@@ -1,8 +1,11 @@
 <?php
 
+use Model\User\SelectUser;
+use Model\User\User;
+use Model\User\UserRegistration;
+
 include '../functions/db.php';
 include '../functions/http.php';
-include '../functions/users.php';
 
 function registerAction(): void
 {
@@ -16,13 +19,17 @@ function registerAction(): void
 		redirect('/register_form');
 	}
 
-	$dbh = connect();
+	$user = new User();
+	$user->setUserName($_POST['name']);
+	$user->setEmail($_POST['email']);
+	$user->setPassword($_POST['pass']);
 
-	register($_POST['pass'], $dbh, $_POST['name'], $_POST['email']);
+	$user_registration = new UserRegistration();
+	$user_registration->register($user);
 
-	$user = selectUserByEmail($dbh, $_POST['email']);
-
-	$_SESSION['user_id'] = $user['id'];
+	$select_user = new SelectUser();
+	$login_user = $select_user->selectUserByEmail($user);
+	$_SESSION['user_id'] = $login_user['id'];
 
 	redirect('/');
 }
