@@ -10,7 +10,7 @@
 <div id="form">
 	<form action="/insert" method="POST">
 		<textarea name="text" id="" cols="50" rows="5" required></textarea>
-		<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+		<input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
 		<input type="submit" value="投稿">
 	</form>
 </div>
