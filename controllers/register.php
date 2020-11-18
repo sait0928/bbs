@@ -3,10 +3,12 @@
 use Model\User\SelectUser;
 use Model\User\User;
 use Model\User\UserRegistration;
+use Model\User\Auth;
 
 include '../Model/User/SelectUser.php';
 include '../Model/User/User.php';
 include '../Model/User/UserRegistration.php';
+include '../Model/User/Auth.php';
 include '../functions/db.php';
 include '../functions/http.php';
 
@@ -22,17 +24,17 @@ function registerAction(): void
 		redirect('/register_form');
 	}
 
-	$user = new User();
-	$user->setUserName($_POST['name']);
-	$user->setEmail($_POST['email']);
-	$user->setPassword($_POST['pass']);
-
 	$user_registration = new UserRegistration();
-	$user_registration->register($user);
+	$user_registration->register($_POST['name'], $_POST['email'], $_POST['pass']);
 
-	$select_user = new SelectUser();
-	$login_user = $select_user->selectUserByEmail($user);
-	$_SESSION['user_id'] = $login_user['id'];
+	$auth = new Auth(
+		new SelectUser()
+	);
+	$auth->login($_POST['email'], $_POST['pass']);
+
+	if (!$auth->isLoggedIn()) {
+		redirect('/register_form');
+	}
 
 	redirect('/');
 }

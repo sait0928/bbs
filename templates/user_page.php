@@ -22,7 +22,7 @@
 				<td><?php echo $post['post_id']; ?></td>
 				<td><?php echo $post['name']; ?></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
-				<?php if($post['user_id'] === $_SESSION['user_id']) : ?>
+				<?php if((int)$post['user_id'] === $_SESSION['user_id']) : ?>
 					<td>
 						<form action="/delete" method="POST">
 							<input type="hidden" name="id" value="<?php echo $post['post_id']; ?>">

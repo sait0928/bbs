@@ -18,12 +18,9 @@ function indexAction(): void
 		redirect('/login_form');
 	}
 
-	$user = new User();
-	$user->setUserId($_SESSION['user_id']);
-
 	$select_user = new SelectUser();
-	$login_user = $select_user->selectUserById($user);
-	$name = $login_user['name'];
+	$user = $select_user->selectUserById($_SESSION['user_id']);
+	$name = $user->getUserName();
 
 	$dbh = connect();
 

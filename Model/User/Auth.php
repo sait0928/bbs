@@ -1,36 +1,42 @@
 <?php
 namespace Model\User;
 
+use Model\User\AuthStorage;
+
+include 'AuthStorage.php';
+
 class Auth
 {
-	private $dbh;
+	private SelectUser $select_user;
 
-	public function __construct()
+	public function __construct(SelectUser $select_user)
 	{
-		$this->dbh = connect();
+		$this->select_user = $select_user;
 	}
 
-	public function login(User $user)
+	private function verifyPassword(string $password_input, User $user): bool
 	{
-		$email = $user->getEmail();
-		$pass = $user->getPassword();
-		$stmt = $this->dbh->prepare('SELECT pass FROM users WHERE email=:email');
-		$stmt->bindParam(':email', $email, \PDO::PARAM_STR);
-		$stmt->execute();
+		return password_verify($password_input, $user->getPassword());
+	}
 
-		$verify_pass = $stmt->fetch();
-
-		if(password_verify($pass, $verify_pass['pass'])) {
-			return (bool)true;
-		} else {
-			return (bool)false;
+	public function login(string $email, string $password): void
+	{
+		$user = $this->select_user->selectUserByEmail($email);
+		if ($this->verifyPassword($password, $user)) {
+			$authStorage = new AuthStorage();
+			$authStorage->setStorage($user);
 		}
 	}
 
-	public function logout()
+	public function isLoggedIn(): bool
 	{
-		$_SESSION = array();
-		session_destroy();
+		return isset($_SESSION['user_id']);
+	}
+
+	public function logout(): void
+	{
+		$authStorage = new AuthStorage();
+		$authStorage->clearStorage();
 	}
 }
 

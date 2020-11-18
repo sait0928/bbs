@@ -3,10 +3,10 @@ namespace Model\User;
 
 class User
 {
-	private $user_id;
-	private $user_name;
-	private $email;
-	private $password;
+	private int $user_id;
+	private string $user_name;
+	private string $email;
+	private string $password;
 
 	public function setUserId(int $user_id): void
 	{

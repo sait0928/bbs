@@ -18,18 +18,14 @@ function loginAction(): void
 		redirect('/login_form');
 	}
 
-	$user = new User();
-	$user->setEmail($_POST['email']);
-	$user->setPassword($_POST['pass']);
+	$auth = new Auth(
+		new SelectUser()
+	);
+	$auth->login($_POST['email'], $_POST['pass']);
 
-	$auth = new Auth();
-	$select_user = new SelectUser();
-	if($auth->login($user)) {
-		$login_user = $select_user->selectUserByEmail($user);
-		$_SESSION['user_id'] = $login_user['id'];
-
-		redirect('/');
-	} else {
+	if (!$auth->isLoggedIn()) {
 		redirect('/login_form');
 	}
+
+	redirect('/');
 }
