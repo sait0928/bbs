@@ -1,9 +1,8 @@
 <?php
 
+use Http\Http;
 use Model\User\Auth;
 use Model\User\SelectUser;
-
-include '../functions/http.php';
 
 function logoutAction(): void
 {
@@ -14,5 +13,6 @@ function logoutAction(): void
 	);
 	$auth->logout();
 
-	redirect('/login_form');
+	$http = new Http();
+	$http->redirect('/login_form');
 }

@@ -1,10 +1,10 @@
 <?php
 
+use Http\Http;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
 
-include '../functions/http.php';
 include '../functions/pagination.php';
 
 function userPageAction(): void
@@ -12,7 +12,8 @@ function userPageAction(): void
 	session_start();
 
 	if(!isset($_SESSION['user_id'])) {
-		redirect('/login_form');
+		$http = new Http();
+		$http->redirect('/login_form');
 	}
 
 	$select_user = new SelectUser();

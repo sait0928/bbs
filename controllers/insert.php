@@ -1,19 +1,20 @@
 <?php
 
+use Http\Http;
 use Model\Post\PostWriter;
-
-include '../functions/http.php';
 
 function insertAction(): void
 {
 	session_start();
 
+	$http = new Http();
+
 	if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-		redirect('/');
+		$http->redirect('/');
 	}
 
 	$post_writer = new PostWriter();
 	$post_writer->insert($_POST['text'], $_POST['user_id']);
 
-	redirect('/');
+	$http->redirect('/');
 }

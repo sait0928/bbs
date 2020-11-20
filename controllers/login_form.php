@@ -1,13 +1,14 @@
 <?php
 
-include '../functions/http.php';
+use Http\Http;
 
 function loginFormAction(): void
 {
 	session_start();
 
 	if(isset($_SESSION['user_id'])) {
-		redirect('/');
+		$http = new Http();
+		$http->redirect('/');
 	}
 
 	include '../templates/login_form.php';

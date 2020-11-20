@@ -1,16 +1,17 @@
 <?php
 
+use Http\Http;
 use Model\User\Auth;
 use Model\User\SelectUser;
-
-include '../functions/http.php';
 
 function loginAction(): void
 {
 	session_start();
 
+	$http = new Http();
+
 	if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-		redirect('/login_form');
+		$http->redirect('/login_form');
 	}
 
 	$auth = new Auth(
@@ -19,8 +20,8 @@ function loginAction(): void
 	$auth->login($_POST['email'], $_POST['pass']);
 
 	if (!$auth->isLoggedIn()) {
-		redirect('/login_form');
+		$http->redirect('/login_form');
 	}
 
-	redirect('/');
+	$http->redirect('/');
 }

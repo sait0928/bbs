@@ -1,21 +1,22 @@
 <?php
 
+use Http\Http;
 use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
-
-include '../functions/http.php';
 
 function registerAction(): void
 {
 	session_start();
 
+	$http = new Http();
+
 	if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-		redirect('/register_form');
+		$http->redirect('/register_form');
 	}
 
 	if($_POST['pass'] !== $_POST['again']) {
-		redirect('/register_form');
+		$http->redirect('/register_form');
 	}
 
 	$user_registration = new UserRegistration();
@@ -27,8 +28,8 @@ function registerAction(): void
 	$auth->login($_POST['email'], $_POST['pass']);
 
 	if (!$auth->isLoggedIn()) {
-		redirect('/register_form');
+		$http->redirect('/register_form');
 	}
 
-	redirect('/');
+	$http->redirect('/');
 }
