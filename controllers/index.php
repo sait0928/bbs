@@ -2,10 +2,10 @@
 
 use Model\User\SelectUser;
 use Model\Post\PostReader;
+use Model\Post\PostCounter;
 
 include '../functions/db.php';
 include '../functions/http.php';
-include '../functions/posts.php';
 include '../functions/pagination.php';
 
 function indexAction(): void
@@ -24,8 +24,8 @@ function indexAction(): void
 	$post_reader = new PostReader();
 	$posts = $post_reader->select($page);
 
-	$dbh = connect();
-	$total_posts = countPosts($dbh);
+	$post_counter = new PostCounter();
+	$total_posts = $post_counter->countPosts();
 	$pages = countPages($total_posts);
 
 	include '../templates/index.php';
