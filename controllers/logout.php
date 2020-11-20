@@ -3,8 +3,6 @@
 use Model\User\Auth;
 use Model\User\SelectUser;
 
-include '../Model/User/Auth.php';
-include '../Model/User/SelectUser.php';
 include '../functions/http.php';
 include '../functions/db.php';
 

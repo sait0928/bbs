@@ -3,8 +3,6 @@
 use Model\User\SelectUser;
 use Model\User\User;
 
-include '../Model/User/SelectUser.php';
-include '../Model/User/User.php';
 include '../functions/db.php';
 include '../functions/http.php';
 include '../functions/posts.php';

@@ -1,14 +1,9 @@
 <?php
 
 use Model\User\SelectUser;
-use Model\User\User;
 use Model\User\UserRegistration;
 use Model\User\Auth;
 
-include '../Model/User/SelectUser.php';
-include '../Model/User/User.php';
-include '../Model/User/UserRegistration.php';
-include '../Model/User/Auth.php';
 include '../functions/db.php';
 include '../functions/http.php';
 
