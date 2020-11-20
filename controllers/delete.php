@@ -1,7 +1,8 @@
 <?php
 
+use Model\Post\PostWriter;
+
 include '../functions/db.php';
-include '../functions/posts.php';
 include '../functions/http.php';
 
 function deleteAction(): void
@@ -12,9 +13,8 @@ function deleteAction(): void
 		redirect('/user_page?user_id='.$_SESSION['user_id']);
 	}
 
-	$dbh = connect();
-
-	delete($dbh, $_POST['id']);
+	$post_writer = new PostWriter();
+	$post_writer->delete($_POST['id']);
 
 	redirect('/user_page?user_id='.$_SESSION['user_id']);
 }

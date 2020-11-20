@@ -1,8 +1,9 @@
 <?php
 
+use Model\Post\PostWriter;
+
 include '../functions/db.php';
 include '../functions/http.php';
-include '../functions/posts.php';
 
 function insertAction(): void
 {
@@ -12,9 +13,8 @@ function insertAction(): void
 		redirect('/');
 	}
 
-	$dbh = connect();
-
-	insert($dbh, $_POST['text'], $_POST['user_id']);
+	$post_writer = new PostWriter();
+	$post_writer->insert($_POST['text'], $_POST['user_id']);
 
 	redirect('/');
 }

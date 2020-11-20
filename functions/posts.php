@@ -1,21 +1,6 @@
 <?php
 
 /**
- * 記事の投稿
- *
- * @param PDO $dbh
- * @param string $text
- * @param int $user_id
- */
-function insert(PDO $dbh, string $text, int $user_id): void
-{
-	$stmt = $dbh->prepare('INSERT INTO posts (post, user_id) VALUES (:post, :user_id)');
-	$stmt->bindParam(':post', $text, PDO::PARAM_STR);
-	$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-	$stmt->execute();
-}
-
-/**
  * 記事の出力
  *
  * @param PDO $dbh
@@ -34,19 +19,6 @@ function select(PDO $dbh, ?int $page): array
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}
-}
-
-/**
- * 記事の削除
- *
- * @param PDO $dbh
- * @param int $id
- */
-function delete(PDO $dbh, int $id): void
-{
-	$stmt = $dbh->prepare('DELETE FROM posts WHERE id=:id');
-	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-	$stmt->execute();
 }
 
 /**
