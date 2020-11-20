@@ -1,7 +1,7 @@
 <?php
 
 use Model\User\SelectUser;
-use Model\User\User;
+use Model\Post\PostReader;
 
 include '../functions/db.php';
 include '../functions/http.php';
@@ -20,11 +20,11 @@ function indexAction(): void
 	$user = $select_user->selectUserById($_SESSION['user_id']);
 	$name = $user->getUserName();
 
-	$dbh = connect();
-
 	$page = $_GET['page'] ?? null;
-	$posts = select($dbh, $page);
+	$post_reader = new PostReader();
+	$posts = $post_reader->select($page);
 
+	$dbh = connect();
 	$total_posts = countPosts($dbh);
 	$pages = countPages($total_posts);
 
