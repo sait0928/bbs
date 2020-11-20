@@ -4,8 +4,7 @@ use Http\Http;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
-
-include '../functions/pagination.php';
+use Pagination\Pagination;
 
 function indexAction(): void
 {
@@ -26,7 +25,8 @@ function indexAction(): void
 
 	$post_counter = new PostCounter();
 	$total_posts = $post_counter->countPosts();
-	$pages = countPages($total_posts);
+	$pagination = new Pagination();
+	$pages = $pagination->countPages($total_posts);
 
 	include '../templates/index.php';
 }
