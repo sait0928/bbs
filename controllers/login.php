@@ -3,7 +3,6 @@
 use Model\User\Auth;
 use Model\User\SelectUser;
 
-include '../functions/db.php';
 include '../functions/http.php';
 
 function loginAction(): void

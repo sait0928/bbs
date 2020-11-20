@@ -1,13 +1,16 @@
 <?php
 namespace Model\Post;
 
+use Database\Database;
+
 class PostReader
 {
 	private \PDO $dbh;
 
 	public function __construct()
 	{
-		$this->dbh = connect();
+		$database = new Database();
+		$this->dbh = $database->connect();
 	}
 
 	function select(?int $page): array

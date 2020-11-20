@@ -2,7 +2,6 @@
 
 use Model\Post\PostWriter;
 
-include '../functions/db.php';
 include '../functions/http.php';
 
 function deleteAction(): void

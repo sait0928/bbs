@@ -1,13 +1,16 @@
 <?php
 namespace Model\Post;
 
+use Database\Database;
+
 class PostWriter
 {
 	private \PDO $dbh;
 
 	public function __construct()
 	{
-		$this->dbh = connect();
+		$database = new Database();
+		$this->dbh = $database->connect();
 	}
 
 	function insert(string $text, int $user_id): void

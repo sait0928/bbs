@@ -4,7 +4,6 @@ use Model\User\Auth;
 use Model\User\SelectUser;
 
 include '../functions/http.php';
-include '../functions/db.php';
 
 function logoutAction(): void
 {

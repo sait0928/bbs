@@ -1,13 +1,16 @@
 <?php
 namespace Model\User;
 
+use Database\Database;
+
 class SelectUser
 {
 	private $dbh;
 
 	public function __construct()
 	{
-		$this->dbh = connect();
+		$database = new Database();
+		$this->dbh = $database->connect();
 	}
 
 	public function selectUserById(int $id): User

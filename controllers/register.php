@@ -4,7 +4,6 @@ use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
 
-include '../functions/db.php';
 include '../functions/http.php';
 
 function registerAction(): void

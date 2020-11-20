@@ -1,13 +1,16 @@
 <?php
 namespace Model\User;
 
+use Database\Database;
+
 class UserRegistration
 {
 	private $dbh;
 
 	public function __construct()
 	{
-		$this->dbh = connect();
+		$database = new Database();
+		$this->dbh = $database->connect();
 	}
 
 	public function register(string $name, string $email, string $pass): void

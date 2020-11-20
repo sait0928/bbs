@@ -4,7 +4,6 @@ use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
 
-include '../functions/db.php';
 include '../functions/http.php';
 include '../functions/pagination.php';
 
