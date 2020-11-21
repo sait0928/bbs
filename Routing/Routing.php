@@ -1,6 +1,17 @@
 <?php
 namespace Routing;
 
+use Controller\DeleteController;
+use Controller\IndexController;
+use Controller\InsertController;
+use Controller\LoginController;
+use Controller\LoginFormController;
+use Controller\LogoutController;
+use Controller\NotFoundController;
+use Controller\RegisterController;
+use Controller\RegisterFormController;
+use Controller\UserPageController;
+
 class Routing
 {
 	public function routing(string $request_uri): void
@@ -8,21 +19,21 @@ class Routing
 		$url = parse_url($request_uri);
 		$path = $url['path'];
 
-		$controller_base = '../controllers';
 		$routes = [
-			'/'              => ['/index.php', 'indexAction'],
-			'/user_page'     => ['/user_page.php', 'userPageAction'],
-			'/insert'        => ['/insert.php', 'insertAction'],
-			'/delete'        => ['/delete.php', 'deleteAction'],
-			'/login_form'    => ['/login_form.php', 'loginFormAction'],
-			'/login'         => ['/login.php', 'loginAction'],
-			'/register_form' => ['/register_form.php', 'registerFormAction'],
-			'/register'      => ['/register.php', 'registerAction'],
-			'/logout'        => ['/logout.php', 'logoutAction'],
+			'/'              => [IndexController::class, 'indexAction'],
+			'/user_page'     => [UserPageController::class, 'userPageAction'],
+			'/insert'        => [InsertController::class, 'insertAction'],
+			'/delete'        => [DeleteController::class, 'deleteAction'],
+			'/login_form'    => [LoginFormController::class, 'loginFormAction'],
+			'/login'         => [LoginController::class, 'loginAction'],
+			'/register_form' => [RegisterFormController::class, 'registerFormAction'],
+			'/register'      => [RegisterController::class, 'registerAction'],
+			'/logout'        => [LogoutController::class, 'logoutAction'],
 		];
-		[$route, $action] = $routes[$path] ?? ['/404.php', 'notFoundAction'];
 
-		include $controller_base . $route;
-		$action();
+		[$classname, $action] = $routes[$path] ?? [NotFoundController::class, 'notFoundAction'];
+
+		$controller = new $classname();
+		$controller->$action();
 	}
 }
