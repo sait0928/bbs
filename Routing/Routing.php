@@ -3,7 +3,7 @@ namespace Routing;
 
 class Routing
 {
-	function routing(string $request_uri): void
+	public function routing(string $request_uri): void
 	{
 		$url = parse_url($request_uri);
 		$path = $url['path'];

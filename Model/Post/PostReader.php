@@ -13,7 +13,7 @@ class PostReader
 		$this->dbh = $database->connect();
 	}
 
-	function select(?int $page): array
+	public function select(?int $page): array
 	{
 		if($page === null) {
 			$stmt = $this->dbh->query('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT 3');
@@ -27,7 +27,7 @@ class PostReader
 		}
 	}
 
-	function selectUserPosts(?int $page, int $user_id): array
+	public function selectUserPosts(?int $page, int $user_id): array
 	{
 		if($page === null) {
 			$stmt = $this->dbh->prepare('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.id DESC LIMIT 3');
