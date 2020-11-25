@@ -31,7 +31,7 @@ class UserPageController
 		$pagination = new Pagination();
 		$pages = $pagination->countPages($total_posts);
 
-		include '../templates/user_page.php';
+		include TEMPLATE_DIR . '/user_page.php';
 
 	}
 }

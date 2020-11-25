@@ -14,6 +14,6 @@ class LoginFormController
 			$http->redirect('/');
 		}
 
-		include '../templates/login_form.php';
+		include TEMPLATE_DIR . '/login_form.php';
 	}
 }

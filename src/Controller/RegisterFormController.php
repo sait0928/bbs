@@ -14,6 +14,6 @@ class RegisterFormController
 			$http->redirect('/');
 		}
 
-		include '../templates/register_form.php';
+		include TEMPLATE_DIR . '/register_form.php';
 	}
 }

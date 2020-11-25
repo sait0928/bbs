@@ -4,8 +4,12 @@ error_reporting(E_ALL);
 
 use Routing\Routing;
 
+const BASE_DIR = __DIR__ . '/..';
+const SOURCE_DIR = BASE_DIR . '/src';
+const TEMPLATE_DIR = BASE_DIR . '/templates';
+
 spl_autoload_register(function (string $class_name) {
-	$file_path = '../src/' . str_replace('\\', '/', $class_name) . '.php';
+	$file_path = SOURCE_DIR . '/' . str_replace('\\', '/', $class_name) . '.php';
 	include_once($file_path);
 });
 

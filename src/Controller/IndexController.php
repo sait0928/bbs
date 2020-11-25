@@ -31,6 +31,6 @@ class IndexController
 		$pagination = new Pagination();
 		$pages = $pagination->countPages($total_posts);
 
-		include '../templates/index.php';
+		include TEMPLATE_DIR . '/index.php';
 	}
 }
