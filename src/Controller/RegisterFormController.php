@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use View\View;
 
 class RegisterFormController
 {
@@ -14,6 +15,7 @@ class RegisterFormController
 			$http->redirect('/');
 		}
 
-		include TEMPLATE_DIR . '/register_form.php';
+		$view = new View();
+		$view->render('/register_form.php');
 	}
 }

@@ -6,6 +6,7 @@ use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
 use Pagination\Pagination;
+use View\View;
 
 class UserPageController
 {
@@ -31,7 +32,13 @@ class UserPageController
 		$pagination = new Pagination();
 		$pages = $pagination->countPages($total_posts);
 
-		include TEMPLATE_DIR . '/user_page.php';
+		$params = [
+			'name' => $name,
+			'posts' => $posts,
+			'pages' => $pages,
+		];
+		$view = new View();
+		$view->render('/user_page.php', $params);
 
 	}
 }

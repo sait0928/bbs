@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use View\View;
 
 class LoginFormController
 {
@@ -14,6 +15,7 @@ class LoginFormController
 			$http->redirect('/');
 		}
 
-		include TEMPLATE_DIR . '/login_form.php';
+		$view = new View();
+		$view->render('/login_form.php');
 	}
 }
