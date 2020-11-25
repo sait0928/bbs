@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 use Routing\Routing;
 
 spl_autoload_register(function (string $class_name) {
-	$file_path = '../' . str_replace('\\', '/', $class_name) . '.php';
+	$file_path = '../src/' . str_replace('\\', '/', $class_name) . '.php';
 	include_once($file_path);
 });
 
