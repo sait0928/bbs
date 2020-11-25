@@ -23,7 +23,7 @@ class UserPageController
 		$user = $select_user->selectUserById($_GET['user_id']);
 		$name = $user->getUserName();
 
-		$page = $_GET['page'] ?? null;
+		$page = $_GET['page'] ?? 1;
 		$post_reader = new PostReader();
 		$posts = $post_reader->selectUserPosts($page, $_GET['user_id']);
 
