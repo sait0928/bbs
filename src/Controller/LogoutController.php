@@ -9,7 +9,6 @@ use Model\User\SelectUser;
  * '/logout' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class LogoutController
  * @package Controller
  */
 class LogoutController

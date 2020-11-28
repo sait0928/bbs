@@ -10,7 +10,6 @@ use Model\User\Auth;
  * '/register' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class RegisterController
  * @package Controller
  */
 class RegisterController

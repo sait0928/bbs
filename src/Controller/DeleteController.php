@@ -8,7 +8,6 @@ use Model\Post\PostWriter;
  * '/delete' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class DeleteController
  * @package Controller
  */
 class DeleteController

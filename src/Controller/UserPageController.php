@@ -12,7 +12,6 @@ use View\View;
  * '/user_page' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class UserPageController
  * @package Controller
  */
 class UserPageController

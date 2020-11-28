@@ -12,7 +12,6 @@ use View\View;
  * '/' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class IndexController
  * @package Controller
  */
 class IndexController

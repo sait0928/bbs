@@ -5,7 +5,6 @@ namespace Controller;
  * 存在しないURLにアクセスした時に
  * 使用するコントローラー
  *
- * Class NotFoundController
  * @package Controller
  */
 class NotFoundController

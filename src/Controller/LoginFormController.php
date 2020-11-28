@@ -8,7 +8,6 @@ use View\View;
  * '/login_form' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class LoginFormController
  * @package Controller
  */
 class LoginFormController

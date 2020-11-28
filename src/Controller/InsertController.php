@@ -8,7 +8,6 @@ use Model\Post\PostWriter;
  * '/insert' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class InsertController
  * @package Controller
  */
 class InsertController

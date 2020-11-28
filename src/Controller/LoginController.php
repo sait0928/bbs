@@ -9,7 +9,6 @@ use Model\User\SelectUser;
  * '/login' にアクセスされた時に
  * 使用するコントローラー
  *
- * Class LoginController
  * @package Controller
  */
 class LoginController
