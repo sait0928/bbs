@@ -4,8 +4,20 @@ namespace Controller;
 use Http\Http;
 use Model\Post\PostWriter;
 
+/**
+ * '/insert' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class InsertController
+ * @package Controller
+ */
 class InsertController
 {
+	/**
+	 * POST通信で送られてきたテキストと
+	 * ログインユーザーのIDを
+	 * postsに挿入する
+	 */
 	public function insertAction(): void
 	{
 		session_start();

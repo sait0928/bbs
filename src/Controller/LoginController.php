@@ -5,8 +5,20 @@ use Http\Http;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
+/**
+ * '/login' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class LoginController
+ * @package Controller
+ */
 class LoginController
 {
+	/**
+	 * POST通信で送られてきたEMAILとPASSを元に
+	 * ユーザーを照合して
+	 * ログインする
+	 */
 	public function loginAction(): void
 	{
 		session_start();

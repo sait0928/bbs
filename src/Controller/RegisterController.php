@@ -6,8 +6,20 @@ use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
 
+/**
+ * '/register' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class RegisterController
+ * @package Controller
+ */
 class RegisterController
 {
+	/**
+	 * POST通信で送られてきた
+	 * name, email, pass を元に
+	 * 新規登録する
+	 */
 	public function registerAction(): void
 	{
 		session_start();

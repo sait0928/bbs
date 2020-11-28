@@ -5,8 +5,18 @@ use Http\Http;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
+/**
+ * '/logout' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class LogoutController
+ * @package Controller
+ */
 class LogoutController
 {
+	/**
+	 * ログアウトする
+	 */
 	public function logoutAction(): void
 	{
 		session_start();

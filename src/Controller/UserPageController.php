@@ -8,8 +8,19 @@ use Model\Post\PostCounter;
 use Pagination\Pagination;
 use View\View;
 
+/**
+ * '/user_page' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class UserPageController
+ * @package Controller
+ */
 class UserPageController
 {
+	/**
+	 * GET通信で取得したuser_idを元に
+	 * そのユーザーが投稿した記事一覧を表示
+	 */
 	public function userPageAction(): void
 	{
 		session_start();

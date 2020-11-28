@@ -4,8 +4,19 @@ namespace Controller;
 use Http\Http;
 use Model\Post\PostWriter;
 
+/**
+ * '/delete' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class DeleteController
+ * @package Controller
+ */
 class DeleteController
 {
+	/**
+	 * POST通信で送られてきたposts.idを元に
+	 * postsのレコードを削除する
+	 */
 	public function deleteAction(): void
 	{
 		session_start();

@@ -8,8 +8,19 @@ use Model\Post\PostCounter;
 use Pagination\Pagination;
 use View\View;
 
+/**
+ * '/' にアクセスされた時に
+ * 使用するコントローラー
+ *
+ * Class IndexController
+ * @package Controller
+ */
 class IndexController
 {
+	/**
+	 * 現在ログインしているユーザーと
+	 * 記事一覧を表示
+	 */
 	public function indexAction(): void
 	{
 		session_start();
