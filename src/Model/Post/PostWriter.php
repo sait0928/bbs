@@ -3,6 +3,11 @@ namespace Model\Post;
 
 use Database\Database;
 
+/**
+ * 記事を操作するモデル
+ *
+ * @package Model\Post
+ */
 class PostWriter
 {
 	private \PDO $dbh;
@@ -13,6 +18,12 @@ class PostWriter
 		$this->dbh = $database->connect();
 	}
 
+	/**
+	 * 記事を投稿
+	 *
+	 * @param string $text
+	 * @param int $user_id
+	 */
 	public function insert(string $text, int $user_id): void
 	{
 		$stmt = $this->dbh->prepare('INSERT INTO posts (post, user_id) VALUES (:post, :user_id)');
@@ -21,6 +32,11 @@ class PostWriter
 		$stmt->execute();
 	}
 
+	/**
+	 * 記事を削除
+	 *
+	 * @param int $id
+	 */
 	public function delete(int $id): void
 	{
 		$stmt = $this->dbh->prepare('DELETE FROM posts WHERE id=:id');
