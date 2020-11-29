@@ -3,6 +3,11 @@ namespace Model\User;
 
 use Database\Database;
 
+/**
+ * ユーザーを検索するモデル
+ *
+ * @package Model\User
+ */
 class SelectUser
 {
 	private $dbh;
@@ -13,6 +18,12 @@ class SelectUser
 		$this->dbh = $database->connect();
 	}
 
+	/**
+	 * id からユーザーを検索する
+	 *
+	 * @param int $id
+	 * @return User
+	 */
 	public function selectUserById(int $id): User
 	{
 		$stmt = $this->dbh->prepare('SELECT * FROM users WHERE id=:id');
@@ -29,6 +40,12 @@ class SelectUser
 		return $user;
 	}
 
+	/**
+	 * email からユーザーを検索する
+	 *
+	 * @param string $email
+	 * @return User
+	 */
 	public function selectUserByEmail(string $email): User
 	{
 		$stmt = $this->dbh->prepare('SELECT * FROM users WHERE email=:email');

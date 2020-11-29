@@ -3,6 +3,11 @@ namespace Model\User;
 
 use Database\Database;
 
+/**
+ * ユーザーを新規登録するモデル
+ *
+ * @package Model\User
+ */
 class UserRegistration
 {
 	private $dbh;
@@ -13,6 +18,13 @@ class UserRegistration
 		$this->dbh = $database->connect();
 	}
 
+	/**
+	 * 新規登録
+	 *
+	 * @param string $name
+	 * @param string $email
+	 * @param string $pass
+	 */
 	public function register(string $name, string $email, string $pass): void
 	{
 		$hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
