@@ -12,8 +12,19 @@ use Controller\RegisterController;
 use Controller\RegisterFormController;
 use Controller\UserPageController;
 
+/**
+ * ルーティングに関するクラス
+ *
+ * @package Routing
+ */
 class Routing
 {
+	/**
+	 * リクエストされたURLに基づいて
+	 * どのコントローラーを使うかルーティングする
+	 *
+	 * @param string $request_uri
+	 */
 	public function routing(string $request_uri): void
 	{
 		$url = parse_url($request_uri);
