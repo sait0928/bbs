@@ -1,6 +1,8 @@
 <?php
 namespace Model\User;
 
+use Http\Session;
+
 /**
  * ログイン認証に使用する
  * セッション変数を操作するモデル
@@ -25,6 +27,7 @@ class AuthStorage
 	public function clearStorage(): void
 	{
 		$_SESSION = array();
-		session_destroy();
+		$session = new Session();
+		$session->destroy();
 	}
 }

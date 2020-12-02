@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use Model\Post\PostWriter;
 
 /**
@@ -19,7 +20,8 @@ class InsertController
 	 */
 	public function insertAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		$http = new Http();
 

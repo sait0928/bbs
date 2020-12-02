@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use Model\Post\PostWriter;
 
 /**
@@ -18,7 +19,8 @@ class DeleteController
 	 */
 	public function deleteAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		$http = new Http();
 

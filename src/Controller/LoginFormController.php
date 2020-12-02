@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use View\View;
 
 /**
@@ -17,7 +18,8 @@ class LoginFormController
 	 */
 	public function loginFormAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		if(isset($_SESSION['user_id'])) {
 			$http = new Http();

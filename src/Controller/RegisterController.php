@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
@@ -21,7 +22,8 @@ class RegisterController
 	 */
 	public function registerAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		$http = new Http();
 

@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
@@ -18,7 +19,8 @@ class LogoutController
 	 */
 	public function logoutAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		$auth = new Auth(
 			new SelectUser()

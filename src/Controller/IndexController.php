@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Http\Http;
+use Http\Session;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -22,7 +23,8 @@ class IndexController
 	 */
 	public function indexAction(): void
 	{
-		session_start();
+		$session = new Session();
+		$session->start();
 
 		if(!isset($_SESSION['user_id'])) {
 			$http = new Http();
