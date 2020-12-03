@@ -14,6 +14,29 @@ use Model\User\SelectUser;
  */
 class LoginController
 {
+	private Session $session;
+	private Http $http;
+	private Auth $auth;
+
+	public function __construct(
+		Session $session,
+		Http $http,
+		Auth $auth
+	) {
+		$this->session = $session;
+		$this->http = $http;
+		$this->auth = $auth;
+	}
+
+	public static function createDefault()
+	{
+		return new self(
+			new Session(),
+			new Http(),
+			new Auth(new SelectUser()),
+		);
+	}
+
 	/**
 	 * POST通信で送られてきたEMAILとPASSを元に
 	 * ユーザーを照合して
@@ -21,24 +44,18 @@ class LoginController
 	 */
 	public function loginAction(): void
 	{
-		$session = new Session();
-		$session->start();
-
-		$http = new Http();
+		$this->session->start();
 
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-			$http->redirect('/login_form');
+			$this->http->redirect('/login_form');
 		}
 
-		$auth = new Auth(
-			new SelectUser()
-		);
-		$auth->login($_POST['email'], $_POST['pass']);
+		$this->auth->login($_POST['email'], $_POST['pass']);
 
-		if (!$auth->isLoggedIn()) {
-			$http->redirect('/login_form');
+		if (!$this->auth->isLoggedIn()) {
+			$this->http->redirect('/login_form');
 		}
 
-		$http->redirect('/');
+		$this->http->redirect('/');
 	}
 }
