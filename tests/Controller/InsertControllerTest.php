@@ -39,4 +39,40 @@ class InsertControllerTest extends TestCase
 		);
 		$insert_controller->insertAction();
 	}
+
+	public function testInsertAction_NotPostRequest()
+	{
+		$session = $this->getMockBuilder(Session::class)->getMock();
+		$session->expects($this->once())
+			->method('start')
+		;
+
+		$http = $this->getMockBuilder(Http::class)->getMock();
+		$http->expects($this->once())
+			->method('redirect')
+			->with('/')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
+		;
+
+		$post_writer = $this->getMockBuilder(PostWriter::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$post_writer->expects($this->never())
+			->method('insert')
+		;
+
+		$_POST['text'] = 'test';
+		$_POST['user_id'] = 1;
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$insert_controller = new InsertController(
+			$session,
+			$http,
+			$post_writer
+		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
+		$insert_controller->insertAction();
+	}
 }

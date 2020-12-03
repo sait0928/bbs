@@ -39,4 +39,40 @@ class DeleteControllerTest extends TestCase
 		);
 		$delete_controller->deleteAction();
 	}
+
+	public function testDeleteAction_NotPostRequest()
+	{
+		$session = $this->getMockBuilder(Session::class)->getMock();
+		$session->expects($this->once())
+			->method('start')
+		;
+
+		$http = $this->getMockBuilder(Http::class)->getMock();
+		$http->expects($this->once())
+			->method('redirect')
+			->with('/user_page?user_id=1')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
+		;
+
+		$post_writer = $this->getMockBuilder(PostWriter::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$post_writer->expects($this->never())
+			->method('delete')
+		;
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SESSION['user_id'] = 1;
+		$_POST['id'] = 1;
+		$delete_controller = new DeleteController(
+			$session,
+			$http,
+			$post_writer
+		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
+		$delete_controller->deleteAction();
+	}
 }
