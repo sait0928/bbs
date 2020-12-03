@@ -13,24 +13,43 @@ use Model\Post\PostWriter;
  */
 class DeleteController
 {
+	private Session $session;
+	private Http $http;
+	private PostWriter $post_writer;
+
+	public function __construct(
+		Session $session,
+		Http $http,
+		PostWriter $post_writer
+	) {
+		$this->session = $session;
+		$this->http = $http;
+		$this->post_writer = $post_writer;
+	}
+
+	public static function createDefault()
+	{
+		return new self(
+			new Session(),
+			new Http(),
+			new PostWriter()
+		);
+	}
+
 	/**
 	 * POST通信で送られてきたposts.idを元に
 	 * postsのレコードを削除する
 	 */
 	public function deleteAction(): void
 	{
-		$session = new Session();
-		$session->start();
-
-		$http = new Http();
+		$this->session->start();
 
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-			$http->redirect('/user_page?user_id='.$_SESSION['user_id']);
+			$this->http->redirect('/user_page?user_id='.$_SESSION['user_id']);
 		}
 
-		$post_writer = new PostWriter();
-		$post_writer->delete($_POST['id']);
+		$this->post_writer->delete($_POST['id']);
 
-		$http->redirect('/user_page?user_id='.$_SESSION['user_id']);
+		$this->http->redirect('/user_page?user_id='.$_SESSION['user_id']);
 	}
 }
