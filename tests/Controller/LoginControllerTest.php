@@ -105,6 +105,9 @@ class LoginControllerTest extends TestCase
 		$http->expects($this->once())
 			->method('redirect')
 			->with('/login_form')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -118,12 +121,9 @@ class LoginControllerTest extends TestCase
 		$auth->expects($this->once())
 			->method('isLoggedIn')
 			->willReturn(false)
-			->willReturnCallback(function () {
-				throw new \Exception('exit with redirect');
-			})
 		;
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$_POST['pass'] = 'password';
 		$login_controller = new LoginController(

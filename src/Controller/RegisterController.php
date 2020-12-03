@@ -15,6 +15,33 @@ use Model\User\Auth;
  */
 class RegisterController
 {
+	private Session $session;
+	private Http $http;
+	private UserRegistration $user_registration;
+	private Auth $auth;
+
+	public function __construct(
+		Session $session,
+		Http $http,
+		UserRegistration $user_registration,
+		Auth $auth
+	) {
+		$this->session = $session;
+		$this->http = $http;
+		$this->user_registration = $user_registration;
+		$this->auth = $auth;
+	}
+
+	public static function createDefault()
+	{
+		return new self(
+			new Session(),
+			new Http(),
+			new UserRegistration(),
+			new Auth(new SelectUser())
+		);
+	}
+
 	/**
 	 * POST通信で送られてきた
 	 * name, email, pass を元に
@@ -22,31 +49,24 @@ class RegisterController
 	 */
 	public function registerAction(): void
 	{
-		$session = new Session();
-		$session->start();
-
-		$http = new Http();
+		$this->session->start();
 
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-			$http->redirect('/register_form');
+			$this->http->redirect('/register_form');
 		}
 
 		if($_POST['pass'] !== $_POST['again']) {
-			$http->redirect('/register_form');
+			$this->http->redirect('/register_form');
 		}
 
-		$user_registration = new UserRegistration();
-		$user_registration->register($_POST['name'], $_POST['email'], $_POST['pass']);
+		$this->user_registration->register($_POST['name'], $_POST['email'], $_POST['pass']);
 
-		$auth = new Auth(
-			new SelectUser()
-		);
-		$auth->login($_POST['email'], $_POST['pass']);
+		$this->auth->login($_POST['email'], $_POST['pass']);
 
-		if (!$auth->isLoggedIn()) {
-			$http->redirect('/register_form');
+		if (!$this->auth->isLoggedIn()) {
+			$this->http->redirect('/register_form');
 		}
 
-		$http->redirect('/');
+		$this->http->redirect('/');
 	}
 }
