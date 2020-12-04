@@ -14,20 +14,38 @@ use Model\User\SelectUser;
  */
 class LogoutController
 {
+	private Session $session;
+	private Auth $auth;
+	private Http $http;
+
+	public function __construct(
+		Session $session,
+		Auth $auth,
+		Http $http
+	) {
+		$this->session = $session;
+		$this->auth = $auth;
+		$this->http = $http;
+	}
+
+	public static function createDefault()
+	{
+		return new self(
+			new Session,
+			new Auth(new SelectUser()),
+			new Http
+		);
+	}
+
 	/**
 	 * ログアウトする
 	 */
 	public function logoutAction(): void
 	{
-		$session = new Session();
-		$session->start();
+		$this->session->start();
 
-		$auth = new Auth(
-			new SelectUser()
-		);
-		$auth->logout();
+		$this->auth->logout();
 
-		$http = new Http();
-		$http->redirect('/login_form');
+		$this->http->redirect('/login_form');
 	}
 }
