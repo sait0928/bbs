@@ -44,7 +44,7 @@ class Routing
 
 		[$classname, $action] = $routes[$path] ?? [NotFoundController::class, 'notFoundAction'];
 
-		$controller = new $classname();
+		$controller = $classname::createDefault();
 		$controller->$action();
 	}
 }
