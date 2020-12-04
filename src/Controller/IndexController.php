@@ -19,9 +19,9 @@ use View\View;
 class IndexController
 {
 	private Session $session;
-	private SelectUser $select_user;
 	private Auth $auth;
 	private Http $http;
+	private SelectUser $select_user;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
 	private Pagination $pagination;
@@ -29,18 +29,18 @@ class IndexController
 
 	public function __construct(
 		Session $session,
-		SelectUser $select_user,
 		Auth $auth,
 		Http $http,
+		SelectUser $select_user,
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
 		View $view
 	) {
 		$this->session = $session;
-		$this->select_user = $select_user;
 		$this->auth = $auth;
 		$this->http = $http;
+		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
 		$this->pagination = $pagination;
@@ -51,9 +51,9 @@ class IndexController
 	{
 		return new self(
 			new Session(),
-			new SelectUser(),
 			new Auth(new SelectUser()),
 			new Http(),
+			new SelectUser(),
 			new PostReader(),
 			new PostCounter(),
 			new Pagination(),

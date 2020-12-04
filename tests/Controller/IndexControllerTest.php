@@ -21,14 +21,6 @@ class IndexControllerTest extends TestCase
 			->method('start')
 		;
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$select_user->expects($this->once())
-			->method('selectUserById')
-			->with(1)
-		;
-
 		$auth = $this->getMockBuilder(Auth::class)
 			->disableOriginalConstructor()
 			->getMock();
@@ -40,6 +32,14 @@ class IndexControllerTest extends TestCase
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->never())
 			->method('redirect')
+		;
+
+		$select_user = $this->getMockBuilder(SelectUser::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$select_user->expects($this->once())
+			->method('selectUserById')
+			->with(1)
 		;
 
 		$post_reader = $this->getMockBuilder(PostReader::class)
@@ -73,9 +73,9 @@ class IndexControllerTest extends TestCase
 		$_GET['page'] = 1;
 		$index_controller = new IndexController(
 			$session,
-			$select_user,
 			$auth,
 			$http,
+			$select_user,
 			$post_reader,
 			$post_counter,
 			$pagination,
@@ -89,13 +89,6 @@ class IndexControllerTest extends TestCase
 		$session = $this->getMockBuilder(Session::class)->getMock();
 		$session->expects($this->once())
 			->method('start')
-		;
-
-		$select_user = $this->getMockBuilder(SelectUser::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$select_user->expects($this->never())
-			->method('selectUserById')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -113,6 +106,13 @@ class IndexControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$select_user = $this->getMockBuilder(SelectUser::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$select_user->expects($this->never())
+			->method('selectUserById')
 		;
 
 		$post_reader = $this->getMockBuilder(PostReader::class)
@@ -141,9 +141,9 @@ class IndexControllerTest extends TestCase
 
 		$index_controller = new IndexController(
 			$session,
-			$select_user,
 			$auth,
 			$http,
+			$select_user,
 			$post_reader,
 			$post_counter,
 			$pagination,
