@@ -51,7 +51,7 @@ class InsertController
 			$this->http->redirect('/');
 		}
 
-		$this->post_writer->insert($_POST['text'], $_POST['user_id']);
+		$this->post_writer->insert($_POST['text'], $_SESSION['user_id']);
 
 		$this->http->redirect('/');
 	}
