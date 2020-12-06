@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Database\Database;
 use Http\Http;
 use Http\Session;
 use Model\User\Auth;
@@ -30,10 +31,11 @@ class LoginController
 
 	public static function createDefault()
 	{
+		$database = new Database();
 		return new self(
 			new Session(),
 			new Http(),
-			new Auth(new SelectUser()),
+			new Auth(new SelectUser($database)),
 		);
 	}
 

@@ -10,12 +10,11 @@ use Database\Database;
  */
 class PostCounter
 {
-	private \PDO $dbh;
+	private Database $db;
 
-	public function __construct()
+	public function __construct(Database $db)
 	{
-		$database = new Database();
-		$this->dbh = $database->connect();
+		$this->db = $db;
 	}
 
 	/**
@@ -25,7 +24,7 @@ class PostCounter
 	 */
 	public function countPosts(): int
 	{
-		$stmt = $this->dbh->query('SELECT COUNT(*) FROM posts');
+		$stmt = $this->db->getConnection()->query('SELECT COUNT(*) FROM posts');
 		return $stmt->fetchColumn();
 	}
 
@@ -37,7 +36,7 @@ class PostCounter
 	 */
 	public function countUserPosts(int $user_id): int
 	{
-		$stmt = $this->dbh->prepare('SELECT COUNT(*) FROM posts WHERE user_id = :user_id');
+		$stmt = $this->db->getConnection()->prepare('SELECT COUNT(*) FROM posts WHERE user_id = :user_id');
 		$stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchColumn();

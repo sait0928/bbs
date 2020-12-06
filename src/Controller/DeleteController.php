@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Database\Database;
 use Http\Http;
 use Http\Session;
 use Model\Post\PostWriter;
@@ -29,10 +30,11 @@ class DeleteController
 
 	public static function createDefault()
 	{
+		$database = new Database();
 		return new self(
 			new Session(),
 			new Http(),
-			new PostWriter()
+			new PostWriter($database)
 		);
 	}
 

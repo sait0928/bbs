@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Database\Database;
 use Http\Http;
 use Http\Session;
 use Model\User\SelectUser;
@@ -34,11 +35,12 @@ class RegisterController
 
 	public static function createDefault()
 	{
+		$database = new Database();
 		return new self(
 			new Session(),
 			new Http(),
-			new UserRegistration(),
-			new Auth(new SelectUser())
+			new UserRegistration($database),
+			new Auth(new SelectUser($database))
 		);
 	}
 

@@ -10,12 +10,11 @@ use Database\Database;
  */
 class UserRegistration
 {
-	private $dbh;
+	private Database $db;
 
-	public function __construct()
+	public function __construct(Database $db)
 	{
-		$database = new Database();
-		$this->dbh = $database->connect();
+		$this->db = $db;
 	}
 
 	/**
@@ -28,7 +27,7 @@ class UserRegistration
 	public function register(string $name, string $email, string $pass): void
 	{
 		$hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
-		$stmt = $this->dbh->prepare('INSERT INTO users (name, email, pass) VALUES (:name, :email, :pass)');
+		$stmt = $this->db->getConnection()->prepare('INSERT INTO users (name, email, pass) VALUES (:name, :email, :pass)');
 		$stmt->bindParam(':name', $name, \PDO::PARAM_STR);
 		$stmt->bindParam(':email', $email, \PDO::PARAM_STR);
 		$stmt->bindParam(':pass', $hashed_pass, \PDO::PARAM_STR);

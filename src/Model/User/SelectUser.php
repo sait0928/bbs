@@ -10,12 +10,11 @@ use Database\Database;
  */
 class SelectUser
 {
-	private $dbh;
+	private Database $db;
 
-	public function __construct()
+	public function __construct(Database $db)
 	{
-		$database = new Database();
-		$this->dbh = $database->connect();
+		$this->db = $db;
 	}
 
 	/**
@@ -26,7 +25,7 @@ class SelectUser
 	 */
 	public function selectUserById(int $id): User
 	{
-		$stmt = $this->dbh->prepare('SELECT * FROM users WHERE id=:id');
+		$stmt = $this->db->getConnection()->prepare('SELECT * FROM users WHERE id=:id');
 		$stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetch();
@@ -48,7 +47,7 @@ class SelectUser
 	 */
 	public function selectUserByEmail(string $email): User
 	{
-		$stmt = $this->dbh->prepare('SELECT * FROM users WHERE email=:email');
+		$stmt = $this->db->getConnection()->prepare('SELECT * FROM users WHERE email=:email');
 		$stmt->bindParam(':email', $email, \PDO::PARAM_STR);
 		$stmt->execute();
 		$result = $stmt->fetch();
