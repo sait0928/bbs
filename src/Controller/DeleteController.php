@@ -5,6 +5,8 @@ use Database\Database;
 use Http\Http;
 use Http\Session;
 use Model\Post\PostWriter;
+use Model\User\Auth;
+use Model\User\SelectUser;
 
 /**
  * '/delete' にアクセスされた時に
@@ -16,15 +18,18 @@ class DeleteController
 {
 	private Session $session;
 	private Http $http;
+	private Auth $auth;
 	private PostWriter $post_writer;
 
 	public function __construct(
 		Session $session,
 		Http $http,
+		Auth $auth,
 		PostWriter $post_writer
 	) {
 		$this->session = $session;
 		$this->http = $http;
+		$this->auth = $auth;
 		$this->post_writer = $post_writer;
 	}
 
@@ -34,6 +39,7 @@ class DeleteController
 		return new self(
 			new Session(),
 			new Http(),
+			new Auth(new SelectUser($database)),
 			new PostWriter($database)
 		);
 	}
@@ -48,6 +54,10 @@ class DeleteController
 
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/user_page?user_id='.$_SESSION['user_id']);
+		}
+
+		if(!$this->auth->isLoggedIn()) {
+			$this->http->redirect('/login_form');
 		}
 
 		$this->post_writer->delete($_POST['id']);
