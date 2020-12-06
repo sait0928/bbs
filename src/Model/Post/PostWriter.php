@@ -35,11 +35,13 @@ class PostWriter
 	 * 記事を削除
 	 *
 	 * @param int $id
+	 * @param int $user_id
 	 */
-	public function delete(int $id): void
+	public function delete(int $id, int $user_id): void
 	{
-		$stmt = $this->db->getConnection()->prepare('DELETE FROM posts WHERE id=:id');
+		$stmt = $this->db->getConnection()->prepare('DELETE FROM posts WHERE id=:id and user_id=:user_id');
 		$stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+		$stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
 		$stmt->execute();
 	}
 }

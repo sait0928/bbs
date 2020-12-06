@@ -60,7 +60,7 @@ class DeleteController
 			$this->http->redirect('/login_form');
 		}
 
-		$this->post_writer->delete($_POST['id']);
+		$this->post_writer->delete($_POST['id'], $_SESSION['user_id']);
 
 		$this->http->redirect('/user_page?user_id='.$_SESSION['user_id']);
 	}
