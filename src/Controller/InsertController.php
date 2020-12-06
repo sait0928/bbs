@@ -5,6 +5,8 @@ use Database\Database;
 use Http\Http;
 use Http\Session;
 use Model\Post\PostWriter;
+use Model\User\Auth;
+use Model\User\SelectUser;
 
 /**
  * '/insert' にアクセスされた時に
@@ -16,15 +18,18 @@ class InsertController
 {
 	private Session $session;
 	private Http $http;
+	private Auth $auth;
 	private PostWriter $post_writer;
 
 	public function __construct(
 		Session $session,
 		Http $http,
+		Auth $auth,
 		PostWriter $post_writer
 	) {
 		$this->session = $session;
 		$this->http = $http;
+		$this->auth = $auth;
 		$this->post_writer = $post_writer;
 	}
 
@@ -34,6 +39,7 @@ class InsertController
 		return new self(
 			new Session(),
 			new Http(),
+			new Auth(new SelectUser($database)),
 			new PostWriter($database)
 		);
 	}
@@ -51,7 +57,11 @@ class InsertController
 			$this->http->redirect('/');
 		}
 
-		$this->post_writer->insert($_POST['text'], $_POST['user_id']);
+		if(!$this->auth->isLoggedIn()) {
+			$this->http->redirect('/login_form');
+		}
+
+		$this->post_writer->insert($_POST['text'], $_SESSION['user_id']);
 
 		$this->http->redirect('/');
 	}
