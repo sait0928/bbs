@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>掲示板</h1>
-<p><?php echo $name; ?>さんの投稿一覧</p>
+<p><?php echo htmlspecialchars($name); ?>さんの投稿一覧</p>
 <div id="return">
 	<a href="/">←戻る</a>
 </div>
@@ -20,7 +20,7 @@
 		<?php foreach($posts as $post) : ?>
 			<tr>
 				<td><?php echo $post['post_id']; ?></td>
-				<td><?php echo $post['name']; ?></td>
+				<td><?php echo htmlspecialchars($post['name']); ?></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 				<?php if((int)$post['user_id'] === $_SESSION['user_id']) : ?>
 					<td>

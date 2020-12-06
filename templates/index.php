@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>掲示板</h1>
-<p>ようこそ<?php echo $name; ?>さん！</p>
+<p>ようこそ<?php echo htmlspecialchars($name); ?>さん！</p>
 <div id="form">
 	<form action="/insert" method="POST">
 		<textarea name="text" id="" cols="50" rows="5" required></textarea>
@@ -24,7 +24,7 @@
 		<?php foreach($posts as $post) : ?>
 			<tr>
 				<td><?php echo $post['post_id']; ?></td>
-				<td><a href="/user_page?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></td>
+				<td><a href="/user_page?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['name']); ?></a></td>
 				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
 			</tr>
 		<?php endforeach; ?>
