@@ -1,18 +1,12 @@
 <?php
-namespace Controller;
+namespace Middleware;
 
 use Database\Database;
 use Http\Http;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
-/**
- * '/logout' にアクセスされた時に
- * 使用するコントローラー
- *
- * @package Controller
- */
-class LogoutController
+class AuthMiddleware
 {
 	private Auth $auth;
 	private Http $http;
@@ -30,17 +24,21 @@ class LogoutController
 		$database = new Database();
 		return new self(
 			new Auth(new SelectUser($database)),
-			new Http
+			new Http()
 		);
 	}
 
-	/**
-	 * ログアウトする
-	 */
-	public function logoutAction(): void
+	public function isLoggedIn(): void
 	{
-		$this->auth->logout();
+		if(!$this->auth->isLoggedIn()) {
+			$this->http->redirect('/login_form');
+		}
+	}
 
-		$this->http->redirect('/login_form');
+	public function isNotLoggedIn(): void
+	{
+		if($this->auth->isLoggedIn()) {
+			$this->http->redirect('/');
+		}
 	}
 }

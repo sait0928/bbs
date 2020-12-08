@@ -1,8 +1,6 @@
 <?php
 namespace Controller;
 
-use Http\Session;
-
 /**
  * 存在しないURLにアクセスした時に
  * 使用するコントローラー
@@ -11,27 +9,19 @@ use Http\Session;
  */
 class NotFoundController
 {
-	private Session $session;
-
-	public function __construct(
-		Session $session
-	) {
-		$this->session = $session;
+	public function __construct()
+	{
 	}
 
 	public static function createDefault()
 	{
-		return new self(
-			new Session()
-		);
+		return new self();
 	}
 	/**
 	 * ページが無いことを通知
 	 */
 	public function notFoundAction(): void
 	{
-		$this->session->start();
-
 		echo 'ページが見つかりません';
 	}
 }

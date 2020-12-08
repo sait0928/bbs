@@ -3,8 +3,6 @@ namespace Controller;
 
 use Database\Database;
 use Http\Http;
-use Http\Session;
-use Model\User\Auth;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -19,8 +17,6 @@ use View\View;
  */
 class UserPageController
 {
-	private Session $session;
-	private Auth $auth;
 	private Http $http;
 	private SelectUser $select_user;
 	private PostReader $post_reader;
@@ -29,8 +25,6 @@ class UserPageController
 	private View $view;
 
 	public function __construct(
-		Session $session,
-		Auth $auth,
 		Http $http,
 		SelectUser $select_user,
 		PostReader $post_reader,
@@ -38,8 +32,6 @@ class UserPageController
 		Pagination $pagination,
 		View $view
 	) {
-		$this->session = $session;
-		$this->auth = $auth;
 		$this->http = $http;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
@@ -52,8 +44,6 @@ class UserPageController
 	{
 		$database = new Database();
 		return new self(
-			new Session(),
-			new Auth(new SelectUser($database)),
 			new Http(),
 			new SelectUser($database),
 			new PostReader($database),
@@ -69,12 +59,6 @@ class UserPageController
 	 */
 	public function userPageAction(): void
 	{
-		$this->session->start();
-
-		if (!$this->auth->isLoggedIn()) {
-			$this->http->redirect('/login_form');
-		}
-
 		$user = $this->select_user->selectUserById($_GET['user_id']);
 		$name = $user->getUserName();
 
