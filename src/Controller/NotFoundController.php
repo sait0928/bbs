@@ -15,6 +15,7 @@ class NotFoundController
 
 	public static function createDefault()
 	{
+		return new self();
 	}
 	/**
 	 * ページが無いことを通知
