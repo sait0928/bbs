@@ -3,7 +3,6 @@ namespace Controller;
 
 use Database\Database;
 use Http\Http;
-use Http\Session;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
@@ -15,16 +14,13 @@ use Model\User\SelectUser;
  */
 class LogoutController
 {
-	private Session $session;
 	private Auth $auth;
 	private Http $http;
 
 	public function __construct(
-		Session $session,
 		Auth $auth,
 		Http $http
 	) {
-		$this->session = $session;
 		$this->auth = $auth;
 		$this->http = $http;
 	}
@@ -33,7 +29,6 @@ class LogoutController
 	{
 		$database = new Database();
 		return new self(
-			new Session,
 			new Auth(new SelectUser($database)),
 			new Http
 		);
@@ -44,8 +39,6 @@ class LogoutController
 	 */
 	public function logoutAction(): void
 	{
-		$this->session->start();
-
 		$this->auth->logout();
 
 		$this->http->redirect('/login_form');

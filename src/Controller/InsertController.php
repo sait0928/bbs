@@ -3,7 +3,6 @@ namespace Controller;
 
 use Database\Database;
 use Http\Http;
-use Http\Session;
 use Model\Post\PostWriter;
 use Model\User\Auth;
 use Model\User\SelectUser;
@@ -16,18 +15,15 @@ use Model\User\SelectUser;
  */
 class InsertController
 {
-	private Session $session;
 	private Http $http;
 	private Auth $auth;
 	private PostWriter $post_writer;
 
 	public function __construct(
-		Session $session,
 		Http $http,
 		Auth $auth,
 		PostWriter $post_writer
 	) {
-		$this->session = $session;
 		$this->http = $http;
 		$this->auth = $auth;
 		$this->post_writer = $post_writer;
@@ -37,7 +33,6 @@ class InsertController
 	{
 		$database = new Database();
 		return new self(
-			new Session(),
 			new Http(),
 			new Auth(new SelectUser($database)),
 			new PostWriter($database)
@@ -51,8 +46,6 @@ class InsertController
 	 */
 	public function insertAction(): void
 	{
-		$this->session->start();
-
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/');
 		}

@@ -3,7 +3,6 @@ namespace Controller;
 
 use Database\Database;
 use Http\Http;
-use Http\Session;
 use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
@@ -16,18 +15,15 @@ use Model\User\Auth;
  */
 class RegisterController
 {
-	private Session $session;
 	private Http $http;
 	private UserRegistration $user_registration;
 	private Auth $auth;
 
 	public function __construct(
-		Session $session,
 		Http $http,
 		UserRegistration $user_registration,
 		Auth $auth
 	) {
-		$this->session = $session;
 		$this->http = $http;
 		$this->user_registration = $user_registration;
 		$this->auth = $auth;
@@ -37,7 +33,6 @@ class RegisterController
 	{
 		$database = new Database();
 		return new self(
-			new Session(),
 			new Http(),
 			new UserRegistration($database),
 			new Auth(new SelectUser($database))
@@ -51,8 +46,6 @@ class RegisterController
 	 */
 	public function registerAction(): void
 	{
-		$this->session->start();
-
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/register_form');
 		}

@@ -3,7 +3,6 @@ namespace Controller;
 
 use Database\Database;
 use Http\Http;
-use Http\Session;
 use Model\User\Auth;
 use Model\User\SelectUser;
 
@@ -15,16 +14,13 @@ use Model\User\SelectUser;
  */
 class LoginController
 {
-	private Session $session;
 	private Http $http;
 	private Auth $auth;
 
 	public function __construct(
-		Session $session,
 		Http $http,
 		Auth $auth
 	) {
-		$this->session = $session;
 		$this->http = $http;
 		$this->auth = $auth;
 	}
@@ -33,7 +29,6 @@ class LoginController
 	{
 		$database = new Database();
 		return new self(
-			new Session(),
 			new Http(),
 			new Auth(new SelectUser($database)),
 		);
@@ -46,8 +41,6 @@ class LoginController
 	 */
 	public function loginAction(): void
 	{
-		$this->session->start();
-
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/login_form');
 		}
