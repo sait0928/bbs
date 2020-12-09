@@ -1,7 +1,6 @@
 <?php
 namespace Controller;
 
-use Database\Database;
 use Http\Http;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
@@ -38,19 +37,6 @@ class IndexController
 		$this->post_counter = $post_counter;
 		$this->pagination = $pagination;
 		$this->view = $view;
-	}
-
-	public static function createDefault()
-	{
-		$database = new Database();
-		return new self(
-			new Http(),
-			new SelectUser($database),
-			new PostReader($database),
-			new PostCounter($database),
-			new Pagination(),
-			new View()
-		);
 	}
 
 	/**

@@ -23,14 +23,6 @@ class RegisterFormController
 		$this->view = $view;
 	}
 
-	public static function createDefault()
-	{
-		return new self(
-			new Http(),
-			new View()
-		);
-	}
-
 	/**
 	 * 新規登録フォームを表示
 	 */

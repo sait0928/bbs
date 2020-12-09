@@ -16,9 +16,9 @@ use Middleware\AuthMiddleware;
 /**
  * ルーティングに関するクラス
  *
- * @package Routing
+ * @package Router
  */
-class Routing
+class Router
 {
 	private const ROUTES = [
 		'login_required' => [
@@ -41,28 +41,28 @@ class Routing
 		'before_login'   => [AuthMiddleware::class, 'isNotLoggedIn'],
 	];
 
-	public function routing(string $request_uri): void
+	public function routing(string $request_uri): Route
 	{
 		$url = parse_url($request_uri);
 		$path = $url['path'];
-		// ルートが見つからなかった時のデフォルトの設定
 		[$controller_name, $action] = [NotFoundController::class, 'notFoundAction'];
 		foreach (self::ROUTES as $group_name => $route_group) {
 			if (!isset($route_group[$path])) {
 				continue;
 			}
-			// ルートが見つかったので処理
-			// ミドルウェアの設定されてるルートなら実行
 			if (isset(self::ROUTE_MIDDLEWARES[$group_name])) {
 				[$middleware_name, $method] = self::ROUTE_MIDDLEWARES[$group_name];
-				$middleware = $middleware_name::createDefault();
-				$middleware->$method();
 			}
 			[$controller_name, $action] = $route_group[$path];
 			break;
 		}
-		// アクションを実行
-		$controller = $controller_name::createDefault();
-		$controller->$action();
+		return new Route(
+			$controller_name,
+			$action,
+			[
+				'middleware_name' => $middleware_name,
+				'method'          => $method
+			]
+		);
 	}
 }

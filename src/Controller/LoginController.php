@@ -1,10 +1,8 @@
 <?php
 namespace Controller;
 
-use Database\Database;
 use Http\Http;
 use Model\User\Auth;
-use Model\User\SelectUser;
 
 /**
  * '/login' にアクセスされた時に
@@ -23,15 +21,6 @@ class LoginController
 	) {
 		$this->http = $http;
 		$this->auth = $auth;
-	}
-
-	public static function createDefault()
-	{
-		$database = new Database();
-		return new self(
-			new Http(),
-			new Auth(new SelectUser($database)),
-		);
 	}
 
 	/**

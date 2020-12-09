@@ -1,9 +1,7 @@
 <?php
 namespace Controller;
 
-use Database\Database;
 use Http\Http;
-use Model\User\SelectUser;
 use Model\User\UserRegistration;
 use Model\User\Auth;
 
@@ -27,16 +25,6 @@ class RegisterController
 		$this->http = $http;
 		$this->user_registration = $user_registration;
 		$this->auth = $auth;
-	}
-
-	public static function createDefault()
-	{
-		$database = new Database();
-		return new self(
-			new Http(),
-			new UserRegistration($database),
-			new Auth(new SelectUser($database))
-		);
 	}
 
 	/**

@@ -1,10 +1,8 @@
 <?php
 namespace Controller;
 
-use Database\Database;
 use Http\Http;
 use Model\User\Auth;
-use Model\User\SelectUser;
 
 /**
  * '/logout' にアクセスされた時に
@@ -23,15 +21,6 @@ class LogoutController
 	) {
 		$this->auth = $auth;
 		$this->http = $http;
-	}
-
-	public static function createDefault()
-	{
-		$database = new Database();
-		return new self(
-			new Auth(new SelectUser($database)),
-			new Http
-		);
 	}
 
 	/**
