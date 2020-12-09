@@ -11,6 +11,7 @@ use Controller\NotFoundController;
 use Controller\RegisterController;
 use Controller\RegisterFormController;
 use Controller\UserPageController;
+use DI\Container;
 use Middleware\AuthMiddleware;
 
 /**
@@ -41,7 +42,7 @@ class Routing
 		'before_login'   => [AuthMiddleware::class, 'isNotLoggedIn'],
 	];
 
-	public function routing(string $request_uri): void
+	public function routing(string $request_uri, Container $container): void
 	{
 		$url = parse_url($request_uri);
 		$path = $url['path'];
@@ -55,14 +56,12 @@ class Routing
 			// ミドルウェアの設定されてるルートなら実行
 			if (isset(self::ROUTE_MIDDLEWARES[$group_name])) {
 				[$middleware_name, $method] = self::ROUTE_MIDDLEWARES[$group_name];
-				$middleware = $middleware_name::createDefault();
-				$middleware->$method();
+				$container->get($middleware_name)->$method();
 			}
 			[$controller_name, $action] = $route_group[$path];
 			break;
 		}
 		// アクションを実行
-		$controller = $controller_name::createDefault();
-		$controller->$action();
+		$container->get($controller_name)->$action();
 	}
 }

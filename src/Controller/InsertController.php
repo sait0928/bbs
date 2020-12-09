@@ -1,7 +1,6 @@
 <?php
 namespace Controller;
 
-use Database\Database;
 use Http\Http;
 use Model\Post\PostWriter;
 
@@ -22,15 +21,6 @@ class InsertController
 	) {
 		$this->http = $http;
 		$this->post_writer = $post_writer;
-	}
-
-	public static function createDefault()
-	{
-		$database = new Database();
-		return new self(
-			new Http(),
-			new PostWriter($database)
-		);
 	}
 
 	/**

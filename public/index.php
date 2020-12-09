@@ -5,11 +5,12 @@ use Http\Session;
 
 include __DIR__ . '/../autoload.php';
 include __DIR__ . '/../config.php';
+include __DIR__ . '/../vendor/autoload.php';
 
 spl_autoload_register('Autoloader::load');
 
-$session = new Session();
-$session->start();
+$container = new DI\Container();
 
-$routing = new Routing();
-$routing->routing($_SERVER['REQUEST_URI']);
+$container->get(Session::class)->start();
+
+$container->get(Routing::class)->routing($_SERVER['REQUEST_URI'], $container);
