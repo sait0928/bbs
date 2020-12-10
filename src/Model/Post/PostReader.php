@@ -17,8 +17,7 @@ class PostReader
 	public function __construct(
 		Database $db,
 		Pagination $pagination
-	)
-	{
+	) {
 		$this->db = $db;
 		$this->pagination = $pagination;
 	}
