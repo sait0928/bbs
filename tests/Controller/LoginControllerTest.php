@@ -67,8 +67,6 @@ class LoginControllerTest extends TestCase
 		;
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
-		$_POST['email'] = 'hoge@hoge.co.jp';
-		$_POST['pass'] = 'password';
 		$login_controller = new LoginController(
 			$http,
 			$auth
