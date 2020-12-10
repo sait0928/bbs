@@ -1,7 +1,6 @@
 <?php
 namespace Controller;
 
-use Http\Http;
 use View\View;
 
 /**
@@ -12,14 +11,11 @@ use View\View;
  */
 class RegisterFormController
 {
-	private Http $http;
 	private View $view;
 
 	public function __construct(
-		Http $http,
 		View $view
 	) {
-		$this->http = $http;
 		$this->view = $view;
 	}
 

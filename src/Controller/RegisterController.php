@@ -45,7 +45,6 @@ class RegisterController
 		$this->user_registration->register($_POST['name'], $_POST['email'], $_POST['pass']);
 
 		$this->auth->login($_POST['email'], $_POST['pass']);
-
 		if (!$this->auth->isLoggedIn()) {
 			$this->http->redirect('/register_form');
 		}

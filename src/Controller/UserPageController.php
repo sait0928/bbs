@@ -1,7 +1,6 @@
 <?php
 namespace Controller;
 
-use Http\Http;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -16,7 +15,6 @@ use View\View;
  */
 class UserPageController
 {
-	private Http $http;
 	private SelectUser $select_user;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
@@ -24,14 +22,12 @@ class UserPageController
 	private View $view;
 
 	public function __construct(
-		Http $http,
 		SelectUser $select_user,
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
 		View $view
 	) {
-		$this->http = $http;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;

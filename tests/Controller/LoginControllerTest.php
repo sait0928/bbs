@@ -2,7 +2,6 @@
 namespace Controller;
 
 use Http\Http;
-use Http\Session;
 use Model\User\Auth;
 use PHPUnit\Framework\TestCase;
 
@@ -13,11 +12,6 @@ class LoginControllerTest extends TestCase
 	 */
 	public function testLoginAction()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -41,7 +35,6 @@ class LoginControllerTest extends TestCase
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$_POST['pass'] = 'password';
 		$login_controller = new LoginController(
-			$session,
 			$http,
 			$auth
 		);
@@ -53,11 +46,6 @@ class LoginControllerTest extends TestCase
 	 */
 	public function testLoginAction_NotPostRequest()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -82,7 +70,6 @@ class LoginControllerTest extends TestCase
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$_POST['pass'] = 'password';
 		$login_controller = new LoginController(
-			$session,
 			$http,
 			$auth
 		);
@@ -96,11 +83,6 @@ class LoginControllerTest extends TestCase
 	 */
 	public function testLoginAction_IsNotLoggedIn()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -127,7 +109,6 @@ class LoginControllerTest extends TestCase
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$_POST['pass'] = 'password';
 		$login_controller = new LoginController(
-			$session,
 			$http,
 			$auth
 		);
