@@ -2,6 +2,7 @@
 namespace Model\Post;
 
 use Database\Database;
+use Pagination\Pagination;
 
 /**
  * 記事を読み込むモデル
@@ -11,10 +12,14 @@ use Database\Database;
 class PostReader
 {
 	private Database $db;
+	private Pagination $pagination;
 
-	public function __construct(Database $db)
-	{
+	public function __construct(
+		Database $db,
+		Pagination $pagination
+	) {
 		$this->db = $db;
+		$this->pagination = $pagination;
 	}
 
 	/**
@@ -25,9 +30,11 @@ class PostReader
 	 */
 	public function select(int $page): array
 	{
-		$start = ($page - 1) * 3;
-		$stmt = $this->db->getConnection()->prepare('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT :start, 3');
+		$display_posts = $this->pagination::DISPLAY_POSTS;
+		$start = ($page - 1) * $display_posts;
+		$stmt = $this->db->getConnection()->prepare('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC LIMIT :start, :display_posts');
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
+		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}
@@ -41,10 +48,12 @@ class PostReader
 	 */
 	public function selectUserPosts(int $page, int $user_id): array
 	{
-		$start = ($page - 1) * 3;
-		$stmt = $this->db->getConnection()->prepare('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.id DESC LIMIT :start, 3');
+		$display_posts = $this->pagination::DISPLAY_POSTS;
+		$start = ($page - 1) * $display_posts;
+		$stmt = $this->db->getConnection()->prepare('SELECT posts.id as post_id, post, user_id, name FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.id DESC LIMIT :start, :display_posts');
 		$stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
+		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}

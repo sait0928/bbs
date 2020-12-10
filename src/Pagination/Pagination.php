@@ -8,6 +8,8 @@ namespace Pagination;
  */
 class Pagination
 {
+	public const DISPLAY_POSTS = 3;
+
 	/**
 	 * 総記事数を元に必要なページ数を計算
 	 *
@@ -16,6 +18,6 @@ class Pagination
 	 */
 	public function countPages(int $total_posts): int
 	{
-		return ceil($total_posts / 3);
+		return ceil($total_posts / self::DISPLAY_POSTS);
 	}
 }
