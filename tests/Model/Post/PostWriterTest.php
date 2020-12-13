@@ -50,4 +50,19 @@ class PostWriterTest extends TestCase
 		$result = $pdo->query('SELECT COUNT(*) FROM posts')->fetchColumn();
 		$this->assertSame(0, $result);
 	}
+
+	public function testDelete_Failure()
+	{
+		$pdo = $this->db->getConnection();
+		$pdo->exec('DELETE FROM posts');
+		$pdo->exec('DELETE FROM users');
+		$pdo->exec('INSERT INTO users (id, name, email, pass) VALUES (1, "test", "email", "pass")');
+		$pdo->exec('INSERT INTO posts (id, post, user_id) VALUES (1, "test_post_text", 1)');
+
+		$post_writer = new PostWriter($this->db);
+		$post_writer->delete(1, 2);
+
+		$result = $pdo->query('SELECT COUNT(*) FROM posts')->fetchColumn();
+		$this->assertSame(1, $result);
+	}
 }
