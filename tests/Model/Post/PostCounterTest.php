@@ -44,7 +44,8 @@ class PostCounterTest extends TestCase
 		$pdo = $this->db->getConnection();
 		$pdo->exec('DELETE FROM posts');
 		$pdo->exec('DELETE FROM users');
-		$pdo->exec('INSERT INTO users (id, name, email, pass) VALUES (1, "test", "email", "pass")');
+		$pdo->exec('INSERT INTO users (id, name, email, pass) VALUES (1, "test1", "email1", "pass1")');
+		$pdo->exec('INSERT INTO users (id, name, email, pass) VALUES (2, "test2", "email2", "pass2")');
 
 		$post_counter = new PostCounter($this->db);
 		$result = $post_counter->countUserPosts(1);
