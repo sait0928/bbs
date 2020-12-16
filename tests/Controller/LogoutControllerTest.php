@@ -3,7 +3,6 @@
 namespace Controller;
 
 use Http\Http;
-use Http\Session;
 use Model\User\Auth;
 use PHPUnit\Framework\TestCase;
 
@@ -11,11 +10,6 @@ class LogoutControllerTest extends TestCase
 {
 	public function testLogoutAction()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$auth = $this->getMockBuilder(Auth::class)
 			->disableOriginalConstructor()
 			->getMock();
@@ -30,7 +24,6 @@ class LogoutControllerTest extends TestCase
 		;
 
 		$logout_controller = new LogoutController(
-			$session,
 			$auth,
 			$http
 		);

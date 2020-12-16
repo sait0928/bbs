@@ -20,7 +20,11 @@ class Database
 		return new \PDO(
 			'mysql:dbname=bbs;host=localhost',
 			'root',
-			''
+			'',
+			[
+				// 取得した値の型変換を無効にする
+				\PDO::ATTR_EMULATE_PREPARES => false
+			]
 		);
 	}
 

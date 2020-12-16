@@ -2,7 +2,6 @@
 namespace Controller;
 
 use Http\Http;
-use Http\Session;
 use Model\Post\PostWriter;
 use PHPUnit\Framework\TestCase;
 
@@ -10,11 +9,6 @@ class InsertControllerTest extends TestCase
 {
 	public function testInsertAction()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -30,10 +24,9 @@ class InsertControllerTest extends TestCase
 		;
 
 		$_POST['text'] = 'test';
-		$_POST['user_id'] = 1;
+		$_SESSION['user_id'] = 1;
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$insert_controller = new InsertController(
-			$session,
 			$http,
 			$post_writer
 		);
@@ -42,11 +35,6 @@ class InsertControllerTest extends TestCase
 
 	public function testInsertAction_NotPostRequest()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -63,11 +51,8 @@ class InsertControllerTest extends TestCase
 			->method('insert')
 		;
 
-		$_POST['text'] = 'test';
-		$_POST['user_id'] = 1;
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$insert_controller = new InsertController(
-			$session,
 			$http,
 			$post_writer
 		);

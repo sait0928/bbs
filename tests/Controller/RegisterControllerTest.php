@@ -2,7 +2,6 @@
 namespace Controller;
 
 use Http\Http;
-use Http\Session;
 use Model\User\Auth;
 use Model\User\UserRegistration;
 use PHPUnit\Framework\TestCase;
@@ -11,11 +10,6 @@ class RegisterControllerTest extends TestCase
 {
 	public function testRegisterAction()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -49,7 +43,6 @@ class RegisterControllerTest extends TestCase
 		$_POST['name'] = 'hoge';
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$register_controller = new RegisterController(
-			$session,
 			$http,
 			$user_registration,
 			$auth
@@ -59,11 +52,6 @@ class RegisterControllerTest extends TestCase
 
 	public function testRegisterAction_NotPostRequest()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -78,7 +66,6 @@ class RegisterControllerTest extends TestCase
 			->getMock();
 		$user_registration->expects($this->never())
 			->method('register')
-			->with('hoge', 'hoge@hoge.co.jp', 'password')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -86,21 +73,14 @@ class RegisterControllerTest extends TestCase
 			->getMock();
 		$auth->expects($this->never())
 			->method('login')
-			->with('hoge@hoge.co.jp', 'password')
 		;
 
 		$auth->expects($this->never())
 			->method('isLoggedIn')
-			->willReturn(true)
 		;
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
-		$_POST['pass'] = 'password';
-		$_POST['again'] = 'password';
-		$_POST['name'] = 'hoge';
-		$_POST['email'] = 'hoge@hoge.co.jp';
 		$register_controller = new RegisterController(
-			$session,
 			$http,
 			$user_registration,
 			$auth
@@ -112,11 +92,6 @@ class RegisterControllerTest extends TestCase
 
 	public function testRegisterAction_InputDifferentPassword()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -131,7 +106,6 @@ class RegisterControllerTest extends TestCase
 			->getMock();
 		$user_registration->expects($this->never())
 			->method('register')
-			->with('hoge', 'hoge@hoge.co.jp', 'password')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -139,21 +113,16 @@ class RegisterControllerTest extends TestCase
 			->getMock();
 		$auth->expects($this->never())
 			->method('login')
-			->with('hoge@hoge.co.jp', 'password')
 		;
 
 		$auth->expects($this->never())
 			->method('isLoggedIn')
-			->willReturn(true)
 		;
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['pass'] = 'password';
 		$_POST['again'] = 'different';
-		$_POST['name'] = 'hoge';
-		$_POST['email'] = 'hoge@hoge.co.jp';
 		$register_controller = new RegisterController(
-			$session,
 			$http,
 			$user_registration,
 			$auth
@@ -165,11 +134,6 @@ class RegisterControllerTest extends TestCase
 
 	public function testRegisterAction_IsNotLoggedIn()
 	{
-		$session = $this->getMockBuilder(Session::class)->getMock();
-		$session->expects($this->once())
-			->method('start')
-		;
-
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
@@ -206,7 +170,6 @@ class RegisterControllerTest extends TestCase
 		$_POST['name'] = 'hoge';
 		$_POST['email'] = 'hoge@hoge.co.jp';
 		$register_controller = new RegisterController(
-			$session,
 			$http,
 			$user_registration,
 			$auth
