@@ -1,10 +1,6 @@
 <?php
 namespace Model\User;
 
-use Model\User\AuthStorage;
-
-include 'AuthStorage.php';
-
 /**
  * ユーザー認証に関わるモデル
  *
