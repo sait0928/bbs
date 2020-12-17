@@ -11,6 +11,14 @@ use Http\Session;
  */
 class AuthStorage
 {
+	private Session $session;
+
+	public function __construct(
+		Session $session
+	) {
+		$this->session = $session;
+	}
+
 	/**
 	 * セッション変数を set
 	 *
@@ -27,7 +35,6 @@ class AuthStorage
 	public function clearStorage(): void
 	{
 		$_SESSION = array();
-		$session = new Session();
-		$session->destroy();
+		$this->session->destroy();
 	}
 }

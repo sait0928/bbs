@@ -9,10 +9,14 @@ namespace Model\User;
 class Auth
 {
 	private SelectUser $select_user;
+	private AuthStorage $auth_storage;
 
-	public function __construct(SelectUser $select_user)
-	{
+	public function __construct(
+		SelectUser $select_user,
+		AuthStorage $auth_storage
+	) {
 		$this->select_user = $select_user;
+		$this->auth_storage = $auth_storage;
 	}
 
 	/**
@@ -37,8 +41,7 @@ class Auth
 	{
 		$user = $this->select_user->selectUserByEmail($email);
 		if ($this->verifyPassword($password, $user)) {
-			$authStorage = new AuthStorage();
-			$authStorage->setStorage($user);
+			$this->auth_storage->setStorage($user);
 		}
 	}
 
@@ -57,8 +60,7 @@ class Auth
 	 */
 	public function logout(): void
 	{
-		$authStorage = new AuthStorage();
-		$authStorage->clearStorage();
+		$this->auth_storage->clearStorage();
 	}
 }
 

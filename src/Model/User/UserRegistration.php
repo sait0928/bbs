@@ -12,8 +12,9 @@ class UserRegistration
 {
 	private Database $db;
 
-	public function __construct(Database $db)
-	{
+	public function __construct(
+		Database $db
+	) {
 		$this->db = $db;
 	}
 
