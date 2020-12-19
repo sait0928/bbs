@@ -26,7 +26,7 @@ class AuthStorage
 	 */
 	public function setStorage(User $user): void
 	{
-		$_SESSION['user_id'] = $user->getUserId();
+		$this->session->setUserId($user->getUserId());
 	}
 
 	/**

@@ -9,26 +9,17 @@ namespace Model\User;
 class Auth
 {
 	private SelectUser $select_user;
+	private PasswordVerifier $password_verifier;
 	private AuthStorage $auth_storage;
 
 	public function __construct(
 		SelectUser $select_user,
+		PasswordVerifier $password_verifier,
 		AuthStorage $auth_storage
 	) {
 		$this->select_user = $select_user;
+		$this->password_verifier = $password_verifier;
 		$this->auth_storage = $auth_storage;
-	}
-
-	/**
-	 * パスワードを認証
-	 *
-	 * @param string $password_input
-	 * @param User $user
-	 * @return bool
-	 */
-	private function verifyPassword(string $password_input, User $user): bool
-	{
-		return password_verify($password_input, $user->getPassword());
 	}
 
 	/**
@@ -40,7 +31,7 @@ class Auth
 	public function login(string $email, string $password): void
 	{
 		$user = $this->select_user->selectUserByEmail($email);
-		if ($this->verifyPassword($password, $user)) {
+		if ($this->password_verifier->verifyPassword($password, $user)) {
 			$this->auth_storage->setStorage($user);
 		}
 	}

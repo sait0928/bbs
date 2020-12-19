@@ -23,4 +23,20 @@ class Session
 	{
 		session_destroy();
 	}
+
+	/**
+	 * @param int $user_id
+	 */
+	public function setUserId(int $user_id): void
+	{
+		$_SESSION['user_id'] = $user_id;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUserId(): int
+	{
+		return $_SESSION['user_id'];
+	}
 }
