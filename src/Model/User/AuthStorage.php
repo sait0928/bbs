@@ -11,6 +11,14 @@ use Http\Session;
  */
 class AuthStorage
 {
+	private Session $session;
+
+	public function __construct(
+		Session $session
+	) {
+		$this->session = $session;
+	}
+
 	/**
 	 * セッション変数を set
 	 *
@@ -18,7 +26,18 @@ class AuthStorage
 	 */
 	public function setStorage(User $user): void
 	{
-		$_SESSION['user_id'] = $user->getUserId();
+		$this->session->set('user_id', $user->getUserId());
+	}
+
+	/**
+	 * セッション変数が入っているか確認
+	 *
+	 * @return bool
+	 */
+	public function issetStorage(): bool
+	{
+		$user_id = $this->session->get('user_id');
+		return isset($user_id);
 	}
 
 	/**
@@ -26,8 +45,7 @@ class AuthStorage
 	 */
 	public function clearStorage(): void
 	{
-		$_SESSION = array();
-		$session = new Session();
-		$session->destroy();
+		$this->session->unset();
+		$this->session->destroy();
 	}
 }

@@ -1,10 +1,6 @@
 <?php
 namespace Model\User;
 
-use Model\User\AuthStorage;
-
-include 'AuthStorage.php';
-
 /**
  * ユーザー認証に関わるモデル
  *
@@ -13,22 +9,17 @@ include 'AuthStorage.php';
 class Auth
 {
 	private SelectUser $select_user;
+	private PasswordVerifier $password_verifier;
+	private AuthStorage $auth_storage;
 
-	public function __construct(SelectUser $select_user)
-	{
+	public function __construct(
+		SelectUser $select_user,
+		PasswordVerifier $password_verifier,
+		AuthStorage $auth_storage
+	) {
 		$this->select_user = $select_user;
-	}
-
-	/**
-	 * パスワードを認証
-	 *
-	 * @param string $password_input
-	 * @param User $user
-	 * @return bool
-	 */
-	private function verifyPassword(string $password_input, User $user): bool
-	{
-		return password_verify($password_input, $user->getPassword());
+		$this->password_verifier = $password_verifier;
+		$this->auth_storage = $auth_storage;
 	}
 
 	/**
@@ -40,9 +31,8 @@ class Auth
 	public function login(string $email, string $password): void
 	{
 		$user = $this->select_user->selectUserByEmail($email);
-		if ($this->verifyPassword($password, $user)) {
-			$authStorage = new AuthStorage();
-			$authStorage->setStorage($user);
+		if ($this->password_verifier->verifyPassword($password, $user)) {
+			$this->auth_storage->setStorage($user);
 		}
 	}
 
@@ -53,7 +43,7 @@ class Auth
 	 */
 	public function isLoggedIn(): bool
 	{
-		return isset($_SESSION['user_id']);
+		return $this->auth_storage->issetStorage();
 	}
 
 	/**
@@ -61,8 +51,7 @@ class Auth
 	 */
 	public function logout(): void
 	{
-		$authStorage = new AuthStorage();
-		$authStorage->clearStorage();
+		$this->auth_storage->clearStorage();
 	}
 }
 
