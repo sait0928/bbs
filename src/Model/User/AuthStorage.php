@@ -26,7 +26,7 @@ class AuthStorage
 	 */
 	public function setStorage(User $user): void
 	{
-		$this->session->setUserId($user->getUserId());
+		$this->session->set('user_id', $user->getUserId());
 	}
 
 	/**
@@ -34,7 +34,7 @@ class AuthStorage
 	 */
 	public function clearStorage(): void
 	{
-		$_SESSION = array();
+		$this->session->unset();
 		$this->session->destroy();
 	}
 }

@@ -25,18 +25,28 @@ class Session
 	}
 
 	/**
+	 * @param string $key
 	 * @param int $user_id
 	 */
-	public function setUserId(int $user_id): void
+	public function set(string $key, int $user_id): void
 	{
-		$_SESSION['user_id'] = $user_id;
+		$_SESSION[$key] = $user_id;
 	}
 
 	/**
+	 * @param string $key
 	 * @return int
 	 */
-	public function getUserId(): int
+	public function get(string $key): int
 	{
-		return $_SESSION['user_id'];
+		return $_SESSION[$key];
+	}
+
+	/**
+	 * session 変数の初期化
+	 */
+	public function unset(): void
+	{
+		$_SESSION = array();
 	}
 }
