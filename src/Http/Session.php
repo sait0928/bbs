@@ -8,8 +8,6 @@ namespace Http;
  */
 class Session
 {
-	private const PHP_SESSION_NONE = 1;
-
 	/**
 	 * session 開始
 	 */
@@ -23,7 +21,7 @@ class Session
 	 */
 	public function destroy(): void
 	{
-		if(session_status() === self::PHP_SESSION_NONE) {
+		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
 		session_destroy();
@@ -35,7 +33,7 @@ class Session
 	 */
 	public function set(string $key, int $user_id): void
 	{
-		if(session_status() === self::PHP_SESSION_NONE) {
+		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
 		$_SESSION[$key] = $user_id;
@@ -47,7 +45,7 @@ class Session
 	 */
 	public function get(string $key)
 	{
-		if(session_status() === self::PHP_SESSION_NONE) {
+		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
 		return $_SESSION[$key] ?? null;
@@ -58,7 +56,7 @@ class Session
 	 */
 	public function unset(): void
 	{
-		if(session_status() === self::PHP_SESSION_NONE) {
+		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
 		$_SESSION = array();
