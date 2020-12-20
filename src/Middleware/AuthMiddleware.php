@@ -3,7 +3,10 @@ namespace Middleware;
 
 use Database\Database;
 use Http\Http;
+use Http\Session;
 use Model\User\Auth;
+use Model\User\AuthStorage;
+use Model\User\PasswordVerifier;
 use Model\User\SelectUser;
 
 class AuthMiddleware
@@ -23,7 +26,11 @@ class AuthMiddleware
 	{
 		$database = new Database();
 		return new self(
-			new Auth(new SelectUser($database)),
+			new Auth(
+				new SelectUser($database),
+				new PasswordVerifier(),
+				new AuthStorage(new Session())
+			),
 			new Http()
 		);
 	}

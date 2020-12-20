@@ -43,7 +43,7 @@ class Auth
 	 */
 	public function isLoggedIn(): bool
 	{
-		return isset($_SESSION['user_id']);
+		return $this->auth_storage->issetStorage();
 	}
 
 	/**

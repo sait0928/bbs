@@ -11,7 +11,7 @@ class Session
 	/**
 	 * session 開始
 	 */
-	public function start()
+	public function start(): void
 	{
 		session_start();
 	}
@@ -19,7 +19,7 @@ class Session
 	/**
 	 * session 終了
 	 */
-	public function destroy()
+	public function destroy(): void
 	{
 		session_destroy();
 	}
@@ -35,11 +35,11 @@ class Session
 
 	/**
 	 * @param string $key
-	 * @return int
+	 * @return mixed
 	 */
-	public function get(string $key): int
+	public function get(string $key)
 	{
-		return $_SESSION[$key];
+		return $_SESSION[$key] ?? null;
 	}
 
 	/**

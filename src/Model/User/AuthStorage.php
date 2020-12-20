@@ -30,6 +30,17 @@ class AuthStorage
 	}
 
 	/**
+	 * セッション変数が入っているか確認
+	 *
+	 * @return bool
+	 */
+	public function issetStorage(): bool
+	{
+		$user_id = $this->session->get('user_id');
+		return isset($user_id);
+	}
+
+	/**
 	 * セッション変数を破棄する
 	 */
 	public function clearStorage(): void
