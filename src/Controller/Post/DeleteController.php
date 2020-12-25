@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace Controller\Post;
 
 use Http\Http;
 use Model\Post\PostWriter;

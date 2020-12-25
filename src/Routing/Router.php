@@ -1,15 +1,15 @@
 <?php
 namespace Routing;
 
-use Controller\DeleteController;
+use Controller\Post\DeleteController;
 use Controller\IndexController;
-use Controller\InsertController;
-use Controller\LoginController;
-use Controller\LoginFormController;
-use Controller\LogoutController;
+use Controller\Post\InsertController;
+use Controller\Auth\LoginController;
+use Controller\Auth\LoginFormController;
+use Controller\Auth\LogoutController;
 use Controller\NotFoundController;
-use Controller\RegisterController;
-use Controller\RegisterFormController;
+use Controller\Auth\RegisterController;
+use Controller\Auth\RegisterFormController;
 use Controller\UserPageController;
 use Middleware\AuthMiddleware;
 
