@@ -2,6 +2,7 @@
 namespace Controller\Post;
 
 use Http\Http;
+use Http\Session;
 use Model\Post\PostWriter;
 
 /**
@@ -12,13 +13,16 @@ use Model\Post\PostWriter;
  */
 class InsertController
 {
+	private Session $session;
 	private Http $http;
 	private PostWriter $post_writer;
 
 	public function __construct(
+		Session $session,
 		Http $http,
 		PostWriter $post_writer
 	) {
+		$this->session = $session;
 		$this->http = $http;
 		$this->post_writer = $post_writer;
 	}
@@ -34,7 +38,9 @@ class InsertController
 			$this->http->redirect('/');
 		}
 
-		$this->post_writer->insert($_POST['text'], $_SESSION['user_id']);
+		$user_id = $this->session->get('user_id');
+
+		$this->post_writer->insert($_POST['text'], $user_id);
 
 		$this->http->redirect('/');
 	}
