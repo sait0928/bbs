@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Http\Session;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -15,6 +16,7 @@ use View\View;
  */
 class IndexController
 {
+	private Session $session;
 	private SelectUser $select_user;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
@@ -22,12 +24,14 @@ class IndexController
 	private View $view;
 
 	public function __construct(
+		Session $session,
 		SelectUser $select_user,
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
 		View $view
 	) {
+		$this->session = $session;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
@@ -41,7 +45,9 @@ class IndexController
 	 */
 	public function indexAction(): void
 	{
-		$user = $this->select_user->selectUserById($_SESSION['user_id']);
+		$user_id = $this->session->get('user_id');
+
+		$user = $this->select_user->selectUserById($user_id);
 		$name = $user->getUserName();
 
 		$page = $_GET['page'] ?? 1;

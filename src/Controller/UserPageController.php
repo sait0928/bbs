@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Http\Session;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -15,6 +16,7 @@ use View\View;
  */
 class UserPageController
 {
+	private Session $session;
 	private SelectUser $select_user;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
@@ -22,12 +24,14 @@ class UserPageController
 	private View $view;
 
 	public function __construct(
+		Session $session,
 		SelectUser $select_user,
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
 		View $view
 	) {
+		$this->session = $session;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
@@ -41,6 +45,8 @@ class UserPageController
 	 */
 	public function userPageAction(): void
 	{
+		$session_user_id = $this->session->get('user_id');
+
 		$user = $this->select_user->selectUserById($_GET['user_id']);
 		$name = $user->getUserName();
 
@@ -51,9 +57,10 @@ class UserPageController
 		$pages = $this->pagination->countPages($total_posts);
 
 		$params = [
-			'name' => $name,
-			'posts' => $posts,
-			'pages' => $pages,
+			'session_user_id' => $session_user_id,
+			'name'            => $name,
+			'posts'           => $posts,
+			'pages'           => $pages,
 		];
 		$this->view->render('/user_page.php', $params);
 
