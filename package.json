@@ -1,0 +1,27 @@
+{
+  "name": "bbs",
+  "version": "1.0.0",
+  "description": "This software is released under the MIT License, see LICENSE.txt.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sait0928/bbs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sait0928/bbs/issues"
+  },
+  "homepage": "https://github.com/sait0928/bbs#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
