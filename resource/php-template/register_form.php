@@ -5,22 +5,12 @@
 	<title>掲示板</title>
 </head>
 <body>
-<h1>新規登録</h1>
-<div id="form">
-	<form action="/register" method="POST">
-		<label for="name">名前:</label>
-		<input type="text" name="name" id="name" required><br>
-		<label for="email">メールアドレス:</label>
-		<input type="email" name="email" id="email" required><br>
-		<label for="pass">パスワード設定:</label>
-		<input type="password" name="pass" id="pass" required><br>
-		<label for="again">パスワード再入力:</label>
-		<input type="password" name="again" id="again" required><br>
-		<input type="submit" value="新規登録">
-	</form>
-</div>
-<div id="login">
-	<a href="/login_form">ログインはコチラ</a>
-</div>
+<div id="title"></div>
+<div id="register-form"></div>
+<div id="login-form-link"></div>
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="/js/register_form.js"></script>
 </body>
 </html>
