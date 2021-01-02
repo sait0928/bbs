@@ -56,11 +56,14 @@ class UserPageController
 		$total_posts = $this->post_counter->countUserPosts($_GET['user_id']);
 		$pages = $this->pagination->countPages($total_posts);
 
+		$get_user_id = $_GET['user_id'];
+
 		$params = [
 			'session_user_id' => $session_user_id,
 			'name'            => $name,
 			'posts'           => $posts,
 			'pages'           => $pages,
+			'get_user_id'     => $get_user_id,
 		];
 		$this->view->render('/user_page.php', $params);
 

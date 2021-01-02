@@ -36,7 +36,7 @@
 </div>
 <div id="pagination">
 	<?php for($i = 1; $i <= $pages; $i++) : ?>
-		<a href="/user_page?user_id=<?php echo $_GET['user_id']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+		<a href="/user_page?user_id=<?php echo $get_user_id; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
 	<?php endfor; ?>
 </div>
 </body>
