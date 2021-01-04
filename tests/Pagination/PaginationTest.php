@@ -22,7 +22,8 @@ class PaginationTest extends TestCase
 	{
 		$pagination = new Pagination();
 
-		$this->assertSame([1, 2, 3, 4, 5], $pagination->createPageLinksArray(1, 10));
+		$this->assertSame([1, 2, 3], $pagination->createPageLinksArray(1, 3));
+		$this->assertSame([1, 2, 3, 4, 5], $pagination->createPageLinksArray(2, 10));
 		$this->assertSame([3, 4, 5, 6, 7], $pagination->createPageLinksArray(5, 10));
 		$this->assertSame([6, 7, 8, 9, 10], $pagination->createPageLinksArray(9, 10));
 	}
