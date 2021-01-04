@@ -5,37 +5,10 @@
 	<title>掲示板</title>
 </head>
 <body>
-<h1>掲示板</h1>
-<p>ようこそ<?php echo htmlspecialchars($name); ?>さん！</p>
-<div id="form">
-	<form action="/insert" method="POST">
-		<textarea name="text" id="" cols="50" rows="5" required></textarea>
-		<input type="submit" value="投稿">
-	</form>
-</div>
-<div id="posts">
-	<table>
-		<tr>
-			<th>投稿ID</th>
-			<th>投稿者</th>
-			<th>投稿内容</th>
-		</tr>
-		<?php foreach($posts as $post) : ?>
-			<tr>
-				<td><?php echo $post['post_id']; ?></td>
-				<td><a href="/user_page?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['name']); ?></a></td>
-				<td><?php echo nl2br(htmlspecialchars($post['post'])); ?></td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-</div>
-<div id="pagination">
-	<?php for($i = 1; $i <= $pages; $i++) : ?>
-		<a href="/?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-	<?php endfor; ?>
-</div>
-<div id="logout">
-	<a href="/logout">ログアウト</a>
-</div>
+<div id="root" data-params="<?= htmlspecialchars($json_params) ?>"></div>
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>
