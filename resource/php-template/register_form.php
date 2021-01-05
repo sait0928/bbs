@@ -5,9 +5,7 @@
 	<title>掲示板</title>
 </head>
 <body>
-<div id="title"></div>
-<div id="register-form"></div>
-<div id="login-form-link"></div>
+<div id="root"></div>
 <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
