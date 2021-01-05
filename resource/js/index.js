@@ -21,7 +21,7 @@ ReactDOM.render(
 				{params.posts.map((post) => {
 					return <tr>
 						<td>{post.post_id}</td>
-						<td><a href={`/user_page?user_id=${post.user_id}`}>{post.user_id}</a></td>
+						<td><a href={`/user_page?user_id=${post.user_id}`}>{post.name}</a></td>
 						<td>{post.post}</td>
 					</tr>
 				})}

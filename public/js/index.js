@@ -66,7 +66,7 @@ ReactDOM.render(React.createElement(
 						React.createElement(
 							"a",
 							{ href: "/user_page?user_id=" + post.user_id },
-							post.user_id
+							post.name
 						)
 					),
 					React.createElement(
