@@ -6,7 +6,7 @@ use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
 use Pagination\Pagination;
-use View\View;
+use View\ReactView;
 
 /**
  * '/user_page' にアクセスされた時に
@@ -21,7 +21,7 @@ class UserPageController
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
 	private Pagination $pagination;
-	private View $view;
+	private ReactView $react_view;
 
 	public function __construct(
 		Session $session,
@@ -29,14 +29,14 @@ class UserPageController
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
-		View $view
+		ReactView $react_view
 	) {
 		$this->session = $session;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
 		$this->pagination = $pagination;
-		$this->view = $view;
+		$this->react_view = $react_view;
 	}
 
 	/**
@@ -47,25 +47,25 @@ class UserPageController
 	{
 		$session_user_id = $this->session->get('user_id');
 
-		$user = $this->select_user->selectUserById($_GET['user_id']);
+		$get_user_id = $_GET['user_id'];
+
+		$user = $this->select_user->selectUserById($get_user_id);
 		$name = $user->getUserName();
 
-		$page = $_GET['page'] ?? 1;
-		$posts = $this->post_reader->selectUserPosts($page, $_GET['user_id']);
+		$current_page = $_GET['page'] ?? 1;
+		$posts = $this->post_reader->selectUserPosts($current_page, $get_user_id);
 
-		$total_posts = $this->post_counter->countUserPosts($_GET['user_id']);
-		$pages = $this->pagination->countPages($total_posts);
-
-		$get_user_id = $_GET['user_id'];
+		$total_posts = $this->post_counter->countUserPosts($get_user_id);
+		$total_pages = $this->pagination->countPages($total_posts);
+		$page_links = $this->pagination->createPageLinksArray($current_page, $total_pages);
 
 		$params = [
 			'session_user_id' => $session_user_id,
 			'name'            => $name,
 			'posts'           => $posts,
-			'pages'           => $pages,
+			'page_links'      => $page_links,
 			'get_user_id'     => $get_user_id,
 		];
-		$this->view->render('/user_page.php', $params);
-
+		$this->react_view->render('/user_page.php', $params);
 	}
 }
