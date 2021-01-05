@@ -12,18 +12,16 @@ ReactDOM.render(React.createElement(
 	React.createElement(
 		"p",
 		null,
-		"\u3088\u3046\u3053\u305D",
 		params.name,
-		"\u3055\u3093\uFF01"
+		"\u3055\u3093\u306E\u6295\u7A3F\u4E00\u89A7"
 	),
 	React.createElement(
 		"div",
-		{ id: "form" },
+		{ id: "return" },
 		React.createElement(
-			"form",
-			{ action: "/insert", method: "POST" },
-			React.createElement("textarea", { name: "text", id: "", cols: "50", rows: "5", required: true }),
-			React.createElement("input", { type: "submit", value: "\u6295\u7A3F" })
+			"a",
+			{ href: "/" },
+			"\u2190\u623B\u308B"
 		)
 	),
 	React.createElement(
@@ -63,16 +61,22 @@ ReactDOM.render(React.createElement(
 					React.createElement(
 						"td",
 						null,
-						React.createElement(
-							"a",
-							{ href: "/user_page?user_id=" + post.user_id },
-							post.name
-						)
+						post.name
 					),
 					React.createElement(
 						"td",
 						null,
 						post.post
+					),
+					post.user_id === params.session_user_id && React.createElement(
+						"td",
+						null,
+						React.createElement(
+							"form",
+							{ action: "/delete", method: "POST" },
+							React.createElement("input", { type: "hidden", name: "id", value: post.post_id }),
+							React.createElement("input", { type: "submit", value: "\u524A\u9664" })
+						)
 					)
 				);
 			})
@@ -84,18 +88,9 @@ ReactDOM.render(React.createElement(
 		params.page_links.map(function (page_link) {
 			return React.createElement(
 				"a",
-				{ href: "/?page=" + page_link },
+				{ href: "/user_page?user_id=" + params.get_user_id + "&page=" + page_link },
 				page_link
 			);
 		})
-	),
-	React.createElement(
-		"div",
-		{ id: "logout" },
-		React.createElement(
-			"a",
-			{ href: "/logout" },
-			"\u30ED\u30B0\u30A2\u30A6\u30C8"
-		)
 	)
 ), root);
