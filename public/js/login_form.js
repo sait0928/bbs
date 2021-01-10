@@ -1,3 +1,6 @@
+var root = document.getElementById('root');
+var params = JSON.parse(root.dataset.params);
+
 ReactDOM.render(React.createElement(
 	"div",
 	null,
@@ -26,6 +29,7 @@ ReactDOM.render(React.createElement(
 				React.createElement("input", { type: "password", name: "pass", id: "pass", required: true })
 			),
 			React.createElement("br", null),
+			React.createElement("input", { type: "hidden", name: "csrf_token", value: params.csrf_token }),
 			React.createElement("input", { type: "submit", value: "\u30ED\u30B0\u30A4\u30F3" })
 		)
 	),

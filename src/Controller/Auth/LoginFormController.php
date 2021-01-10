@@ -1,7 +1,8 @@
 <?php
 namespace Controller\Auth;
 
-use View\View;
+use CsrfToken\CsrfToken;
+use View\ReactView;
 
 /**
  * '/login_form' にアクセスされた時に
@@ -11,12 +12,15 @@ use View\View;
  */
 class LoginFormController
 {
-	private View $view;
+	private CsrfToken $csrf_token;
+	private ReactView $react_view;
 
 	public function __construct(
-		View $view
+		CsrfToken $csrf_token,
+		ReactView $react_view
 	) {
-		$this->view = $view;
+		$this->csrf_token = $csrf_token;
+		$this->react_view = $react_view;
 	}
 
 	/**
@@ -24,6 +28,12 @@ class LoginFormController
 	 */
 	public function loginFormAction(): void
 	{
-		$this->view->render('/login_form.php');
+		$this->csrf_token->set();
+		$csrf_token = $this->csrf_token->get();
+
+		$params = [
+			'csrf_token' => $csrf_token,
+		];
+		$this->react_view->render('/login_form.php', $params);
 	}
 }
