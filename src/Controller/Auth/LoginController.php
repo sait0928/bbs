@@ -1,6 +1,7 @@
 <?php
 namespace Controller\Auth;
 
+use CsrfToken\CsrfToken;
 use Http\Http;
 use Model\User\Auth;
 
@@ -14,13 +15,16 @@ class LoginController
 {
 	private Http $http;
 	private Auth $auth;
+	private CsrfToken $csrf_token;
 
 	public function __construct(
 		Http $http,
-		Auth $auth
+		Auth $auth,
+		CsrfToken $csrf_token
 	) {
 		$this->http = $http;
 		$this->auth = $auth;
+		$this->csrf_token = $csrf_token;
 	}
 
 	/**
@@ -31,6 +35,12 @@ class LoginController
 	public function loginAction(): void
 	{
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			$this->http->redirect('/login_form');
+		}
+
+		$csrf_token = $this->csrf_token->get();
+		if($csrf_token !== $_POST['csrf_token'])
+		{
 			$this->http->redirect('/login_form');
 		}
 

@@ -29,14 +29,14 @@ class Session
 
 	/**
 	 * @param string $key
-	 * @param int $user_id
+	 * @param mixed $value
 	 */
-	public function set(string $key, int $user_id): void
+	public function set(string $key, $value): void
 	{
 		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
-		$_SESSION[$key] = $user_id;
+		$_SESSION[$key] = $value;
 	}
 
 	/**

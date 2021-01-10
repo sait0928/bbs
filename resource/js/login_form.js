@@ -1,3 +1,6 @@
+const root = document.getElementById('root');
+const params = JSON.parse(root.dataset.params);
+
 ReactDOM.render(
 	<div>
 		<h1>ログイン</h1>
@@ -11,6 +14,7 @@ ReactDOM.render(
 					パスワード:
 					<input type="password" name="pass" id="pass" required />
 				</label><br />
+				<input type="hidden" name="csrf_token" value={params.csrf_token} />
 				<input type="submit" value="ログイン" />
 			</form>
 		</div>
