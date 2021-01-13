@@ -1,6 +1,7 @@
 <?php
 namespace Controller\Auth;
 
+use CsrfToken\CsrfToken;
 use Http\Http;
 use Model\User\UserRegistration;
 use Model\User\Auth;
@@ -16,15 +17,18 @@ class RegisterController
 	private Http $http;
 	private UserRegistration $user_registration;
 	private Auth $auth;
+	private CsrfToken $csrf_token;
 
 	public function __construct(
 		Http $http,
 		UserRegistration $user_registration,
-		Auth $auth
+		Auth $auth,
+		CsrfToken $csrf_token
 	) {
 		$this->http = $http;
 		$this->user_registration = $user_registration;
 		$this->auth = $auth;
+		$this->csrf_token = $csrf_token;
 	}
 
 	/**
@@ -35,6 +39,12 @@ class RegisterController
 	public function registerAction(): void
 	{
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			$this->http->redirect('/register_form');
+		}
+
+		$csrf_token = $this->csrf_token->get();
+		if($csrf_token !== $_POST['csrf_token'])
+		{
 			$this->http->redirect('/register_form');
 		}
 
