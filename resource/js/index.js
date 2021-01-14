@@ -8,6 +8,7 @@ ReactDOM.render(
 		<div id="form">
 			<form action="/insert" method="POST">
 				<textarea name="text" id="" cols="50" rows="5" required />
+				<input type="hidden" name="csrf_token" value={params.csrf_token} />
 				<input type="submit" value="投稿" />
 			</form>
 		</div>

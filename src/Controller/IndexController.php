@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use CsrfToken\CsrfToken;
 use Http\Session;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
@@ -21,6 +22,7 @@ class IndexController
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
 	private Pagination $pagination;
+	private CsrfToken $csrf_token;
 	private ReactView $react_view;
 
 	public function __construct(
@@ -29,6 +31,7 @@ class IndexController
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
+		CsrfToken $csrf_token,
 		ReactView $react_view
 	) {
 		$this->session = $session;
@@ -36,6 +39,7 @@ class IndexController
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
 		$this->pagination = $pagination;
+		$this->csrf_token = $csrf_token;
 		$this->react_view = $react_view;
 	}
 
@@ -57,10 +61,13 @@ class IndexController
 		$total_pages = $this->pagination->countPages($total_posts);
 		$page_links = $this->pagination->createPageLinksArray($current_page, $total_pages);
 
+		$csrf_token = $this->csrf_token->get();
+
 		$params = [
 			'name' => $name,
 			'posts' => $posts,
 			'page_links' => $page_links,
+			'csrf_token' => $csrf_token,
 		];
 		$this->react_view->render('/index.php', $params);
 	}
