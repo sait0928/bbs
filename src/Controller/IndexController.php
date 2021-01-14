@@ -64,8 +64,8 @@ class IndexController
 		$csrf_token = $this->csrf_token->get();
 
 		$params = [
-			'name' => $name,
-			'posts' => $posts,
+			'name'       => $name,
+			'posts'      => $posts,
 			'page_links' => $page_links,
 			'csrf_token' => $csrf_token,
 		];

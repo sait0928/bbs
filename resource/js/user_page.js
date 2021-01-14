@@ -24,6 +24,7 @@ ReactDOM.render(
 						<td>
 							<form action="/delete" method="POST">
 								<input type="hidden" name="id" value={post.post_id} />
+								<input type="hidden" name="csrf_token" value={params.csrf_token} />
 								<input type="submit" value="削除" />
 							</form>
 						</td>

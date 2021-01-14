@@ -75,6 +75,7 @@ ReactDOM.render(React.createElement(
 							"form",
 							{ action: "/delete", method: "POST" },
 							React.createElement("input", { type: "hidden", name: "id", value: post.post_id }),
+							React.createElement("input", { type: "hidden", name: "csrf_token", value: params.csrf_token }),
 							React.createElement("input", { type: "submit", value: "\u524A\u9664" })
 						)
 					)
