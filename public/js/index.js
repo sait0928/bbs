@@ -23,6 +23,7 @@ ReactDOM.render(React.createElement(
 			"form",
 			{ action: "/insert", method: "POST" },
 			React.createElement("textarea", { name: "text", id: "", cols: "50", rows: "5", required: true }),
+			React.createElement("input", { type: "hidden", name: "csrf_token", value: params.csrf_token }),
 			React.createElement("input", { type: "submit", value: "\u6295\u7A3F" })
 		)
 	),
