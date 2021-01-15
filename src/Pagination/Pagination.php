@@ -19,6 +19,10 @@ class Pagination
 	 */
 	public function countPages(int $total_posts): int
 	{
+		if($total_posts === 0) {
+			return 1;
+		}
+
 		return ceil($total_posts / self::DISPLAY_POSTS);
 	}
 
