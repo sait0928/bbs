@@ -1,7 +1,5 @@
 <?php
-namespace CsrfToken;
-
-use Http\Session;
+namespace Http;
 
 /**
  * Class CsrfToken

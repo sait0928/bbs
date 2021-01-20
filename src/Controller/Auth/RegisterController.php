@@ -1,7 +1,7 @@
 <?php
 namespace Controller\Auth;
 
-use CsrfToken\CsrfToken;
+use Http\CsrfToken;
 use Http\Http;
 use Model\User\UserRegistration;
 use Model\User\Auth;

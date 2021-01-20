@@ -1,7 +1,7 @@
 <?php
 namespace Controller\Auth;
 
-use CsrfToken\CsrfToken;
+use Http\CsrfToken;
 use View\ReactView;
 
 /**

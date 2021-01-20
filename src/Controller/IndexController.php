@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 
-use CsrfToken\CsrfToken;
+use Http\CsrfToken;
 use Http\Session;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
