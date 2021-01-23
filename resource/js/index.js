@@ -5,6 +5,7 @@ ReactDOM.render(
 	<div>
 		<h1>掲示板</h1>
 		<p>ようこそ{params.name}さん！</p>
+		<div id="user-update"><a href="/user_update_form">ユーザ情報を更新する</a></div>
 		<div id="form">
 			<form action="/insert" method="POST">
 				<textarea name="text" id="" cols="50" rows="5" required />

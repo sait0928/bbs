@@ -18,6 +18,15 @@ ReactDOM.render(React.createElement(
 	),
 	React.createElement(
 		"div",
+		{ id: "user-update" },
+		React.createElement(
+			"a",
+			{ href: "/user_update_form" },
+			"\u30E6\u30FC\u30B6\u60C5\u5831\u3092\u66F4\u65B0\u3059\u308B"
+		)
+	),
+	React.createElement(
+		"div",
 		{ id: "form" },
 		React.createElement(
 			"form",
