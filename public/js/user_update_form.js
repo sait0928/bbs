@@ -16,16 +16,9 @@ ReactDOM.render(React.createElement(
 			"form",
 			{ action: "/user_update", method: "POST" },
 			React.createElement(
-				"label",
-				{ htmlFor: "current_password" },
-				"\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B:",
-				React.createElement("input", { type: "password", name: "current_pass", id: "current_pass", required: true })
-			),
-			React.createElement("br", null),
-			React.createElement(
-				"h2",
+				"p",
 				null,
-				"\u4EE5\u4E0B\u3001\u5909\u66F4\u3057\u305F\u3044\u9805\u76EE\u306E\u307F\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+				"\u5909\u66F4\u3057\u305F\u3044\u9805\u76EE\u306E\u307F\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
 			),
 			React.createElement(
 				"label",

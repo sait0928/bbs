@@ -6,6 +6,7 @@ use Controller\Auth\LoginFormController;
 use Controller\Auth\LogoutController;
 use Controller\Auth\RegisterController;
 use Controller\Auth\RegisterFormController;
+use Controller\Auth\UserUpdateController;
 use Controller\Auth\UserUpdateFormController;
 use Controller\IndexController;
 use Controller\NotFoundController;
@@ -28,6 +29,7 @@ class Router
 			'/insert'           => [InsertController::class,         'insertAction'],
 			'/delete'           => [DeleteController::class,         'deleteAction'],
 			'/user_update_form' => [UserUpdateFormController::class, 'userUpdateFormAction'],
+			'/user_update'      => [UserUpdateController::class,     'userUpdateAction'],
 			'/logout'           => [LogoutController::class,         'logoutAction'],
 		],
 		'before_login' => [

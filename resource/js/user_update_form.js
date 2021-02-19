@@ -6,11 +6,7 @@ ReactDOM.render(
 		<h1>ユーザ情報更新</h1>
 		<div id="user-update-form">
 			<form action="/user_update" method="POST">
-				<label htmlFor="current_password">
-					現在のパスワードを入力:
-					<input type="password" name="current_pass" id="current_pass" required />
-				</label><br />
-				<h2>以下、変更したい項目のみ入力してください</h2>
+				<p>変更したい項目のみ入力してください</p>
 				<label htmlFor="email">
 					ユーザ名を変更:
 					<input type="text" name="name" id="name" />
@@ -21,7 +17,7 @@ ReactDOM.render(
 				</label><br />
 				<label htmlFor="pass">
 					パスワードを変更:
-					<input type="password" name="new_pass" id="new_pass" />
+					<input type="password" name="pass" id="pass" />
 				</label><br />
 				<label htmlFor="pass">
 					変更後パスワード再入力:
