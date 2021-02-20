@@ -1,10 +1,11 @@
 <?php
 namespace Controller\Auth;
 
-use Database\Database;
 use Http\CsrfToken;
 use Http\Http;
+use Http\Session;
 use Model\User\Auth;
+use Model\User\UserUpdate;
 
 /**
  * '/user_update'にアクセスされた時に
@@ -17,18 +18,21 @@ class UserUpdateController
 	private Http $http;
 	private Auth $auth;
 	private CsrfToken $csrf_token;
-	private Database $db;
+	private UserUpdate $user_update;
+	private Session $session;
 
 	public function __construct(
 		Http $http,
 		Auth $auth,
 		CsrfToken $csrf_token,
-		Database $db
+		UserUpdate $user_update,
+		Session $session
 	) {
 		$this->http = $http;
 		$this->auth = $auth;
 		$this->csrf_token = $csrf_token;
-		$this->db = $db;
+		$this->user_update = $user_update;
+		$this->session = $session;
 	}
 
 	/**
@@ -64,27 +68,9 @@ class UserUpdateController
 			$_POST['pass'] = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 		}
 
-		$sql = 'UPDATE users SET ';
+		$user_id = $this->session->get('user_id');
 
-		$count = count($sql_array);
-		$i = 1;
-		foreach($sql_array as $sql_element) {
-			$sql = $sql . $sql_element;
-
-			if($i < $count) {
-				$sql = $sql . ', ';
-				$i++;
-			}
-		}
-
-		$sql = $sql . ' WHERE id = :id';
-
-		$stmt = $this->db->getConnection()->prepare($sql);
-		foreach($sql_array as $key => $sql_element) {
-			$place_holder = ':' . $key;
-			$stmt->bindParam($place_holder, $_POST[$key], \PDO::PARAM_STR);
-		}
-		$stmt->execute();
+		$this->user_update->updateUser($sql_array, $user_id);
 
 		$this->http->redirect('/');
 	}
