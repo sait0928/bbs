@@ -40,6 +40,10 @@ class UserUpdateController
 	 */
 	public function userUpdateAction(): void
 	{
+		if(!$_POST['name'] && !$_POST['email'] && !$_POST['pass']) {
+			$this->http->redirect('/user_update_form');
+		}
+
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/user_update_form');
 		}
