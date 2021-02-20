@@ -56,21 +56,24 @@ class UserUpdateController
 
 		// 動的にsqlを生成する
 		$sql_array = [];
+		$value_array = [];
 
-		if(isset($_POST['name'])) {
+		if($_POST['name'] !== '') {
 			$sql_array['name'] = 'name = :name';
+			$value_array['name'] = $_POST['name'];
 		}
-		if(isset($_POST['email'])) {
+		if($_POST['email'] !== '') {
 			$sql_array['email'] = 'email = :email';
+			$value_array['email'] = $_POST['email'];
 		}
-		if(isset($_POST['pass'])) {
+		if($_POST['pass'] !== '') {
 			$sql_array['pass'] = 'pass = :pass';
-			$_POST['pass'] = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+			$value_array['pass'] = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 		}
 
 		$user_id = $this->session->get('user_id');
 
-		$this->user_update->updateUser($sql_array, $user_id);
+		$this->user_update->updateUser($sql_array, $value_array, $user_id);
 
 		$this->http->redirect('/');
 	}
