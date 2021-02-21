@@ -13,21 +13,39 @@ class UserUpdate
 		$this->db = $db;
 	}
 
-	private function createSql(array $sql_array): string
+	/**
+	 * ユーザ情報を更新する
+	 *
+	 * @param string $name
+	 * @param string $email
+	 * @param string $pass
+	 * @param int $user_id
+	 */
+	public function updateUser(string $name, string $email, string $pass, int $id): void
 	{
-		$sql = 'UPDATE users SET ' . implode(', ', $sql_array) . ' WHERE id = :id';
-		return $sql;
-	}
-
-	public function updateUser(array $sql_array, array $value_array, int $user_id): void
-	{
-		$sql = $this->createSql($sql_array);
-		$stmt = $this->db->getConnection()->prepare($sql);
-		foreach($sql_array as $key => $value) {
-			$place_holder = ':' . $key;
-			$stmt->bindParam($place_holder, $value_array[$key], \PDO::PARAM_STR);
+		if($name !== '') {
+			$sql_array['name'] = 'name = :name';
+			$value_array['name'] = $name;
 		}
-		$stmt->bindParam(':id', $user_id, \PDO::PARAM_INT);
+
+		if($email !== '') {
+			$sql_array['email'] = 'email = :email';
+			$value_array['email'] = $email;
+		}
+
+		if($pass !== '') {
+			$sql_array['pass'] = 'pass = :pass';
+			$value_array['pass'] = password_hash($pass, PASSWORD_DEFAULT);
+		}
+
+		$sql = 'UPDATE users SET ' . implode(', ', $sql_array) . ' WHERE id = :id';
+
+		$stmt = $this->db->getConnection()->prepare($sql);
+		foreach($value_array as $key => $value) {
+			$place_holder = ':' . $key;
+			$stmt->bindParam($place_holder, $value, \PDO::PARAM_STR);
+		}
+		$stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
 	}
 }

@@ -40,11 +40,16 @@ class UserUpdateController
 	 */
 	public function userUpdateAction(): void
 	{
-		if($_POST['name'] === '' && $_POST['email'] === '' && $_POST['pass'] === '') {
+		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/user_update_form');
 		}
 
-		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		$name = $_POST['name'] ?? '';
+		$email = $_POST['email'] ?? '';
+		$pass = $_POST['pass'] ?? '';
+		$again = $_POST['again'] ?? '';
+
+		if($name === '' && $email === '' && $pass === '') {
 			$this->http->redirect('/user_update_form');
 		}
 
@@ -54,30 +59,13 @@ class UserUpdateController
 			$this->http->redirect('/user_update_form');
 		}
 
-		if($_POST['pass'] !== $_POST['again']) {
+		if($pass !== $again) {
 			$this->http->redirect('/user_update_form');
 		}
 
-		// 動的にsqlを生成する
-		$sql_array = [];
-		$value_array = [];
+		$id = $this->session->get('user_id');
 
-		if($_POST['name'] !== '') {
-			$sql_array['name'] = 'name = :name';
-			$value_array['name'] = $_POST['name'];
-		}
-		if($_POST['email'] !== '') {
-			$sql_array['email'] = 'email = :email';
-			$value_array['email'] = $_POST['email'];
-		}
-		if($_POST['pass'] !== '') {
-			$sql_array['pass'] = 'pass = :pass';
-			$value_array['pass'] = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-		}
-
-		$user_id = $this->session->get('user_id');
-
-		$this->user_update->updateUser($sql_array, $value_array, $user_id);
+		$this->user_update->updateUser($name, $email, $pass, $id);
 
 		$this->http->redirect('/');
 	}
