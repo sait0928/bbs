@@ -53,8 +53,9 @@ class UserUpdateController
 			$this->http->redirect('/user_update_form');
 		}
 
+		$post_csrf_token = $_POST['csrf_token'] ?? '';
 		$csrf_token = $this->csrf_token->get();
-		if($csrf_token !== $_POST['csrf_token'])
+		if($csrf_token !== $post_csrf_token)
 		{
 			$this->http->redirect('/user_update_form');
 		}

@@ -19,10 +19,13 @@ class UserUpdate
 	 * @param string $name
 	 * @param string $email
 	 * @param string $pass
-	 * @param int $user_id
+	 * @param int $id
 	 */
 	public function updateUser(string $name, string $email, string $pass, int $id): void
 	{
+		$sql_array = [];
+		$value_array = [];
+
 		if($name !== '') {
 			$sql_array['name'] = 'name = :name';
 			$value_array['name'] = $name;
@@ -43,9 +46,9 @@ class UserUpdate
 		$stmt = $this->db->getConnection()->prepare($sql);
 		foreach($value_array as $key => $value) {
 			$place_holder = ':' . $key;
-			$stmt->bindParam($place_holder, $value, \PDO::PARAM_STR);
+			$stmt->bindValue($place_holder, $value, \PDO::PARAM_STR);
 		}
-		$stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+		$stmt->bindValue(':id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
 	}
 }
