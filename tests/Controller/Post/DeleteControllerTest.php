@@ -1,44 +1,44 @@
 <?php
-namespace Controller;
+namespace Controller\Post;
 
 use Http\Http;
 use Model\Post\PostWriter;
 use PHPUnit\Framework\TestCase;
 
-class InsertControllerTest extends TestCase
+class DeleteControllerTest extends TestCase
 {
-	public function testInsertAction()
+	public function testDeleteAction()
 	{
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
-			->with('/')
+			->with('/user_page?user_id=1')
 		;
 
 		$post_writer = $this->getMockBuilder(PostWriter::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$post_writer->expects($this->once())
-			->method('insert')
-			->with('test', 1)
+			->method('delete')
+			->with(1, 1)
 		;
 
-		$_POST['text'] = 'test';
-		$_SESSION['user_id'] = 1;
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$insert_controller = new InsertController(
+		$_SESSION['user_id'] = 1;
+		$_POST['id'] = 1;
+		$delete_controller = new DeleteController(
 			$http,
 			$post_writer
 		);
-		$insert_controller->insertAction();
+		$delete_controller->deleteAction();
 	}
 
-	public function testInsertAction_NotPostRequest()
+	public function testDeleteAction_NotPostRequest()
 	{
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
-			->with('/')
+			->with('/user_page?user_id=1')
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
@@ -48,16 +48,17 @@ class InsertControllerTest extends TestCase
 			->disableOriginalConstructor()
 			->getMock();
 		$post_writer->expects($this->never())
-			->method('insert')
+			->method('delete')
 		;
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
-		$insert_controller = new InsertController(
+		$_SESSION['user_id'] = 1;
+		$delete_controller = new DeleteController(
 			$http,
 			$post_writer
 		);
 		$this->expectException(\Exception::class);
 		$this->expectErrorMessage('exit with redirect');
-		$insert_controller->insertAction();
+		$delete_controller->deleteAction();
 	}
 }

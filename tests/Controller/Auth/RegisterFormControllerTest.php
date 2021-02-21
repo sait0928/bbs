@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace Controller\Auth;
 
 use PHPUnit\Framework\TestCase;
 use View\View;
