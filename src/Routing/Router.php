@@ -6,6 +6,8 @@ use Controller\Auth\LoginFormController;
 use Controller\Auth\LogoutController;
 use Controller\Auth\RegisterController;
 use Controller\Auth\RegisterFormController;
+use Controller\Auth\UserUpdateController;
+use Controller\Auth\UserUpdateFormController;
 use Controller\IndexController;
 use Controller\NotFoundController;
 use Controller\Post\DeleteController;
@@ -22,11 +24,13 @@ class Router
 {
 	private const ROUTES = [
 		'login_required' => [
-			'/'              => [IndexController::class,        'indexAction'],
-			'/user_page'     => [UserPageController::class,     'userPageAction'],
-			'/insert'        => [InsertController::class,       'insertAction'],
-			'/delete'        => [DeleteController::class,       'deleteAction'],
-			'/logout'        => [LogoutController::class,       'logoutAction'],
+			'/'                 => [IndexController::class,          'indexAction'],
+			'/user_page'        => [UserPageController::class,       'userPageAction'],
+			'/insert'           => [InsertController::class,         'insertAction'],
+			'/delete'           => [DeleteController::class,         'deleteAction'],
+			'/user_update_form' => [UserUpdateFormController::class, 'userUpdateFormAction'],
+			'/user_update'      => [UserUpdateController::class,     'userUpdateAction'],
+			'/logout'           => [LogoutController::class,         'logoutAction'],
 		],
 		'before_login' => [
 			'/login_form'    => [LoginFormController::class,    'loginFormAction'],
