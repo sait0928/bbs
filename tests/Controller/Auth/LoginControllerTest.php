@@ -181,6 +181,8 @@ class LoginControllerTest extends TestCase
 			$auth,
 			$csrf_token
 		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
 		$login_controller->loginAction();
 	}
 }
