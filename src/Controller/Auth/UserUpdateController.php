@@ -4,7 +4,6 @@ namespace Controller\Auth;
 use Http\CsrfToken;
 use Http\Http;
 use Http\Session;
-use Model\User\Auth;
 use Model\User\UserUpdate;
 
 /**
@@ -16,20 +15,17 @@ use Model\User\UserUpdate;
 class UserUpdateController
 {
 	private Http $http;
-	private Auth $auth;
 	private CsrfToken $csrf_token;
 	private UserUpdate $user_update;
 	private Session $session;
 
 	public function __construct(
 		Http $http,
-		Auth $auth,
 		CsrfToken $csrf_token,
 		UserUpdate $user_update,
 		Session $session
 	) {
 		$this->http = $http;
-		$this->auth = $auth;
 		$this->csrf_token = $csrf_token;
 		$this->user_update = $user_update;
 		$this->session = $session;
