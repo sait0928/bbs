@@ -1,27 +1,22 @@
 <?php
-namespace Controller;
+namespace Controller\Auth;
 
+use Http\CsrfToken;
 use Http\Http;
 use Model\User\Auth;
-use Model\User\UserRegistration;
 use PHPUnit\Framework\TestCase;
 
-class RegisterControllerTest extends TestCase
+class LoginControllerTest extends TestCase
 {
-	public function testRegisterAction()
+	/**
+	 * ログインのテスト
+	 */
+	public function testLoginAction()
 	{
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
 			->with('/')
-		;
-
-		$user_registration = $this->getMockBuilder(UserRegistration::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$user_registration->expects($this->once())
-			->method('register')
-			->with('hoge', 'hoge@hoge.co.jp', 'password')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -37,35 +32,37 @@ class RegisterControllerTest extends TestCase
 			->willReturn(true)
 		;
 
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->once())
+			->method('get')
+		;
+
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_POST['pass'] = 'password';
-		$_POST['again'] = 'password';
-		$_POST['name'] = 'hoge';
 		$_POST['email'] = 'hoge@hoge.co.jp';
-		$register_controller = new RegisterController(
+		$_POST['pass'] = 'password';
+		$_POST['csrf_token'] = '';
+		$login_controller = new LoginController(
 			$http,
-			$user_registration,
-			$auth
+			$auth,
+			$csrf_token
 		);
-		$register_controller->registerAction();
+		$login_controller->loginAction();
 	}
 
-	public function testRegisterAction_NotPostRequest()
+	/**
+	 * POST通信ではなかった場合のテスト
+	 */
+	public function testLoginAction_NotPostRequest()
 	{
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
-			->with('/register_form')
+			->with('/login_form')
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
-		;
-
-		$user_registration = $this->getMockBuilder(UserRegistration::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$user_registration->expects($this->never())
-			->method('register')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -77,78 +74,38 @@ class RegisterControllerTest extends TestCase
 
 		$auth->expects($this->never())
 			->method('isLoggedIn')
+		;
+
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->never())
+			->method('get')
 		;
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
-		$register_controller = new RegisterController(
+		$login_controller = new LoginController(
 			$http,
-			$user_registration,
-			$auth
+			$auth,
+			$csrf_token
 		);
 		$this->expectException(\Exception::class);
 		$this->expectErrorMessage('exit with redirect');
-		$register_controller->registerAction();
+		$login_controller->loginAction();
 	}
 
-	public function testRegisterAction_InputDifferentPassword()
+	/**
+	 * ログインできなかった場合のテスト
+	 */
+	public function testLoginAction_IsNotLoggedIn()
 	{
 		$http = $this->getMockBuilder(Http::class)->getMock();
 		$http->expects($this->once())
 			->method('redirect')
-			->with('/register_form')
+			->with('/login_form')
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
-		;
-
-		$user_registration = $this->getMockBuilder(UserRegistration::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$user_registration->expects($this->never())
-			->method('register')
-		;
-
-		$auth = $this->getMockBuilder(Auth::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$auth->expects($this->never())
-			->method('login')
-		;
-
-		$auth->expects($this->never())
-			->method('isLoggedIn')
-		;
-
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_POST['pass'] = 'password';
-		$_POST['again'] = 'different';
-		$register_controller = new RegisterController(
-			$http,
-			$user_registration,
-			$auth
-		);
-		$this->expectException(\Exception::class);
-		$this->expectErrorMessage('exit with redirect');
-		$register_controller->registerAction();
-	}
-
-	public function testRegisterAction_IsNotLoggedIn()
-	{
-		$http = $this->getMockBuilder(Http::class)->getMock();
-		$http->expects($this->once())
-			->method('redirect')
-			->with('/register_form')
-			->willReturnCallback(function () {
-				throw new \Exception('exit with redirect');
-			})
-		;
-
-		$user_registration = $this->getMockBuilder(UserRegistration::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$user_registration->expects($this->once())
-			->method('register')
-			->with('hoge', 'hoge@hoge.co.jp', 'password')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -164,18 +121,68 @@ class RegisterControllerTest extends TestCase
 			->willReturn(false)
 		;
 
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->once())
+			->method('get')
+		;
+
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_POST['pass'] = 'password';
-		$_POST['again'] = 'password';
-		$_POST['name'] = 'hoge';
 		$_POST['email'] = 'hoge@hoge.co.jp';
-		$register_controller = new RegisterController(
+		$_POST['pass'] = 'password';
+		$_POST['csrf_token'] = '';
+		$login_controller = new LoginController(
 			$http,
-			$user_registration,
-			$auth
+			$auth,
+			$csrf_token
 		);
 		$this->expectException(\Exception::class);
 		$this->expectErrorMessage('exit with redirect');
-		$register_controller->registerAction();
+		$login_controller->loginAction();
+	}
+
+	/**
+	 * トークン認証に失敗した場合のテスト
+	 */
+	public function testLoginAction_TokenMismatch()
+	{
+		$http = $this->getMockBuilder(Http::class)->getMock();
+		$http->expects($this->once())
+			->method('redirect')
+			->with('/login_form')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
+		;
+
+		$auth = $this->getMockBuilder(Auth::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$auth->expects($this->never())
+			->method('login')
+		;
+
+		$auth->expects($this->never())
+			->method('isLoggedIn')
+		;
+
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->once())
+			->method('get')
+		;
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_POST['csrf_token'] = 'token';
+		$login_controller = new LoginController(
+			$http,
+			$auth,
+			$csrf_token
+		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
+		$login_controller->loginAction();
 	}
 }
