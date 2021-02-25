@@ -11,14 +11,15 @@ jobs:
 
     runs-on: ubuntu-20.04
     
+    env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bbs
+    
     services:
       mysql:
         image: mysql:8.0
         ports:
           - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: bbs
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
     
     strategy:
