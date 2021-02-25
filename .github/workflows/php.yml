@@ -18,6 +18,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bbs
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
     
     strategy:
@@ -34,11 +35,11 @@ jobs:
     
     - name: exec users.sql
       run: |
-        mysql -h 127.0.0.1 --port 3306 -u root -proot -e "$(cat $(find ./ -name users.sql))"
+        mysql -h 127.0.0.1 --port 3306 -u root -proot bbs -e "$(cat $(find ./ -name users.sql))"
         
     - name: exec posts.sql
       run: |
-        mysql -h 127.0.0.1 --port 3306 -u root -proot -e "$(cat $(find ./ -name posts.sql))"
+        mysql -h 127.0.0.1 --port 3306 -u root -proot bbs -e "$(cat $(find ./ -name posts.sql))"
 
     - name: Validate composer.json and composer.lock
       run: composer validate
