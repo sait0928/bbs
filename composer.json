@@ -1,4 +1,7 @@
 {
+    "name": "sait0928/bbs",
+    "description": "Bulletin Board System",
+    "license": "MIT",
     "require-dev": {
         "phpunit/phpunit": "^9.4"
     },
