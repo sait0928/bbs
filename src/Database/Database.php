@@ -18,8 +18,13 @@ class Database
 	private function connect(): \PDO
 	{
 		$password = getenv('MYSQL_ROOT_PASSWORD') ?? '';
+		if($password !== '') {
+			$host = '127.0.0.1';
+		} else {
+			$host = 'localhost';
+		}
 		return new \PDO(
-			'mysql:dbname=bbs;host=localhost',
+			'mysql:dbname=bbs;host=' . $host,
 			'root',
 			$password,
 			[
