@@ -61,4 +61,5 @@ jobs:
       env:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: bbs
+        MYSQL_HOST: 127.0.0.1
       run: composer run-script test
