@@ -17,10 +17,12 @@ class Database
 	 */
 	private function connect(): \PDO
 	{
+		$password = getenv('MYSQL_ROOT_PASSWORD') ?? '';
+		$host = getenv('MYSQL_HOST') ?? 'localhost';
 		return new \PDO(
-			'mysql:dbname=bbs;host=localhost',
+			'mysql:dbname=bbs;host=' . $host,
 			'root',
-			'',
+			$password,
 			[
 				// 取得した値の型変換を無効にする
 				\PDO::ATTR_EMULATE_PREPARES => false
