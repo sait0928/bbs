@@ -7,5 +7,8 @@
     },
     "require": {
         "php-di/php-di": "^6.3"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
