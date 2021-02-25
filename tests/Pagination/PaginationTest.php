@@ -9,7 +9,7 @@ class PaginationTest extends TestCase
 	{
 		$pagination = new Pagination();
 
-		$this->assertSame(0, $pagination->countPages(0));
+		$this->assertSame(1, $pagination->countPages(0));
 		$this->assertSame(1, $pagination->countPages(1));
 		$this->assertSame(1, $pagination->countPages(2));
 		$this->assertSame(1, $pagination->countPages(3));
