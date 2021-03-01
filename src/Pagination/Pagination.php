@@ -23,7 +23,8 @@ class Pagination
 			return 1;
 		}
 
-		return ceil($total_posts / self::DISPLAY_POSTS);
+		$result =  ceil($total_posts / self::DISPLAY_POSTS);
+		return (int)$result;
 	}
 
 	/**
