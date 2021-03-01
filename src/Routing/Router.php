@@ -48,7 +48,7 @@ class Router
 	public function routing(string $request_uri): Route
 	{
 		$url = parse_url($request_uri);
-		$path = $url['path'];
+		$path = $url['path'] ?? '/not_found';
 		[$controller_name, $action] = [NotFoundController::class, 'notFoundAction'];
 		foreach (self::ROUTES as $group_name => $route_group) {
 			if (!isset($route_group[$path])) {
