@@ -28,7 +28,7 @@ class PostCounter
 		$stmt = $this->db->getConnection()->query('SELECT COUNT(*) FROM posts');
 		$result = $stmt->fetchColumn();
 		if(!is_int($result)) {
-			$result = 0;
+			throw new PostCounterException("failed to count posts");
 		}
 		return $result;
 	}
@@ -46,7 +46,7 @@ class PostCounter
 		$stmt->execute();
 		$result = $stmt->fetchColumn();
 		if(!is_int($result)) {
-			$result = 0;
+			throw new PostCounterException("failed to count posts");
 		}
 		return $result;
 	}
