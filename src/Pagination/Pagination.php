@@ -36,6 +36,7 @@ class Pagination
 	 */
 	public function createPageLinksArray(int $current_page, int $total_pages): array
 	{
+		$page_links = [];
 		if($total_pages < self::PAGE_LINKS_MAX) {
 			for($i = 1; $i <= $total_pages; $i++) {
 				$page_links[] = $i;
