@@ -16,9 +16,8 @@ class Post
 	 * 記事のid を set
 	 *
 	 * @param int $post_id
-	 * @return int
 	 */
-	public function setPostId(int $post_id): int
+	public function setPostId(int $post_id): void
 	{
 		$this->post_id = $post_id;
 	}
@@ -27,9 +26,8 @@ class Post
 	 * 記事の内容を set
 	 *
 	 * @param string $post
-	 * @return string
 	 */
-	public function setPost(string $post): string
+	public function setPost(string $post): void
 	{
 		$this->post = $post;
 	}
@@ -38,9 +36,8 @@ class Post
 	 * 記事を書いたユーザーの id を set
 	 *
 	 * @param int $user_id
-	 * @return int
 	 */
-	public function setUserId(int $user_id): int
+	public function setUserId(int $user_id): void
 	{
 		$this->user_id = $user_id;
 	}
