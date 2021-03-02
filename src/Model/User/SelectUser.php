@@ -31,11 +31,12 @@ class SelectUser
 		$stmt->execute();
 		$result = $stmt->fetch();
 
-		$user = new User();
-		$user->setUserId($result['id']);
-		$user->setUserName($result['name']);
-		$user->setEmail($result['email']);
-		$user->setPassword($result['pass']);
+		$user = new User(
+			$result['id'],
+			$result['name'],
+			$result['email'],
+			$result['pass']
+		);
 
 		return $user;
 	}
@@ -53,11 +54,12 @@ class SelectUser
 		$stmt->execute();
 		$result = $stmt->fetch();
 
-		$user = new User();
-		$user->setUserId($result['id']);
-		$user->setUserName($result['name']);
-		$user->setEmail($result['email']);
-		$user->setPassword($result['pass']);
+		$user = new User(
+			$result['id'],
+			$result['name'],
+			$result['email'],
+			$result['pass']
+		);
 
 		return $user;
 	}
