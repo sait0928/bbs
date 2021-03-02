@@ -43,7 +43,8 @@ class PostReader
 			$post = new Post(
 				$single_post['post_id'],
 				$single_post['post'],
-				$single_post['user_id']
+				$single_post['user_id'],
+				$single_post['name']
 			);
 
 			$post_array[] = $post;
@@ -75,7 +76,8 @@ class PostReader
 			$post = new Post(
 				$single_post['post_id'],
 				$single_post['post'],
-				$single_post['user_id']
+				$single_post['user_id'],
+				$single_post['name']
 			);
 
 			$post_array[] = $post;
