@@ -15,7 +15,7 @@ class ReactView
 	 * @param string $path
 	 * @param array $params
 	 */
-	public function render(string $path, array $params = [])
+	public function render(string $path, array $params = []): void
 	{
 		$json_params = \json_encode($params);
 		include TEMPLATE_DIR . $path;

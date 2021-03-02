@@ -22,7 +22,7 @@ class AuthMiddleware
 		$this->http = $http;
 	}
 
-	public static function createDefault()
+	public static function createDefault(): self
 	{
 		$database = new Database();
 		return new self(

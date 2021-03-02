@@ -13,7 +13,7 @@ class NotFoundController
 	{
 	}
 
-	public static function createDefault()
+	public static function createDefault(): self
 	{
 		return new self();
 	}
