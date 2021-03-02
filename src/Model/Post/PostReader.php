@@ -36,7 +36,20 @@ class PostReader
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
 		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$posts = $stmt->fetchAll();
+
+		$post_array = [];
+		foreach($posts as $single_post) {
+			$post = new Post(
+				$single_post['post_id'],
+				$single_post['post'],
+				$single_post['user_id']
+			);
+
+			$post_array[] = $post;
+		}
+
+		return $post_array;
 	}
 
 	/**
@@ -55,6 +68,19 @@ class PostReader
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
 		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$posts = $stmt->fetchAll();
+
+		$post_array = [];
+		foreach($posts as $single_post) {
+			$post = new Post(
+				$single_post['post_id'],
+				$single_post['post'],
+				$single_post['user_id']
+			);
+
+			$post_array[] = $post;
+		}
+
+		return $post_array;
 	}
 }
