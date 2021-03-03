@@ -44,6 +44,10 @@ class LoginController
 			$this->http->redirect('/login_form');
 		}
 
+		if(!is_string($_POST['email']) || !is_string($_POST['pass'])) {
+			$this->http->redirect('/login_form');
+		}
+
 		$this->auth->login($_POST['email'], $_POST['pass']);
 		if(!$this->auth->isLoggedIn()) {
 			$this->http->redirect('/login_form');

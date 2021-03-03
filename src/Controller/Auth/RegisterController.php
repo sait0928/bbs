@@ -52,6 +52,10 @@ class RegisterController
 			$this->http->redirect('/register_form');
 		}
 
+		if(!is_string($_POST['name']) || !is_string($_POST['email']) || !is_string($_POST['pass'])) {
+			$this->http->redirect('/register_form');
+		}
+
 		$this->user_registration->register($_POST['name'], $_POST['email'], $_POST['pass']);
 
 		$this->auth->login($_POST['email'], $_POST['pass']);
