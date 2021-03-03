@@ -4,6 +4,7 @@ namespace Controller\Post;
 use Http\CsrfToken;
 use Http\Http;
 use Http\Session;
+use Http\Validator;
 use Model\Post\PostWriter;
 
 /**
@@ -15,17 +16,20 @@ use Model\Post\PostWriter;
 class DeleteController
 {
 	private Session $session;
+	private Validator $validator;
 	private Http $http;
 	private CsrfToken $csrf_token;
 	private PostWriter $post_writer;
 
 	public function __construct(
 		Session $session,
+		Validator $validator,
 		Http $http,
 		CsrfToken $csrf_token,
 		PostWriter $post_writer
 	) {
 		$this->session = $session;
+		$this->validator = $validator;
 		$this->http = $http;
 		$this->csrf_token = $csrf_token;
 		$this->post_writer = $post_writer;
@@ -38,6 +42,7 @@ class DeleteController
 	public function deleteAction(): void
 	{
 		$user_id = $this->session->get('user_id');
+		$this->validator->validateInt($user_id,'/logout');
 
 		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			$this->http->redirect('/user_page?user_id='.$user_id);

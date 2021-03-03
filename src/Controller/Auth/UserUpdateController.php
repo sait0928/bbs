@@ -71,6 +71,7 @@ class UserUpdateController
 		}
 
 		$id = $this->session->get('user_id');
+		$this->validator->validateInt($id, '/user_update_form');
 
 		$this->user_update->updateUser($name, $email, $pass, $id);
 

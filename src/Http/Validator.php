@@ -24,4 +24,18 @@ class Validator
 			$this->http->redirect($url);
 		}
 	}
+
+	/**
+	 * intかどうか検証して違う場合はredirect
+	 *
+	 * @param $param
+	 * @param string $url
+	 * @psalm-assert int $param
+	 */
+	public function validateInt($param, string $url): void
+	{
+		if(!is_int($param)) {
+			$this->http->redirect($url);
+		}
+	}
 }
