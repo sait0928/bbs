@@ -3,6 +3,7 @@ namespace Controller\Auth;
 
 use Http\CsrfToken;
 use Http\Http;
+use Http\Validator;
 use Model\User\UserRegistration;
 use Model\User\Auth;
 
@@ -15,17 +16,20 @@ use Model\User\Auth;
 class RegisterController
 {
 	private Http $http;
+	private Validator $validator;
 	private UserRegistration $user_registration;
 	private Auth $auth;
 	private CsrfToken $csrf_token;
 
 	public function __construct(
 		Http $http,
+		Validator $validator,
 		UserRegistration $user_registration,
 		Auth $auth,
 		CsrfToken $csrf_token
 	) {
 		$this->http = $http;
+		$this->validator = $validator;
 		$this->user_registration = $user_registration;
 		$this->auth = $auth;
 		$this->csrf_token = $csrf_token;
@@ -42,6 +46,10 @@ class RegisterController
 			$this->http->redirect('/register_form');
 		}
 
+		$this->validator->validateString($_POST['name'], '/register_form');
+		$this->validator->validateString($_POST['email'], '/register_form');
+		$this->validator->validateString($_POST['pass'], '/register_form');
+
 		$csrf_token = $this->csrf_token->get();
 		if($csrf_token !== $_POST['csrf_token'])
 		{
@@ -49,10 +57,6 @@ class RegisterController
 		}
 
 		if($_POST['pass'] !== $_POST['again']) {
-			$this->http->redirect('/register_form');
-		}
-
-		if(!is_string($_POST['name']) || !is_string($_POST['email']) || !is_string($_POST['pass'])) {
 			$this->http->redirect('/register_form');
 		}
 
