@@ -56,7 +56,7 @@ class UserPageController
 		$session_user_id = $this->session->get('user_id');
 		$this->validator->validateInt($session_user_id, '/logout');
 
-		$get_user_id = $_GET['user_id'];
+		$get_user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
 		$this->validator->validateInt($get_user_id, '/');
 
 		$user = $this->select_user->selectUserById($get_user_id);
