@@ -37,6 +37,7 @@ class AuthStorage
 	public function issetStorage(): bool
 	{
 		$user_id = $this->session->get('user_id');
+		assert(is_int($user_id) or is_null($user_id));
 		return isset($user_id);
 	}
 
