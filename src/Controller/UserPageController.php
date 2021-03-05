@@ -62,7 +62,8 @@ class UserPageController
 		$user = $this->select_user->selectUserById($get_user_id);
 		$name = $user->getUserName();
 
-		$current_page = $_GET['page'] ?? 1;
+		$current_page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+		$this->validator->validateInt($current_page, '/');
 		$posts = $this->post_reader->selectUserPosts($current_page, $get_user_id);
 
 		$total_posts = $this->post_counter->countUserPosts($get_user_id);

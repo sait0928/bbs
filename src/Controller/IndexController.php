@@ -59,7 +59,8 @@ class IndexController
 		$user = $this->select_user->selectUserById($user_id);
 		$name = $user->getUserName();
 
-		$current_page = $_GET['page'] ?? 1;
+		$current_page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?? 1;
+		$this->validator->validateInt($current_page, '/');
 		$posts = $this->post_reader->select($current_page);
 
 		$total_posts = $this->post_counter->countPosts();
