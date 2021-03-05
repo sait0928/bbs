@@ -6,6 +6,7 @@ use Http\Http;
 use Http\Session;
 use Http\Validator;
 use Model\Post\PostWriter;
+use function Amp\Iterator\filter;
 
 /**
  * '/insert' にアクセスされた時に
@@ -55,6 +56,7 @@ class InsertController
 		$user_id = $this->session->get('user_id');
 		$this->validator->validateInt($user_id, '/logout');
 
+		$this->validator->validateString($_POST['text'], '/');
 		$this->post_writer->insert($_POST['text'], $user_id);
 
 		$this->http->redirect('/');
