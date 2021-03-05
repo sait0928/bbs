@@ -28,7 +28,7 @@ class Validator
 	/**
 	 * intかどうか検証して違う場合はredirect
 	 *
-	 * @param $param
+	 * @param mixed $param
 	 * @param string $url
 	 * @psalm-assert int $param
 	 */
