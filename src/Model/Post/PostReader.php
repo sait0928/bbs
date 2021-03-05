@@ -36,6 +36,14 @@ class PostReader
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
 		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
+		/**
+		 * @var array{
+		 *   post_id: int,
+		 *   post: string,
+		 *   user_id: int,
+		 *   name: string
+		 * }[] $posts
+		 */
 		$posts = $stmt->fetchAll();
 
 		$post_array = [];
@@ -69,6 +77,14 @@ class PostReader
 		$stmt->bindParam(':start', $start, \PDO::PARAM_INT);
 		$stmt->bindParam(':display_posts', $display_posts, \PDO::PARAM_INT);
 		$stmt->execute();
+		/**
+		 * @var array{
+		 *   post_id: int,
+		 *   post: string,
+		 *   user_id: int,
+		 *   name: string
+		 * }[] $posts
+		 */
 		$posts = $stmt->fetchAll();
 
 		$post_array = [];
