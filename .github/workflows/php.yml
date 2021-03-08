@@ -63,3 +63,6 @@ jobs:
         MYSQL_DATABASE: bbs
         MYSQL_HOST: 127.0.0.1
       run: composer run-script test
+
+    - name: Psalm
+      run: ./vendor/bin/psalm
