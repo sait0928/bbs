@@ -57,12 +57,12 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: Psalm
+      uses: docker://vimeo/psalm-github-actions
+
     - name: Run test suite
       env:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: bbs
         MYSQL_HOST: 127.0.0.1
       run: composer run-script test
-
-    - name: Psalm
-      run: ./vendor/bin/psalm
