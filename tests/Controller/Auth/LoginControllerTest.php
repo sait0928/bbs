@@ -26,8 +26,8 @@ class LoginControllerTest extends TestCase
 		$validator->expects($this->exactly(2))
 			->method('validateString')
 			->withConsecutive(
-				[$this->identicalTo('hoge@hoge.co.jp')],
-				[$this->identicalTo('password')]
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
 			)
 		;
 
@@ -135,8 +135,8 @@ class LoginControllerTest extends TestCase
 		$validator->expects($this->exactly(2))
 			->method('validateString')
 			->withConsecutive(
-				[$this->identicalTo('hoge@hoge.co.jp')],
-				[$this->identicalTo('password')]
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
 			)
 		;
 
@@ -195,8 +195,8 @@ class LoginControllerTest extends TestCase
 		$validator->expects($this->exactly(2))
 			->method('validateString')
 			->withConsecutive(
-				[$this->identicalTo('hoge@hoge.co.jp')],
-				[$this->identicalTo('password')]
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
 			)
 		;
 
@@ -246,7 +246,7 @@ class LoginControllerTest extends TestCase
 			->getMock();
 		$validator->expects($this->once())
 			->method('validateString')
-			->with(['hoge@hoge.co.jp', 'huge@huge.co.jp'])
+			->with(['hoge@hoge.co.jp', 'huge@huge.co.jp'], '/login_form')
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
