@@ -54,7 +54,7 @@ class DeleteController
 			$this->http->redirect('/login_form');
 		}
 
-		$post_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$post_id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
 		$this->validator->validateInt($post_id, '/user_page?user_id='.$user_id);
 		$this->post_writer->delete($post_id, $user_id);
 
