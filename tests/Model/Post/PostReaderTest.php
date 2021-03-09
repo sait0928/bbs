@@ -35,9 +35,9 @@ class PostReaderTest extends TestCase
 		);
 		$posts = $post_reader->select(1);
 		foreach($posts as $post) {
-			$this->assertSame(1, $post['post_id']);
-			$this->assertSame('test_post_text', $post['post']);
-			$this->assertSame(1, $post['user_id']);
+			$this->assertSame(1, $post->getPostId());
+			$this->assertSame('test_post_text', $post->getPost());
+			$this->assertSame(1, $post->getUserId());
 		}
 	}
 
@@ -57,9 +57,9 @@ class PostReaderTest extends TestCase
 		);
 		$posts = $post_reader->selectUserPosts(1, 2);
 		foreach($posts as $post) {
-			$this->assertSame(2, $post['post_id']);
-			$this->assertSame('test_post_text2', $post['post']);
-			$this->assertSame(2, $post['user_id']);
+			$this->assertSame(2, $post->getPostId());
+			$this->assertSame('test_post_text2', $post->getPost());
+			$this->assertSame(2, $post->getUserId());
 		}
 	}
 }
