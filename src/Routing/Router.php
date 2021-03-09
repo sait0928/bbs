@@ -14,6 +14,7 @@ use Controller\Post\DeleteController;
 use Controller\Post\InsertController;
 use Controller\UserPageController;
 use Middleware\AuthMiddleware;
+use Middleware\DoNothingMiddleware;
 
 /**
  * ルーティングに関するクラス
@@ -48,8 +49,9 @@ class Router
 	public function routing(string $request_uri): Route
 	{
 		$url = parse_url($request_uri);
-		$path = $url['path'];
+		$path = $url['path'] ?? '/not_found';
 		[$controller_name, $action] = [NotFoundController::class, 'notFoundAction'];
+		[$middleware_name, $method] = [DoNothingMiddleware::class, 'doNothing'];
 		foreach (self::ROUTES as $group_name => $route_group) {
 			if (!isset($route_group[$path])) {
 				continue;

@@ -29,13 +29,22 @@ class SelectUser
 		$stmt = $this->db->getConnection()->prepare('SELECT * FROM users WHERE id=:id');
 		$stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
+		/**
+		 * @var array{
+		 *   id: int,
+		 *   name: string,
+		 *   email: string,
+		 *   pass: string
+		 * } $result
+		 */
 		$result = $stmt->fetch();
 
-		$user = new User();
-		$user->setUserId($result['id']);
-		$user->setUserName($result['name']);
-		$user->setEmail($result['email']);
-		$user->setPassword($result['pass']);
+		$user = new User(
+			$result['id'],
+			$result['name'],
+			$result['email'],
+			$result['pass']
+		);
 
 		return $user;
 	}
@@ -51,13 +60,22 @@ class SelectUser
 		$stmt = $this->db->getConnection()->prepare('SELECT * FROM users WHERE email=:email');
 		$stmt->bindParam(':email', $email, \PDO::PARAM_STR);
 		$stmt->execute();
+		/**
+		 * @var array{
+		 *   id: int,
+		 *   name: string,
+		 *   email: string,
+		 *   pass: string
+		 * } $result
+		 */
 		$result = $stmt->fetch();
 
-		$user = new User();
-		$user->setUserId($result['id']);
-		$user->setUserName($result['name']);
-		$user->setEmail($result['email']);
-		$user->setPassword($result['pass']);
+		$user = new User(
+			$result['id'],
+			$result['name'],
+			$result['email'],
+			$result['pass']
+		);
 
 		return $user;
 	}

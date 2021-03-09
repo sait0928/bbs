@@ -21,7 +21,7 @@ class AuthTest extends TestCase
 
 	public function testLogin()
 	{
-		$user = new User();
+		$user = new User(1, 'name', 'email', 'pass');
 
 		$select_user = $this->getMockBuilder(SelectUser::class)
 			->disableOriginalConstructor()
@@ -58,7 +58,7 @@ class AuthTest extends TestCase
 
 	public function testLogin_Failure()
 	{
-		$user = new User();
+		$user = new User(1, 'name', 'email', 'pass');
 
 		$select_user = $this->getMockBuilder(SelectUser::class)
 			->disableOriginalConstructor()

@@ -13,43 +13,15 @@ class User
 	private string $email;
 	private string $password;
 
-	/**
-	 * ユーザーの id を set
-	 *
-	 * @param int $user_id
-	 */
-	public function setUserId(int $user_id): void
-	{
+	public function __construct(
+		int $user_id,
+		string $user_name,
+		string $email,
+		string $password
+	) {
 		$this->user_id = $user_id;
-	}
-
-	/**
-	 * ユーザーの名前を set
-	 *
-	 * @param string $user_name
-	 */
-	public function setUserName(string $user_name): void
-	{
 		$this->user_name = $user_name;
-	}
-
-	/**
-	 * ユーザーの email を set
-	 *
-	 * @param string $email
-	 */
-	public function setEmail(string $email): void
-	{
 		$this->email = $email;
-	}
-
-	/**
-	 * ユーザーのパスワードを set
-	 *
-	 * @param string $password
-	 */
-	public function setPassword(string $password): void
-	{
 		$this->password = $password;
 	}
 

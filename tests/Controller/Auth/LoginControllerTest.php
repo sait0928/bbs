@@ -3,6 +3,7 @@ namespace Controller\Auth;
 
 use Http\CsrfToken;
 use Http\Http;
+use Http\Validator;
 use Model\User\Auth;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +18,17 @@ class LoginControllerTest extends TestCase
 		$http->expects($this->once())
 			->method('redirect')
 			->with('/')
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(2))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
+			)
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -45,6 +57,7 @@ class LoginControllerTest extends TestCase
 		$_POST['csrf_token'] = '';
 		$login_controller = new LoginController(
 			$http,
+			$validator,
 			$auth,
 			$csrf_token
 		);
@@ -63,6 +76,13 @@ class LoginControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->never())
+			->method('validateString')
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -86,6 +106,7 @@ class LoginControllerTest extends TestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$login_controller = new LoginController(
 			$http,
+			$validator,
 			$auth,
 			$csrf_token
 		);
@@ -106,6 +127,17 @@ class LoginControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(2))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
+			)
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -134,6 +166,7 @@ class LoginControllerTest extends TestCase
 		$_POST['csrf_token'] = '';
 		$login_controller = new LoginController(
 			$http,
+			$validator,
 			$auth,
 			$csrf_token
 		);
@@ -154,6 +187,17 @@ class LoginControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(2))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('hoge@hoge.co.jp'), $this->identicalTo('/login_form')],
+				[$this->identicalTo('password'), $this->identicalTo('/login_form')]
+			)
 		;
 
 		$auth = $this->getMockBuilder(Auth::class)
@@ -178,6 +222,62 @@ class LoginControllerTest extends TestCase
 		$_POST['csrf_token'] = 'token';
 		$login_controller = new LoginController(
 			$http,
+			$validator,
+			$auth,
+			$csrf_token
+		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
+		$login_controller->loginAction();
+	}
+
+	/**
+	 * 期待する値が送信されなかった場合
+	 */
+	public function testLoginAction_ValidationFailure()
+	{
+		$http = $this->getMockBuilder(Http::class)->getMock();
+		$http->expects($this->never())
+			->method('redirect')
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->once())
+			->method('validateString')
+			->with(['hoge@hoge.co.jp', 'huge@huge.co.jp'], '/login_form')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
+		;
+
+		$auth = $this->getMockBuilder(Auth::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$auth->expects($this->never())
+			->method('login')
+		;
+
+		$auth->expects($this->never())
+			->method('isLoggedIn')
+		;
+
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->never())
+			->method('get')
+		;
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_POST['email'] = [
+			'hoge@hoge.co.jp',
+			'huge@huge.co.jp'
+		];
+		$login_controller = new LoginController(
+			$http,
+			$validator,
 			$auth,
 			$csrf_token
 		);

@@ -36,6 +36,7 @@ class Session
 		if(session_status() === PHP_SESSION_NONE) {
 			$this->start();
 		}
+		/** @psalm-suppress MixedAssignment */
 		$_SESSION[$key] = $value;
 	}
 

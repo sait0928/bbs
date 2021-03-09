@@ -8,8 +8,8 @@ namespace Pagination;
  */
 class Pagination
 {
-	public const DISPLAY_POSTS = 3;
-	public const PAGE_LINKS_MAX = 5;
+	private const DISPLAY_POSTS = 3;
+	private const PAGE_LINKS_MAX = 5;
 
 	/**
 	 * 総記事数を元に必要なページ数を計算
@@ -23,7 +23,8 @@ class Pagination
 			return 1;
 		}
 
-		return ceil($total_posts / self::DISPLAY_POSTS);
+		$result =  ceil($total_posts / self::DISPLAY_POSTS);
+		return (int)$result;
 	}
 
 	/**
@@ -35,6 +36,7 @@ class Pagination
 	 */
 	public function createPageLinksArray(int $current_page, int $total_pages): array
 	{
+		$page_links = [];
 		if($total_pages < self::PAGE_LINKS_MAX) {
 			for($i = 1; $i <= $total_pages; $i++) {
 				$page_links[] = $i;
@@ -53,5 +55,13 @@ class Pagination
 			default:
 				return [$current_page - 2, $current_page - 1, $current_page, $current_page + 1, $current_page + 2];
 		}
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDisplayPosts(): int
+	{
+		return self::DISPLAY_POSTS;
 	}
 }

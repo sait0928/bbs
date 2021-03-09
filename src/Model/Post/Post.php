@@ -6,47 +6,37 @@ namespace Model\Post;
  *
  * @package Model\Post
  */
-class Post
+class Post implements \JsonSerializable
 {
 	private int $post_id;
 	private string $post;
 	private int $user_id;
+	private string $name;
 
-	/**
-	 * 記事のid を set
-	 *
-	 * @param int $post_id
-	 * @return int
-	 */
-	public function setPostId(int $post_id): int
-	{
+	public function __construct(
+		int $post_id,
+		string $post,
+		int $user_id,
+		string $name
+	) {
 		$this->post_id = $post_id;
-	}
-
-	/**
-	 * 記事の内容を set
-	 *
-	 * @param string $post
-	 * @return string
-	 */
-	public function setPost(string $post): string
-	{
 		$this->post = $post;
-	}
-
-	/**
-	 * 記事を書いたユーザーの id を set
-	 *
-	 * @param int $user_id
-	 * @return int
-	 */
-	public function setUserId(int $user_id): int
-	{
 		$this->user_id = $user_id;
+		$this->name = $name;
+	}
+
+	public function jsonSerialize()
+	{
+		return [
+			'post_id' => $this->post_id,
+			'post'    => $this->post,
+			'user_id' => $this->user_id,
+			'name'    => $this->name,
+		];
 	}
 
 	/**
-	 * プロパティの post_id を取得
+	 * post_id 取得
 	 *
 	 * @return int
 	 */
@@ -56,7 +46,7 @@ class Post
 	}
 
 	/**
-	 * プロパティの post を取得
+	 * post 取得
 	 *
 	 * @return string
 	 */
@@ -66,12 +56,22 @@ class Post
 	}
 
 	/**
-	 * プロパティの user_id を取得
+	 * user_id 取得
 	 *
 	 * @return int
 	 */
 	public function getUserId(): int
 	{
 		return $this->user_id;
+	}
+
+	/**
+	 * user_name 取得
+	 *
+	 * @return string
+	 */
+	public function getName(): string
+	{
+		return $this->name;
 	}
 }

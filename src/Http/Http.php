@@ -12,6 +12,7 @@ class Http
 	 * リダイレクト
 	 *
 	 * @param string $url
+	 * @return no-return
 	 */
 	public function redirect(string $url): void
 	{

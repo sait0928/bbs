@@ -5,6 +5,7 @@ namespace Controller\Auth;
 use Http\CsrfToken;
 use Http\Http;
 use Http\Session;
+use Http\Validator;
 use Model\User\UserUpdate;
 use PHPUnit\Framework\TestCase;
 
@@ -19,6 +20,20 @@ class UserUpdateControllerTest extends TestCase
 		$http->expects($this->once())
 			->method('redirect')
 			->with('/')
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(5))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('name'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('email'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('pass'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('pass'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('token'), $this->identicalTo('/user_update_form')]
+			)
 		;
 
 		$csrf_token = $this->getMockBuilder(CsrfToken::class)
@@ -52,6 +67,7 @@ class UserUpdateControllerTest extends TestCase
 		$_POST['again'] = 'pass';
 		$user_update_controller = new UserUpdateController(
 			$http,
+			$validator,
 			$csrf_token,
 			$user_update,
 			$session
@@ -71,6 +87,13 @@ class UserUpdateControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->never())
+			->method('validateString')
 		;
 
 		$csrf_token = $this->getMockBuilder(CsrfToken::class)
@@ -95,6 +118,7 @@ class UserUpdateControllerTest extends TestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$user_update_controller = new UserUpdateController(
 			$http,
+			$validator,
 			$csrf_token,
 			$user_update,
 			$session
@@ -116,6 +140,20 @@ class UserUpdateControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(5))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo(''), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo(''), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo(''), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo(''), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('token'), $this->identicalTo('/user_update_form')]
+			)
 		;
 
 		$csrf_token = $this->getMockBuilder(CsrfToken::class)
@@ -142,8 +180,10 @@ class UserUpdateControllerTest extends TestCase
 		$_POST['email'] = '';
 		$_POST['pass'] = '';
 		$_POST['again'] = '';
+		$_POST['csrf_token'] = 'token';
 		$user_update_controller = new UserUpdateController(
 			$http,
+			$validator,
 			$csrf_token,
 			$user_update,
 			$session
@@ -165,6 +205,20 @@ class UserUpdateControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(5))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('name'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('email'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('pass'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('pass'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('mismatch'), $this->identicalTo('/user_update_form')]
+			)
 		;
 
 		$csrf_token = $this->getMockBuilder(CsrfToken::class)
@@ -195,6 +249,7 @@ class UserUpdateControllerTest extends TestCase
 		$_POST['again'] = 'pass';
 		$user_update_controller = new UserUpdateController(
 			$http,
+			$validator,
 			$csrf_token,
 			$user_update,
 			$session
@@ -216,6 +271,20 @@ class UserUpdateControllerTest extends TestCase
 			->willReturnCallback(function () {
 				throw new \Exception('exit with redirect');
 			})
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->exactly(5))
+			->method('validateString')
+			->withConsecutive(
+				[$this->identicalTo('name'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('email'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('pass'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('different'), $this->identicalTo('/user_update_form')],
+				[$this->identicalTo('token'), $this->identicalTo('/user_update_form')]
+			)
 		;
 
 		$csrf_token = $this->getMockBuilder(CsrfToken::class)
@@ -246,6 +315,61 @@ class UserUpdateControllerTest extends TestCase
 		$_POST['again'] = 'different';
 		$user_update_controller = new UserUpdateController(
 			$http,
+			$validator,
+			$csrf_token,
+			$user_update,
+			$session
+		);
+		$this->expectException(\Exception::class);
+		$this->expectErrorMessage('exit with redirect');
+		$user_update_controller->userUpdateAction();
+	}
+
+	/**
+	 * 期待する値が送信されなかった場合
+	 */
+	public function testUserUpdateAction_ValidationFailure()
+	{
+		$http = $this->getMockBuilder(Http::class)->getMock();
+		$http->expects($this->never())
+			->method('redirect')
+		;
+
+		$validator = $this->getMockBuilder(Validator::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$validator->expects($this->once())
+			->method('validateString')
+			->with(['hoge', 'huge'], '/user_update_form')
+			->willReturnCallback(function () {
+				throw new \Exception('exit with redirect');
+			})
+		;
+
+		$csrf_token = $this->getMockBuilder(CsrfToken::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$csrf_token->expects($this->never())
+			->method('get')
+		;
+
+		$session = $this->getMockBuilder(Session::class)->getMock();
+		$session->expects($this->never())
+			->method('get')
+		;
+
+		$user_update = $this->getMockBuilder(UserUpdate::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$user_update->expects($this->never())
+			->method('updateUser')
+		;
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_POST['name'] = ['hoge', 'huge'];
+		$user_update_controller = new UserUpdateController(
+			$http,
+			$validator,
 			$csrf_token,
 			$user_update,
 			$session

@@ -8,12 +8,15 @@ namespace Http;
 class CsrfToken
 {
 	private Session $session;
+	private Validator $validator;
 
 	public function __construct
 	(
-		Session $session
+		Session $session,
+		Validator $validator
 	) {
 		$this->session = $session;
+		$this->validator = $validator;
 	}
 
 	/**
@@ -33,6 +36,8 @@ class CsrfToken
 	 */
 	public function get(): string
 	{
-		return $this->session->get('csrf_token');
+		$token = $this->session->get('csrf_token');
+		$this->validator->validateString($token, '/logout');
+		return $token;
 	}
 }

@@ -3,6 +3,7 @@ namespace Controller;
 
 use Http\CsrfToken;
 use Http\Session;
+use Http\Validator;
 use Model\User\SelectUser;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
@@ -18,6 +19,7 @@ use View\ReactView;
 class IndexController
 {
 	private Session $session;
+	private Validator $validator;
 	private SelectUser $select_user;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
@@ -27,6 +29,7 @@ class IndexController
 
 	public function __construct(
 		Session $session,
+		Validator $validator,
 		SelectUser $select_user,
 		PostReader $post_reader,
 		PostCounter $post_counter,
@@ -35,6 +38,7 @@ class IndexController
 		ReactView $react_view
 	) {
 		$this->session = $session;
+		$this->validator = $validator;
 		$this->select_user = $select_user;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
@@ -51,10 +55,14 @@ class IndexController
 	{
 		$user_id = $this->session->get('user_id');
 
+		$current_page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?? 1;
+
+		$this->validator->validateInt($user_id, '/logout');
+		$this->validator->validateInt($current_page, '/');
+
 		$user = $this->select_user->selectUserById($user_id);
 		$name = $user->getUserName();
 
-		$current_page = $_GET['page'] ?? 1;
 		$posts = $this->post_reader->select($current_page);
 
 		$total_posts = $this->post_counter->countPosts();

@@ -26,7 +26,11 @@ class PostCounter
 	public function countPosts(): int
 	{
 		$stmt = $this->db->getConnection()->query('SELECT COUNT(*) FROM posts');
-		return $stmt->fetchColumn();
+		$result = $stmt->fetchColumn();
+		if(!is_int($result)) {
+			throw new PostCounterException("failed to count posts");
+		}
+		return $result;
 	}
 
 	/**
@@ -40,6 +44,10 @@ class PostCounter
 		$stmt = $this->db->getConnection()->prepare('SELECT COUNT(*) FROM posts WHERE user_id = :user_id');
 		$stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetchColumn();
+		$result = $stmt->fetchColumn();
+		if(!is_int($result)) {
+			throw new PostCounterException("failed to count posts");
+		}
+		return $result;
 	}
 }
