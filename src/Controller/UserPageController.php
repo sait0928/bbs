@@ -56,13 +56,13 @@ class UserPageController
 		$session_user_id = $this->session->get('user_id');
 		$this->validator->validateInt($session_user_id, '/logout');
 
-		$get_user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
+		$get_user_id = filter_var($_GET['user_id'] ?? null, FILTER_VALIDATE_INT);
 		$this->validator->validateInt($get_user_id, '/');
 
 		$user = $this->select_user->selectUserById($get_user_id);
 		$name = $user->getUserName();
 
-		$current_page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?? 1;
+		$current_page = filter_var($_GET['page'] ?? 1, FILTER_VALIDATE_INT);
 		$this->validator->validateInt($current_page, '/');
 		$posts = $this->post_reader->selectUserPosts($current_page, $get_user_id);
 
