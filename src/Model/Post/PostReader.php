@@ -26,7 +26,7 @@ class PostReader
 	 * 投稿一覧ページで現在のページ番号に対応する記事を取得
 	 *
 	 * @param int $page
-	 * @return array
+	 * @return Post[]
 	 */
 	public function select(int $page): array
 	{
@@ -66,7 +66,7 @@ class PostReader
 	 *
 	 * @param int $page
 	 * @param int $user_id
-	 * @return array
+	 * @return Post[]
 	 */
 	public function selectUserPosts(int $page, int $user_id): array
 	{
