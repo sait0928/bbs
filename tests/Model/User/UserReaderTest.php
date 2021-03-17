@@ -20,6 +20,9 @@ class UserReaderTest extends TestCase
 		$this->db->getConnection()->rollBack();
 	}
 
+	/**
+	 * idからUserを探すテスト
+	 */
 	public function testSelectUserById()
 	{
 		$pdo = $this->db->getConnection();
@@ -35,6 +38,9 @@ class UserReaderTest extends TestCase
 		$this->assertSame('email', $user->getEmail());
 	}
 
+	/**
+	 * emailからUserを探すテスト
+	 */
 	public function testSelectUserByEmail()
 	{
 		$pdo = $this->db->getConnection();
