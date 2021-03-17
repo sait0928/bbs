@@ -1,24 +1,10 @@
 <?php
 namespace Model\User;
 
-use Database\Database;
 use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase
 {
-	private Database $db;
-
-	public function setUp(): void
-	{
-		$this->db = new Database();
-		$this->db->getConnection()->beginTransaction();
-	}
-
-	public function tearDown(): void
-	{
-		$this->db->getConnection()->rollBack();
-	}
-
 	public function testLogin()
 	{
 		$user = new User(1, 'name', 'email', 'pass');
