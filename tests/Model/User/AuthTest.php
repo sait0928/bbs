@@ -12,10 +12,10 @@ class AuthTest extends TestCase
 	{
 		$user = new User(1, 'name', 'email', 'pass');
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->once())
+		$user_reader->expects($this->once())
 			->method('selectUserByEmail')
 			->with('email')
 			->willReturn($user)
@@ -37,7 +37,7 @@ class AuthTest extends TestCase
 		;
 
 		$auth = new Auth(
-			$select_user,
+			$user_reader,
 			$password_verifier,
 			$auth_storage
 		);
@@ -52,10 +52,10 @@ class AuthTest extends TestCase
 	{
 		$user = new User(1, 'name', 'email', 'pass');
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->once())
+		$user_reader->expects($this->once())
 			->method('selectUserByEmail')
 			->with('email')
 			->willReturn($user)
@@ -76,7 +76,7 @@ class AuthTest extends TestCase
 		;
 
 		$auth = new Auth(
-			$select_user,
+			$user_reader,
 			$password_verifier,
 			$auth_storage
 		);

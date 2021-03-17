@@ -7,7 +7,7 @@ use Http\Session;
 use Model\User\Auth;
 use Model\User\AuthStorage;
 use Model\User\PasswordVerifier;
-use Model\User\SelectUser;
+use Model\User\UserReader;
 
 class AuthMiddleware
 {
@@ -27,7 +27,7 @@ class AuthMiddleware
 		$database = new Database();
 		return new self(
 			new Auth(
-				new SelectUser($database),
+				new UserReader($database),
 				new PasswordVerifier(),
 				new AuthStorage(new Session())
 			),

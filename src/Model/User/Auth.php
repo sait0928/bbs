@@ -8,16 +8,16 @@ namespace Model\User;
  */
 class Auth
 {
-	private SelectUser $select_user;
+	private UserReader $user_reader;
 	private PasswordVerifier $password_verifier;
 	private AuthStorage $auth_storage;
 
 	public function __construct(
-		SelectUser $select_user,
+		UserReader $user_reader,
 		PasswordVerifier $password_verifier,
 		AuthStorage $auth_storage
 	) {
-		$this->select_user = $select_user;
+		$this->user_reader = $user_reader;
 		$this->password_verifier = $password_verifier;
 		$this->auth_storage = $auth_storage;
 	}
@@ -30,7 +30,7 @@ class Auth
 	 */
 	public function login(string $email, string $password): void
 	{
-		$user = $this->select_user->selectUserByEmail($email);
+		$user = $this->user_reader->selectUserByEmail($email);
 		if ($this->password_verifier->verifyPassword($password, $user)) {
 			$this->auth_storage->setStorage($user);
 		}
