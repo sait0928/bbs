@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase
 {
+	/**
+	 * ログインのテスト
+	 */
 	public function testLogin()
 	{
 		$user = new User(1, 'name', 'email', 'pass');
@@ -42,6 +45,9 @@ class AuthTest extends TestCase
 		$auth->login('email', 'pass');
 	}
 
+	/**
+	 * ログインに失敗した場合のテスト
+	 */
 	public function testLogin_Failure()
 	{
 		$user = new User(1, 'name', 'email', 'pass');
