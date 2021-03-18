@@ -4,7 +4,7 @@ namespace Controller;
 use Http\CsrfToken;
 use Http\Session;
 use Http\Validator;
-use Model\User\SelectUser;
+use Model\User\UserReader;
 use Model\Post\PostReader;
 use Model\Post\PostCounter;
 use Pagination\Pagination;
@@ -20,7 +20,7 @@ class IndexController
 {
 	private Session $session;
 	private Validator $validator;
-	private SelectUser $select_user;
+	private UserReader $user_reader;
 	private PostReader $post_reader;
 	private PostCounter $post_counter;
 	private Pagination $pagination;
@@ -30,7 +30,7 @@ class IndexController
 	public function __construct(
 		Session $session,
 		Validator $validator,
-		SelectUser $select_user,
+		UserReader $user_reader,
 		PostReader $post_reader,
 		PostCounter $post_counter,
 		Pagination $pagination,
@@ -39,7 +39,7 @@ class IndexController
 	) {
 		$this->session = $session;
 		$this->validator = $validator;
-		$this->select_user = $select_user;
+		$this->user_reader = $user_reader;
 		$this->post_reader = $post_reader;
 		$this->post_counter = $post_counter;
 		$this->pagination = $pagination;
@@ -60,7 +60,7 @@ class IndexController
 		$this->validator->validateInt($user_id, '/logout');
 		$this->validator->validateInt($current_page, '/');
 
-		$user = $this->select_user->selectUserById($user_id);
+		$user = $this->user_reader->selectUserById($user_id);
 		$name = $user->getUserName();
 
 		$posts = $this->post_reader->select($current_page);

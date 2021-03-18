@@ -8,7 +8,7 @@ use Database\Database;
  *
  * @package Model\User
  */
-class SelectUser
+class UserReader
 {
 	private Database $db;
 

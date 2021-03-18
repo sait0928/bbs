@@ -1,32 +1,21 @@
 <?php
 namespace Model\User;
 
-use Database\Database;
 use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase
 {
-	private Database $db;
-
-	public function setUp(): void
-	{
-		$this->db = new Database();
-		$this->db->getConnection()->beginTransaction();
-	}
-
-	public function tearDown(): void
-	{
-		$this->db->getConnection()->rollBack();
-	}
-
+	/**
+	 * ログインのテスト
+	 */
 	public function testLogin()
 	{
 		$user = new User(1, 'name', 'email', 'pass');
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->once())
+		$user_reader->expects($this->once())
 			->method('selectUserByEmail')
 			->with('email')
 			->willReturn($user)
@@ -48,7 +37,7 @@ class AuthTest extends TestCase
 		;
 
 		$auth = new Auth(
-			$select_user,
+			$user_reader,
 			$password_verifier,
 			$auth_storage
 		);
@@ -56,14 +45,17 @@ class AuthTest extends TestCase
 		$auth->login('email', 'pass');
 	}
 
+	/**
+	 * ログインに失敗した場合のテスト
+	 */
 	public function testLogin_Failure()
 	{
 		$user = new User(1, 'name', 'email', 'pass');
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->once())
+		$user_reader->expects($this->once())
 			->method('selectUserByEmail')
 			->with('email')
 			->willReturn($user)
@@ -84,7 +76,7 @@ class AuthTest extends TestCase
 		;
 
 		$auth = new Auth(
-			$select_user,
+			$user_reader,
 			$password_verifier,
 			$auth_storage
 		);

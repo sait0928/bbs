@@ -7,7 +7,7 @@ use Http\Session;
 use Http\Validator;
 use Model\Post\PostCounter;
 use Model\Post\PostReader;
-use Model\User\SelectUser;
+use Model\User\UserReader;
 use Pagination\Pagination;
 use PHPUnit\Framework\TestCase;
 use View\ReactView;
@@ -37,10 +37,10 @@ class IndexControllerTest extends TestCase
 			)
 		;
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->once())
+		$user_reader->expects($this->once())
 			->method('selectUserById')
 			->with(1)
 		;
@@ -85,7 +85,7 @@ class IndexControllerTest extends TestCase
 		$index_controller = new IndexController(
 			$session,
 			$validator,
-			$select_user,
+			$user_reader,
 			$post_reader,
 			$post_counter,
 			$pagination,
@@ -118,10 +118,10 @@ class IndexControllerTest extends TestCase
 			})
 		;
 
-		$select_user = $this->getMockBuilder(SelectUser::class)
+		$user_reader = $this->getMockBuilder(UserReader::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$select_user->expects($this->never())
+		$user_reader->expects($this->never())
 			->method('selectUserById')
 		;
 
@@ -161,7 +161,7 @@ class IndexControllerTest extends TestCase
 		$index_controller = new IndexController(
 			$session,
 			$validator,
-			$select_user,
+			$user_reader,
 			$post_reader,
 			$post_counter,
 			$pagination,
