@@ -78,7 +78,7 @@ class UserPageControllerTest extends TestCase
 		$react_view = $this->getMockBuilder(ReactView::class)->getMock();
 		$react_view->expects($this->once())
 			->method('render')
-			->with('/user_page.php')
+			->with('/js/user_page.js')
 		;
 
 		$_GET['user_id'] = 1;
