@@ -20,6 +20,6 @@ class ReactView
 		$json_params = \json_encode($params);
 
 		/** @psalm-suppress UnresolvableInclude */
-		include TEMPLATE_DIR . $path;
+		include TEMPLATE_DIR . '/index.php';
 	}
 }

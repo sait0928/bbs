@@ -77,6 +77,6 @@ class IndexController
 			'page_links' => $page_links,
 			'csrf_token' => $csrf_token,
 		];
-		$this->react_view->render('/index.php', $params);
+		$this->react_view->render('/js/index.js', $params);
 	}
 }
