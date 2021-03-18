@@ -24,7 +24,7 @@ class LoginFormControllerTest extends TestCase
 		$react_view = $this->getMockBuilder(ReactView::class)->getMock();
 		$react_view->expects($this->once())
 			->method('render')
-			->with('/login_form.php')
+			->with('/js/login_form.js')
 		;
 
 		$login_form_controller = new LoginFormController(
