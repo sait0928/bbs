@@ -1,11 +1,13 @@
 import React from "react";
-
+import ReactDOM from "react-dom";
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link
 } from "react-router-dom";
+
+const app = document.getElementById('app');
 
 export default function Default() {
 	return (
@@ -33,7 +35,8 @@ export default function Default() {
 	);
 }
 
-function Home() {
+const Home = () => {
+	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -74,7 +77,7 @@ function Home() {
 	);
 }
 
-function LoginForm() {
+const LoginForm = () => {
 	return (
 		<div>
 			<h1>ログイン</h1>
@@ -97,7 +100,7 @@ function LoginForm() {
 	);
 }
 
-function RegisterForm() {
+const RegisterForm = () => {
 	return (
 		<div>
 			<h1>新規登録</h1>
@@ -128,7 +131,7 @@ function RegisterForm() {
 	);
 }
 
-function UserPage() {
+const UserPage = () => {
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -170,7 +173,7 @@ function UserPage() {
 	);
 }
 
-function UserUpdateForm() {
+const UserUpdateForm = () => {
 	return (
 		<div>
 			<h1>ユーザ情報更新</h1>
@@ -193,3 +196,5 @@ function UserUpdateForm() {
 		</div>
 	);
 }
+
+ReactDOM.render(<Home />, app);
