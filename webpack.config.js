@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
 	entry: {
-		'./js/app': ['./resource/js/app.js'],
+		'./js/app': ['./resource/js/index.js'],
 	},
 	output: {
 		path: path.resolve(__dirname, 'public/'),
