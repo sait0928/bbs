@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 export const UserUpdateForm = () => {
+	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>
 			<h1>ユーザ情報更新</h1>

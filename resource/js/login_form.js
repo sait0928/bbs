@@ -2,8 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 export const LoginForm = () => {
-	const root = document.getElementById('app');
-	const params = JSON.parse(root.dataset.params);
+	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>
 			<h1>ログイン</h1>

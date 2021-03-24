@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 export const UserPage = () => {
+	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>
 			<h1>掲示板</h1>

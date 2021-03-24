@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 export const RegisterForm = () => {
+	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>
 			<h1>新規登録</h1>
