@@ -1,6 +1,7 @@
 <?php
 namespace Routing;
 
+use Controller\Api\HomeController;
 use Controller\Auth\LoginController;
 use Controller\Auth\LoginFormController;
 use Controller\Auth\LogoutController;
@@ -32,6 +33,7 @@ class Router
 			'/user_update_form' => [UserUpdateFormController::class, 'userUpdateFormAction'],
 			'/user_update'      => [UserUpdateController::class,     'userUpdateAction'],
 			'/logout'           => [LogoutController::class,         'logoutAction'],
+			'/api/home'         => [HomeController::class,           'indexAction'],
 		],
 		'before_login' => [
 			'/login_form'    => [LoginFormController::class,    'loginFormAction'],
