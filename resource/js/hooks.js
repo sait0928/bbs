@@ -14,7 +14,7 @@ function useFetch(url) {
 
 	useEffect(() => {
 		fetchUrl();
-	}, []);
+	}, url);
 	return [data, loading];
 }
 export { useFetch };

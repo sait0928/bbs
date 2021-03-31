@@ -5,7 +5,8 @@ import { useFetch } from "./hooks";
 export const Home = () => {
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
-	const [data, loading] = useFetch("/api/home?page=" + parsed.page);
+	const page = parsed.page || 1;
+	const [data, loading] = useFetch("/api/home?page=" + page);
 	return (
 		<div>
 			<h1>掲示板</h1>

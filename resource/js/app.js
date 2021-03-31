@@ -16,21 +16,11 @@ export const App = () => {
 		<Router>
 			<div>
 				<Switch>
-					<Route exact path="/">
-						<Home />
-					</Route>
-					<Route exact path="/login_form">
-						<LoginForm />
-					</Route>
-					<Route exact path="/register_form">
-						<RegisterForm />
-					</Route>
-					<Route exact path="/user_page">
-						<UserPage />
-					</Route>
-					<Route exact path="/user_update_form">
-						<UserUpdateForm />
-					</Route>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/login_form" component={LoginForm} />
+					<Route exact path="/register_form" component={RegisterForm} />
+					<Route exact path="/user_page" component={UserPage} />
+					<Route exact path="/user_update_form" component={UserUpdateForm} />
 				</Switch>
 			</div>
 		</Router>
