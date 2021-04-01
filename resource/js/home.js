@@ -45,7 +45,7 @@ export const Home = () => {
 						})}
 					</div>
 					<div id="logout">
-						<Link to="/logout">ログアウト</Link>
+						<a href="/logout">ログアウト</a>
 					</div>
 				</div>
 			)}
