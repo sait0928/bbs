@@ -80,6 +80,6 @@ class UserPageController
 			'get_user_id'     => $get_user_id,
 			'csrf_token'      => $csrf_token,
 		];
-		$this->react_view->render('/js/user_page.js', $params);
+		$this->react_view->render($params);
 	}
 }

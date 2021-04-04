@@ -34,6 +34,6 @@ class LoginFormController
 		$params = [
 			'csrf_token' => $csrf_token,
 		];
-		$this->react_view->render('/js/login_form.js', $params);
+		$this->react_view->render($params);
 	}
 }
