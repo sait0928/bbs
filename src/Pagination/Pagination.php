@@ -47,11 +47,9 @@ class Pagination
 			case 1:
 			case 2:
 				return [1, 2, 3, 4, 5];
-				break;
 			case $total_pages - 1:
 			case $total_pages:
 				return [$total_pages - 4, $total_pages - 3, $total_pages - 2, $total_pages - 1, $total_pages];
-				break;
 			default:
 				return [$current_page - 2, $current_page - 1, $current_page, $current_page + 1, $current_page + 2];
 		}

@@ -2,13 +2,11 @@ import {Link} from "react-router-dom";
 import React from "react";
 import { useFetch } from "./hooks";
 
-export const UserPage = () => {
+export const Home = () => {
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
 	const page = parsed.page || 1;
-	const user_id = parsed.user_id;
-	console.log(user_id);
-	const [data, loading] = useFetch("/api/user_page?user_id=" + user_id + "&page=" + page);
+	const [data, loading] = useFetch("/api/home?page=" + page);
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -16,9 +14,14 @@ export const UserPage = () => {
 				"Loading..."
 			) : (
 				<div>
-					<p>{data.name}さんの投稿一覧</p>
-					<div id="return">
-						<Link to="/">←戻る</Link>
+					<p>ようこそ{data.name}さん！</p>
+					<div id="user-update"><Link to="/user_update_form">ユーザ情報を更新する</Link></div>
+					<div id="form">
+						<form action="/insert" method="POST">
+							<textarea name="text" id="" cols="50" rows="5" required />
+							<input type="hidden" name="csrf_token" value={data.csrf_token} />
+							<input type="submit" value="投稿" />
+						</form>
 					</div>
 					<div id="posts">
 						<table>
@@ -30,25 +33,19 @@ export const UserPage = () => {
 							{data.posts.map((post) => {
 								return <tr>
 									<td>{post.post_id}</td>
-									<td>{post.name}</td>
+									<td><Link to={`/user_page?user_id=${post.user_id}`}>{post.name}</Link></td>
 									<td>{post.post}</td>
-									{post.user_id === data.session_user_id &&
-									<td>
-										<form action="/delete" method="POST">
-											<input type="hidden" name="id" value={post.post_id} />
-											<input type="hidden" name="csrf_token" value={data.csrf_token} />
-											<input type="submit" value="削除" />
-										</form>
-									</td>
-									}
 								</tr>
 							})}
 						</table>
 					</div>
 					<div id="pagination">
 						{data.page_links.map((page_link) => {
-							return <Link to={`/user_page?user_id=${data.get_user_id}&page=${page_link}`}>{page_link}</Link>
+							return <Link to={`/?page=${page_link}`}>{page_link}</Link>
 						})}
+					</div>
+					<div id="logout">
+						<a href="/logout">ログアウト</a>
 					</div>
 				</div>
 			)}
