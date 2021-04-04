@@ -34,6 +34,6 @@ class RegisterFormController
 		$params = [
 			'csrf_token' => $csrf_token,
 		];
-		$this->react_view->render('/js/register_form.js', $params);
+		$this->react_view->render($params);
 	}
 }

@@ -24,7 +24,6 @@ class RegisterFormControllerTest extends TestCase
 		$react_view = $this->getMockBuilder(ReactView::class)->getMock();
 		$react_view->expects($this->once())
 			->method('render')
-			->with('/js/register_form.js')
 		;
 
 		$register_form_controller = new RegisterFormController(
