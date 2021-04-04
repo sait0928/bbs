@@ -83,7 +83,7 @@ class UserPageControllerTest extends TestCase
 
 		$_GET['user_id'] = 1;
 		$_GET['page'] = 1;
-		$user_page_controller = new UserPageController(
+		$user_page_controller = new UserPageApi(
 			$session,
 			$validator,
 			$user_reader,
@@ -157,7 +157,7 @@ class UserPageControllerTest extends TestCase
 			->method('render')
 		;
 
-		$user_page_controller = new UserPageController(
+		$user_page_controller = new UserPageApi(
 			$session,
 			$validator,
 			$user_reader,

@@ -1,5 +1,5 @@
 <?php
-namespace Controller\Api;
+namespace Api;
 
 use Http\CsrfToken;
 use Http\Session;
@@ -10,7 +10,7 @@ use Model\User\UserReader;
 use Pagination\Pagination;
 use View\JsonResponseView;
 
-class HomeController
+class HomeApi
 {
 	private Session $session;
 	private Validator $validator;
