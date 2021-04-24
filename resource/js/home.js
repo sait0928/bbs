@@ -2,6 +2,21 @@ import {Link} from "react-router-dom";
 import React from "react";
 import { useFetch } from "./hooks";
 
+function handleClick(e) {
+	e.preventDefault();
+	fetch("/insert", {
+		method: "POST"
+	})
+		.then(response => response.json())
+		.then(data => console.log(data));
+
+	var form = document.getElementById("fetch-form");
+	var formData = new FormData(form);
+	for (var value of formData.values()) {
+		console.log(value);
+	}
+}
+
 export const Home = () => {
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
@@ -17,10 +32,10 @@ export const Home = () => {
 					<p>ようこそ{data.name}さん！</p>
 					<div id="user-update"><Link to="/user_update_form">ユーザ情報を更新する</Link></div>
 					<div id="form">
-						<form action="/insert" method="POST">
+						<form id="fetch-form">
 							<textarea name="text" id="" cols="50" rows="5" required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
-							<input type="submit" value="投稿" />
+							<input type="button" value="投稿" onClick={handleClick} />
 						</form>
 					</div>
 					<div id="posts">
