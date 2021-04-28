@@ -2,19 +2,15 @@ import {Link} from "react-router-dom";
 import React from "react";
 import { useFetch } from "./hooks";
 
-function handleClick(e) {
-	e.preventDefault();
-	fetch("/insert", {
-		method: "POST"
+async function handleClick() {
+	var form = document.getElementById("fetch-form");
+	var formData = new FormData(form);
+	await fetch("/insert", {
+		method: "POST",
+		body: formData
 	})
 		.then(response => response.json())
 		.then(data => console.log(data));
-
-	var form = document.getElementById("fetch-form");
-	var formData = new FormData(form);
-	for (var value of formData.values()) {
-		console.log(value);
-	}
 }
 
 export const Home = () => {
