@@ -1,24 +1,24 @@
 import {Link, useHistory} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import { useFetch } from "./hooks";
 
-async function handleClick(e, history) {
+async function handleClick(e, version, setVersion) {
 	var form = document.getElementById("fetch-form");
 	var formData = new FormData(form);
-	await fetch(history.push("/insert"), {
+	await fetch("/insert", {
 		method: "POST",
 		body: formData
-	})
-		.then(response => response.json())
-		.then(data => console.log(data));
+	});
+	form.reset();
+	setVersion(version + 1);
 }
 
 export const Home = () => {
-	const history = useHistory();
+	const [version, setVersion] = useState(0);
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
 	const page = parsed.page || 1;
-	const [data, loading] = useFetch("/api/home?page=" + page);
+	const [data, loading] = useFetch("/api/home?page=" + page, version);
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -32,7 +32,7 @@ export const Home = () => {
 						<form id="fetch-form">
 							<textarea name="text" id="" cols="50" rows="5" required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
-							<input type="button" value="投稿" onClick={(e) => handleClick(e, history)} />
+							<input type="button" value="投稿" onClick={(e) => handleClick(e, version, setVersion)} />
 						</form>
 					</div>
 					<div id="posts">
