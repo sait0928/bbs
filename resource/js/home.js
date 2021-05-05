@@ -1,11 +1,11 @@
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import React from "react";
 import { useFetch } from "./hooks";
 
-async function handleClick() {
+async function handleClick(e, history) {
 	var form = document.getElementById("fetch-form");
 	var formData = new FormData(form);
-	await fetch("/insert", {
+	await fetch(history.push("/insert"), {
 		method: "POST",
 		body: formData
 	})
@@ -14,6 +14,7 @@ async function handleClick() {
 }
 
 export const Home = () => {
+	const history = useHistory();
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
 	const page = parsed.page || 1;
@@ -31,7 +32,7 @@ export const Home = () => {
 						<form id="fetch-form">
 							<textarea name="text" id="" cols="50" rows="5" required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
-							<input type="button" value="投稿" onClick={handleClick} />
+							<input type="button" value="投稿" onClick={(e) => handleClick(e, history)} />
 						</form>
 					</div>
 					<div id="posts">
