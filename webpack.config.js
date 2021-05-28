@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+	mode: 'development',
 	entry: {
 		'./js/app': ['./resource/js/index.js'],
 	},
@@ -11,15 +12,14 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx)$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-env', '@babel/preset-react'],
-					plugins: ['@babel/plugin-transform-runtime'],
-				},
+				test: /\.tsx?$/,
+				use: 'ts-loader',
 			},
 		],
 	},
+	resolve: {
+		extensions: [".ts", ".tsx", ".js", ".json"]
+	},
+	target: ["web", "es5"],
 	plugins: [],
 };
