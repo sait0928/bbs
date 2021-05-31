@@ -1,6 +1,21 @@
 import { Link } from "react-router-dom";
 import * as React from "react";
 import { useFetch } from "./hooks";
+import { useState } from "react";
+
+async function handleClick(e, version, setVersion) {
+	const form = document.getElementById("fetch-form");
+	if (!(form instanceof HTMLFormElement)) {
+		throw new Error('Cannot find the form element');
+	}
+	var formData = new FormData(form);
+	await fetch("/delete", {
+		method: "POST",
+		body: formData
+	});
+	form.reset();
+	setVersion(version + 1);
+}
 
 type PostData = {
 	post_id: number;
@@ -19,12 +34,12 @@ type PageData = {
 }
 
 export const UserPage = () => {
+	const [version, setVersion] = useState(0);
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
 	const page = parsed.page || 1;
 	const user_id = parsed.user_id;
-	console.log(user_id);
-	const [data, loading] = useFetch("/api/user_page?user_id=" + user_id + "&page=" + page) as [PageData, boolean];
+	const [data, loading] = useFetch("/api/user_page?user_id=" + user_id + "&page=" + page, version) as [PageData, boolean];
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -50,10 +65,10 @@ export const UserPage = () => {
 									<td>{post.post}</td>
 									{post.user_id === data.session_user_id &&
 										<td>
-											<form action="/delete" method="POST">
+											<form id="fetch-form">
 												<input type="hidden" name="id" value={post.post_id} />
 												<input type="hidden" name="csrf_token" value={data.csrf_token} />
-												<input type="submit" value="削除" />
+												<input type="button" value="削除" onClick={(e) => handleClick(e, version, setVersion)} />
 											</form>
 										</td>
 									}
