@@ -1,7 +1,8 @@
 import {Link} from "react-router-dom";
-import React from "react";
+import * as React from "react";
 
 export const LoginForm = () => {
+	const app = document.getElementById('app');
 	const params = JSON.parse(app.dataset.params);
 	return (
 		<div>

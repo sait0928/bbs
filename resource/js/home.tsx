@@ -1,9 +1,13 @@
-import {Link} from "react-router-dom";
-import React, {useState} from "react";
+import { Link } from "react-router-dom";
+import * as React from "react";
+import { useState } from "react";
 import { useFetch } from "./hooks";
 
 async function handleClick(e, version, setVersion) {
-	var form = document.getElementById("fetch-form");
+	const form = document.getElementById("fetch-form");
+	if (!(form instanceof HTMLFormElement)) {
+		throw new Error('Cannot find the form element');
+	}
 	var formData = new FormData(form);
 	await fetch("/insert", {
 		method: "POST",
@@ -13,12 +17,26 @@ async function handleClick(e, version, setVersion) {
 	setVersion(version + 1);
 }
 
+type PostData = {
+	post_id: number;
+	user_id: number;
+	name: string;
+	post: string;
+}
+
+type PageData = {
+	name: string;
+	csrf_token: string;
+	posts: PostData[];
+	page_links: string[];
+}
+
 export const Home = () => {
 	const [version, setVersion] = useState(0);
 	const queryString = require('query-string');
 	const parsed = queryString.parse(location.search);
 	const page = parsed.page || 1;
-	const [data, loading] = useFetch("/api/home?page=" + page, version);
+	const [data, loading] = useFetch("/api/home?page=" + page, version) as [PageData, boolean];
 	return (
 		<div>
 			<h1>掲示板</h1>
@@ -30,7 +48,7 @@ export const Home = () => {
 					<div id="user-update"><Link to="/user_update_form">ユーザ情報を更新する</Link></div>
 					<div id="form">
 						<form id="fetch-form">
-							<textarea name="text" id="" cols="50" rows="5" required />
+							<textarea name="text" id="" cols={50} rows={5} required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
 							<input type="button" value="投稿" onClick={(e) => handleClick(e, version, setVersion)} />
 						</form>
