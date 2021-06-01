@@ -2,20 +2,7 @@ import { Link } from "react-router-dom";
 import * as React from "react";
 import { useFetch } from "./hooks";
 import { useState } from "react";
-
-async function handleClick(e, version, setVersion) {
-	const form = document.getElementById("fetch-form");
-	if (!(form instanceof HTMLFormElement)) {
-		throw new Error('Cannot find the form element');
-	}
-	var formData = new FormData(form);
-	await fetch("/delete", {
-		method: "POST",
-		body: formData
-	});
-	form.reset();
-	setVersion(version + 1);
-}
+import { Posts } from "./posts";
 
 type PostData = {
 	post_id: number;
@@ -52,29 +39,7 @@ export const UserPage = () => {
 						<Link to="/">←戻る</Link>
 					</div>
 					<div id="posts">
-						<table>
-							<tr>
-								<th>投稿ID</th>
-								<th>投稿者</th>
-								<th>投稿内容</th>
-							</tr>
-							{data.posts.map((post) => {
-								return <tr>
-									<td>{post.post_id}</td>
-									<td>{post.name}</td>
-									<td>{post.post}</td>
-									{post.user_id === data.session_user_id &&
-										<td>
-											<form id="fetch-form">
-												<input type="hidden" name="id" value={post.post_id} />
-												<input type="hidden" name="csrf_token" value={data.csrf_token} />
-												<input type="button" value="削除" onClick={(e) => handleClick(e, version, setVersion)} />
-											</form>
-										</td>
-									}
-								</tr>
-							})}
-						</table>
+						<Posts data={data} version={version} setVersion={setVersion} />
 					</div>
 					<div id="pagination">
 						{data.page_links.map((page_link) => {

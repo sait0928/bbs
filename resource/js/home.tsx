@@ -2,20 +2,8 @@ import { Link } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import { useFetch } from "./hooks";
-
-async function handleClick(e, version, setVersion) {
-	const form = document.getElementById("fetch-form");
-	if (!(form instanceof HTMLFormElement)) {
-		throw new Error('Cannot find the form element');
-	}
-	var formData = new FormData(form);
-	await fetch("/insert", {
-		method: "POST",
-		body: formData
-	});
-	form.reset();
-	setVersion(version + 1);
-}
+import { submitFormAsync } from "./submit_form_async";
+import { Posts } from "./posts";
 
 type PostData = {
 	post_id: number;
@@ -47,27 +35,14 @@ export const Home = () => {
 					<p>ようこそ{data.name}さん！</p>
 					<div id="user-update"><Link to="/user_update_form">ユーザ情報を更新する</Link></div>
 					<div id="form">
-						<form id="fetch-form">
+						<form id="fetch-insert-form">
 							<textarea name="text" id="" cols={50} rows={5} required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
-							<input type="button" value="投稿" onClick={(e) => handleClick(e, version, setVersion)} />
+							<input type="button" value="投稿" onClick={(e) => submitFormAsync(e, version, setVersion, "/insert")} />
 						</form>
 					</div>
 					<div id="posts">
-						<table>
-							<tr>
-								<th>投稿ID</th>
-								<th>投稿者</th>
-								<th>投稿内容</th>
-							</tr>
-							{data.posts.map((post) => {
-								return <tr>
-									<td>{post.post_id}</td>
-									<td><Link to={`/user_page?user_id=${post.user_id}`}>{post.name}</Link></td>
-									<td>{post.post}</td>
-								</tr>
-							})}
-						</table>
+						<Posts data={data} version={version} setVersion={setVersion} />
 					</div>
 					<div id="pagination">
 						{data.page_links.map((page_link) => {
