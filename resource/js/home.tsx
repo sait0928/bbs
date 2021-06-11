@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useFetch } from "./hooks";
 import { submitFormAsync } from "./submit_form_async";
 import { Posts } from "./posts";
+import Button from '@material-ui/core/Button';
 
 type PostData = {
 	post_id: number;
@@ -38,7 +39,9 @@ export const Home = () => {
 						<form id="fetch-insert-form">
 							<textarea name="text" id="" cols={50} rows={5} required />
 							<input type="hidden" name="csrf_token" value={data.csrf_token} />
-							<input type="button" value="投稿" onClick={(e) => submitFormAsync(e, version, setVersion, "/insert")} />
+							<Button variant="contained" color="primary" onClick={(e) => submitFormAsync(e, version, setVersion, "/insert")}>
+								投稿
+							</Button>
 						</form>
 					</div>
 					<div id="posts">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import * as React from "react";
 import { submitFormAsync } from "./submit_form_async";
+import Button from "@material-ui/core/Button";
 
 export const Posts = (props) => {
     return (
@@ -21,7 +22,9 @@ export const Posts = (props) => {
                                 <form id="fetch-delete-form">
                                     <input type="hidden" name="id" value={post.post_id} />
                                     <input type="hidden" name="csrf_token" value={props.data.csrf_token} />
-                                    <input type="button" id="delete-button" value="削除" onClick={(e) => submitFormAsync(e, props.version, props.setVersion, "/delete")} />
+                                    <Button variant="contained" color="primary" onClick={(e) => submitFormAsync(e, props.version, props.setVersion, "/delete")}>
+                                        削除
+                                    </Button>
                                 </form>
                             </td>
                         }
