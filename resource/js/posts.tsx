@@ -2,23 +2,42 @@ import { Link } from "react-router-dom";
 import * as React from "react";
 import { submitFormAsync } from "./submit_form_async";
 import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+    table: {
+        minWidth: 300,
+    },
+});
 
 export const Posts = (props) => {
+    const classes = useStyles();
     return (
-        <div>
-            <table>
-                <tr>
-                    <th>投稿ID</th>
-                    <th>投稿者</th>
-                    <th>投稿内容</th>
-                </tr>
-                {props.data.posts.map((post) => {
-                    return <tr>
-                        <td>{post.post_id}</td>
-                        <td><Link to={`/user_page?user_id=${post.user_id}`}>{post.name}</Link></td>
-                        <td>{post.post}</td>
-                        {post.user_id === props.data.session_user_id &&
-                            <td>
+        <TableContainer component={Paper}>
+            <Table className={classes.table} size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>投稿者</TableCell>
+                        <TableCell>投稿内容</TableCell>
+                        <TableCell>投稿削除</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {props.data.posts.map((post) => (
+                        <TableRow key={post.post_id}>
+                            <TableCell>
+                                <Link to={`/user_page?user_id=${post.user_id}`}>{post.name}</Link>
+                            </TableCell>
+                            <TableCell>{post.post}</TableCell>
+                            {post.user_id === props.data.session_user_id &&
+                            <TableCell>
                                 <form id="fetch-delete-form">
                                     <input type="hidden" name="id" value={post.post_id} />
                                     <input type="hidden" name="csrf_token" value={props.data.csrf_token} />
@@ -26,11 +45,12 @@ export const Posts = (props) => {
                                         削除
                                     </Button>
                                 </form>
-                            </td>
-                        }
-                    </tr>
-                })}
-            </table>
-        </div>
+                            </TableCell>
+                            }
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
