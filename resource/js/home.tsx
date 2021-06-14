@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 
 type PostData = {
 	post_id: number;
@@ -44,7 +45,15 @@ export const Home = () => {
 						<div id="user-update"><Link to="/user_update_form">ユーザ情報を更新する</Link></div>
 						<div id="form">
 							<form id="fetch-insert-form">
-								<textarea name="text" id="" cols={50} rows={5} required />
+								<TextField
+									id="text"
+									name="text"
+									label="投稿内容"
+									multiline
+									required
+									rows={4}
+									variant="outlined"
+								/>
 								<input type="hidden" name="csrf_token" value={data.csrf_token} />
 								<br />
 								<Button variant="contained" color="primary" onClick={(e) => submitFormAsync(e, version, setVersion, "/insert")}>
@@ -56,7 +65,7 @@ export const Home = () => {
 							<Posts data={data} version={version} setVersion={setVersion} />
 						</div>
 						<div id="pagination">
-							<Pagination count={data.total_pages} onChange={(e, page) => handleLink(`/?page=${page}`)}/>
+							<Pagination count={data.total_pages} defaultPage={data.current_page} onChange={(e, page) => handleLink(`/?page=${page}`)}/>
 						</div>
 						<div id="logout">
 							<a href="/logout">ログアウト</a>
