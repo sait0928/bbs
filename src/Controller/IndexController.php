@@ -67,7 +67,6 @@ class IndexController
 
 		$total_posts = $this->post_counter->countPosts();
 		$total_pages = $this->pagination->countPages($total_posts);
-		$page_links = $this->pagination->createPageLinksArray($current_page, $total_pages);
 
 		$csrf_token = $this->csrf_token->get();
 
@@ -75,7 +74,8 @@ class IndexController
 			'session_user_id' => $session_user_id,
 			'name'            => $name,
 			'posts'           => $posts,
-			'page_links'      => $page_links,
+			'current_page'    => $current_page,
+			'total_pages'     => $total_pages,
 			'csrf_token'      => $csrf_token,
 		];
 		$this->react_view->render($params);
