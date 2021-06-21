@@ -12,8 +12,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 300,
+    table_name: {
+        width: 100,
+    },
+    table_text: {
+        width: 300,
+    },
+    table_delete: {
+        width: 100,
     },
 });
 
@@ -21,12 +27,12 @@ export const Posts = (props) => {
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} size="small" aria-label="simple table">
+            <Table size="small" aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>投稿者</TableCell>
-                        <TableCell>投稿内容</TableCell>
-                        <TableCell>投稿削除</TableCell>
+                        <TableCell className={classes.table_name}>投稿者</TableCell>
+                        <TableCell className={classes.table_text}>投稿内容</TableCell>
+                        <TableCell className={classes.table_delete}>投稿削除</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
